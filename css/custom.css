@@ -380,12 +380,13 @@
     font-size: 0.85em;
 }
 
-/* Square frame for GIFs */
+/* Square frame for GIFs — height-based 1:1 */
 .img-square {
-    width: 380px !important;
     height: 380px !important;
-    object-fit: contain;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
     object-position: center;
+    border-radius: 8px;
 }
 
 /* Responsive */
