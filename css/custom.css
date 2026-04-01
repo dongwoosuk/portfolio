@@ -282,10 +282,10 @@
     z-index: 1;
 }
 
-/* Top: Revit — clipped, revealed from left */
+/* Top: Rhino — clipped, revealed from right */
 .comp-reveal {
     z-index: 2;
-    clip-path: inset(0 100% 0 0);
+    clip-path: inset(0 0 0 100%); /* initially hidden from left */
 }
 
 /* Handle line */
@@ -331,6 +331,7 @@
     background: rgba(0,0,0,0.6);
     padding: 2px 6px;
     border-radius: 3px;
+    transition: opacity 0.2s;
 }
 
 .comp-tag-l { left: 6px; }
