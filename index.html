@@ -104,13 +104,13 @@
                     <h2>5x5 Building: Rhino &rarr; Revit</h2>
                     <p class="subtitle">Drag the handle to compare</p>
                     <div class="comp" id="rir-comp">
-                        <!-- Bottom: Rhino (left side, always full) -->
+                        <!-- Background: Rhino (always full, left side) -->
                         <img class="comp-img comp-bg" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Rhino 3D View.jpg" alt="Rhino">
-                        <!-- Top: Revit (right side, revealed from right as handle moves right) -->
+                        <!-- Overlay: Revit (clipped, revealed from right as handle goes left) -->
                         <img class="comp-img comp-reveal" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Revit">
                         <div class="comp-handle"></div>
-                        <span class="comp-tag comp-tag-l">Revit</span>
-                        <span class="comp-tag comp-tag-r">Rhino</span>
+                        <span class="comp-tag comp-tag-l">Rhino</span>
+                        <span class="comp-tag comp-tag-r">Revit</span>
                     </div>
                 </section>
 
@@ -328,13 +328,15 @@
                     const r = comp.getBoundingClientRect();
                     let p = (x - r.left) / r.width;
                     p = Math.max(0.02, Math.min(0.98, p));
-                    // Rhino reveals from right: clip left side = p*100%
-                    const left = p * 100;
-                    reveal.style.clipPath = 'inset(0 0 0 ' + left + '%)';
-                    handle.style.left = left + '%';
-                    // Show labels based on handle position
-                    tagL.style.opacity = p < 0.8 ? '1' : '0';
-                    tagR.style.opacity = p > 0.2 ? '1' : '0';
+                    // Revit overlay: visible from handle position to right edge
+                    // clip-path inset(top right bottom left)
+                    // left = p means Revit shows from p% to 100%
+                    reveal.style.clipPath = 'inset(0 0 0 ' + (p * 100) + '%)';
+                    handle.style.left = (p * 100) + '%';
+                    // Rhino label (left) shows when handle is right
+                    // Revit label (right) shows when handle is left
+                    tagL.style.opacity = p > 0.3 ? '1' : '0';
+                    tagR.style.opacity = p < 0.7 ? '1' : '0';
                 }
 
                 // Start at 50% — handle in center
