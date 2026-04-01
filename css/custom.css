@@ -270,7 +270,8 @@
     user-select: none;
 }
 
-.comparison-slider .comparison-after-img {
+/* Background: Rhino — full size, always visible */
+.comparison-slider .comparison-bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -279,22 +280,21 @@
     object-fit: contain;
 }
 
-.comparison-slider .comparison-before-clip {
+/* Overlay: Revit — clipped from right side */
+.comparison-slider .comparison-overlay {
     position: absolute;
     top: 0;
     right: 0;
-    left: auto;
-    width: 50%;
+    width: 5%;
     height: 100%;
     overflow: hidden;
     z-index: 2;
 }
 
-.comparison-slider .comparison-before-img {
+.comparison-slider .comparison-overlay-img {
     position: absolute;
     top: 0;
     right: 0;
-    left: auto;
     width: 380px;
     max-width: none;
     height: 100%;

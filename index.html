@@ -104,9 +104,11 @@
                     <h2>5x5 Building: Rhino &rarr; Revit</h2>
                     <p class="subtitle">Drag the handle to compare</p>
                     <div class="comparison-slider" id="rir-comparison">
-                        <img class="comparison-after-img" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Rhino 3D View.jpg" alt="Rhino (Before)">
-                        <div class="comparison-before-clip">
-                            <img class="comparison-before-img" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Revit (After)">
+                        <!-- Background: Rhino (Before) — always full -->
+                        <img class="comparison-bg" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Rhino 3D View.jpg" alt="Rhino (Before)">
+                        <!-- Overlay: Revit (After) — clipped from right -->
+                        <div class="comparison-overlay">
+                            <img class="comparison-overlay-img" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Revit (After)">
                         </div>
                         <div class="comparison-handle" id="comparison-handle">
                             <div class="handle-line"></div>
@@ -324,20 +326,21 @@
         document.addEventListener('DOMContentLoaded', function() {
             const sliders = document.querySelectorAll('.comparison-slider');
             sliders.forEach(function(slider) {
-                const afterClip = slider.querySelector('.comparison-before-clip'); // actually the "after" overlay
+                const overlay = slider.querySelector('.comparison-overlay');
                 const handle = slider.querySelector('.comparison-handle');
                 let isDragging = false;
 
-                // Initial: handle at 95% (almost fully showing Before/Rhino)
-                afterClip.style.width = '5%';
-                handle.style.left = '95%';
+                // bg = Rhino. overlay = Revit (anchored right).
+                // handle LEFT (5%) = overlay small (5%) = Rhino visible
+                // handle RIGHT (95%) = overlay big (95%) = Revit visible
+                overlay.style.width = '5%';
+                handle.style.left = '5%';
 
                 function updateSlider(x) {
                     const rect = slider.getBoundingClientRect();
                     let pos = (x - rect.left) / rect.width;
                     pos = Math.max(0.05, Math.min(0.95, pos));
-                    // After overlay grows from right: width = 1 - pos
-                    afterClip.style.width = ((1 - pos) * 100) + '%';
+                    overlay.style.width = (pos * 100) + '%';
                     handle.style.left = (pos * 100) + '%';
                 }
 
