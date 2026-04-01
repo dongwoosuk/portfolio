@@ -382,13 +382,13 @@
 
 /* Square frame for GIFs — height-based 1:1 */
 .img-square {
-    width: 380px !important;
-    height: 380px !important;
-    max-width: 380px !important;
-    max-height: 380px !important;
+    width: 500px !important;
+    height: 500px !important;
+    max-width: 500px !important;
+    max-height: 500px !important;
     object-fit: cover !important;
     object-position: center !important;
-    border-radius: 8px !important;
+    border-radius: 0 !important;
 }
 
 /* Responsive */
