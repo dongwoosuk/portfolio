@@ -380,6 +380,14 @@
     font-size: 0.85em;
 }
 
+/* Square frame for GIFs */
+.img-square {
+    width: 380px !important;
+    height: 380px !important;
+    object-fit: cover;
+    object-position: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .slide-layout {
