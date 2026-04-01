@@ -56,29 +56,131 @@
                 </div>
             </section>
 
-            <!-- SLIDE 3: RIR Workflow -->
+            <!-- SLIDE 3: RIR Workflow (Vertical Stack) -->
             <section>
-                <h2>Rhino.Inside.Revit Workflow</h2>
-                <p class="subtitle">Bridging Parametric Design and BIM Documentation</p>
-                <div class="slide-layout">
-                    <div class="slide-text">
-                        <div class="metrics">
-                            <div class="metric">
-                                <span class="metric-value">60-75%</span>
-                                <span class="metric-label">Faster Transition</span>
-                            </div>
+                <!-- 3-0: Overview -->
+                <section>
+                    <h2>Rhino.Inside.Revit Workflow</h2>
+                    <p class="subtitle">Bridging Parametric Design and BIM Documentation</p>
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="metric-value">60-75%</span>
+                            <span class="metric-label">Faster Transition</span>
                         </div>
-                        <ul>
-                            <li>Live connection: Grasshopper &harr; Revit</li>
-                            <li>Eliminates manual geometry rebuild</li>
-                            <li>Continued iteration without rework</li>
-                        </ul>
-                        <p class="projects">Case Study: Cal Poly Student Housing (4,200 beds, $1.2B)</p>
+                        <div class="metric">
+                            <span class="metric-value">4</span>
+                            <span class="metric-label">Case Studies</span>
+                        </div>
                     </div>
-                    <div class="slide-image">
-                        <img src="assets/images/rir/5x5 RIR Diagram.gif" alt="RIR Workflow Diagram" loading="lazy">
+                    <ul>
+                        <li>Live connection: Grasshopper &harr; Revit</li>
+                        <li>Eliminates manual geometry rebuild</li>
+                        <li>Continued iteration without rework</li>
+                    </ul>
+                    <p class="nav-hint">&darr; Scroll down for case studies</p>
+                </section>
+
+                <!-- 3-1: 5x5 Building Elefront -->
+                <section>
+                    <h2>Case Study: 5x5 Building Elefront</h2>
+                    <p class="subtitle">Full Building RIR Pipeline — Rhino to Revit</p>
+                    <div class="slide-layout">
+                        <div class="slide-text">
+                            <ul>
+                                <li>Complete building from Rhino &rarr; Revit</li>
+                                <li>Floor slabs, walls, facade, columns, mullions</li>
+                                <li>Phased approach: structure &rarr; envelope &rarr; interiors</li>
+                                <li>Grasshopper script drives all Revit elements</li>
+                            </ul>
+                        </div>
+                        <div class="slide-image">
+                            <img src="assets/images/rir/01_5x5_building/5x5 RIR Diagram.gif" alt="5x5 RIR Diagram" loading="lazy">
+                        </div>
                     </div>
-                </div>
+                </section>
+
+                <!-- 3-1b: 5x5 Building — Before & After -->
+                <section>
+                    <h2>5x5 Building: Rhino &rarr; Revit</h2>
+                    <div class="image-full">
+                        <img src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_Before&After.jpg" alt="Before and After" loading="lazy">
+                    </div>
+                </section>
+
+                <!-- 3-1c: 5x5 Building — Component Breakdown -->
+                <section>
+                    <h2>5x5 Building: Component Breakdown</h2>
+                    <div class="image-grid-3">
+                        <div class="grid-item">
+                            <img src="assets/images/rir/01_5x5_building/25-0616_5x5 Building Elfront_Floor Slabs.png" alt="Floor Slabs" loading="lazy">
+                            <small>Floor Slabs</small>
+                        </div>
+                        <div class="grid-item">
+                            <img src="assets/images/rir/01_5x5_building/25-0616_5x5 Building Elfront_Facade.png" alt="Facade" loading="lazy">
+                            <small>Facade</small>
+                        </div>
+                        <div class="grid-item">
+                            <img src="assets/images/rir/01_5x5_building/25-0616_5x5 Building Elfront_Structural Columns.png" alt="Columns" loading="lazy">
+                            <small>Structural Columns</small>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3-2: Cal Poly Model Group -->
+                <section>
+                    <h2>Case Study: Cal Poly Modular Housing</h2>
+                    <p class="subtitle">Revit Model Group — Largest Modular in U.S. (4,200 beds, $1.2B)</p>
+                    <div class="image-full">
+                        <img src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.gif" alt="Cal Poly Model Group" loading="lazy">
+                    </div>
+                </section>
+
+                <!-- 3-3: Adaptive Curtain Wall -->
+                <section>
+                    <h2>Case Study: Adaptive Curtain Wall</h2>
+                    <p class="subtitle">Parametric Facade Panel System — RIR to Revit</p>
+                    <div class="slide-layout">
+                        <div class="slide-text">
+                            <ul>
+                                <li>Adaptive panel components in Revit</li>
+                                <li>Parametric control from Grasshopper</li>
+                                <li>Panel type variation (A/B)</li>
+                                <li>Sun hour analysis integration</li>
+                            </ul>
+                        </div>
+                        <div class="slide-image">
+                            <img src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form.gif" alt="Adaptive Panel" loading="lazy">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3-3b: Adaptive Curtain Wall — Views -->
+                <section>
+                    <h2>Adaptive Curtain Wall: Design Views</h2>
+                    <div class="image-grid-3">
+                        <div class="grid-item">
+                            <img src="assets/images/rir/03_adaptive_curtain_wall/25-0922_Adaptive Curtain Wall Design_Axon.png" alt="Axon" loading="lazy">
+                            <small>Axonometric</small>
+                        </div>
+                        <div class="grid-item">
+                            <img src="assets/images/rir/03_adaptive_curtain_wall/25-0714_Adaptive Curtain Wall Design_South Elevation.jpg" alt="South Elevation" loading="lazy">
+                            <small>South Elevation</small>
+                        </div>
+                        <div class="grid-item">
+                            <img src="assets/images/rir/03_adaptive_curtain_wall/25-0714_Adaptive Curtain Wall Design_Plan.jpg" alt="Plan" loading="lazy">
+                            <small>Plan</small>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3-4: Frit Pattern Design -->
+                <section>
+                    <h2>Case Study: Frit Pattern Design</h2>
+                    <p class="subtitle">Grasshopper-Based Facade Pattern Generation</p>
+                    <div class="image-full">
+                        <img src="assets/images/rir/04_frit_pattern/25-1111_Axon.gif" alt="Frit Pattern" loading="lazy">
+                    </div>
+                </section>
             </section>
 
             <!-- SLIDE 4: Rhino Grasshopper MCP -->
