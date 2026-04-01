@@ -109,8 +109,8 @@
                         <!-- Top: Revit (right side, revealed from right as handle moves right) -->
                         <img class="comp-img comp-reveal" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Revit">
                         <div class="comp-handle"></div>
-                        <span class="comp-tag comp-tag-l">Rhino</span>
-                        <span class="comp-tag comp-tag-r">Revit</span>
+                        <span class="comp-tag comp-tag-l">Revit</span>
+                        <span class="comp-tag comp-tag-r">Rhino</span>
                     </div>
                 </section>
 
@@ -337,8 +337,8 @@
                     tagR.style.opacity = p > 0.2 ? '1' : '0';
                 }
 
-                // Start at 5% — mostly Revit visible, handle on left
-                update(comp.getBoundingClientRect().left + comp.getBoundingClientRect().width * 0.05);
+                // Start at 50% — handle in center
+                update(comp.getBoundingClientRect().left + comp.getBoundingClientRect().width * 0.5);
 
                 comp.addEventListener('mousedown', function(e) {
                     dragging = true; update(e.clientX);
