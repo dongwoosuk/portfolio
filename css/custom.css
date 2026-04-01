@@ -280,11 +280,11 @@
     object-fit: contain;
 }
 
-/* Overlay: Revit — clipped from right side */
+/* Overlay: Revit — clipped from left, grows rightward with handle */
 .comparison-slider .comparison-overlay {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     width: 5%;
     height: 100%;
     overflow: hidden;
@@ -294,7 +294,7 @@
 .comparison-slider .comparison-overlay-img {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     width: 380px;
     max-width: none;
     height: 100%;
