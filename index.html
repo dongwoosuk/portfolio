@@ -324,23 +324,50 @@
                 const tagR = comp.querySelector('.comp-tag-r');
                 let dragging = false;
 
-                function update(x) {
-                    const r = comp.getBoundingClientRect();
-                    let p = (x - r.left) / r.width;
-                    p = Math.max(0.02, Math.min(0.98, p));
-                    // Revit overlay: visible from handle position to right edge
-                    // clip-path inset(top right bottom left)
-                    // left = p means Revit shows from p% to 100%
-                    reveal.style.clipPath = 'inset(0 0 0 ' + (p * 100) + '%)';
-                    handle.style.left = (p * 100) + '%';
-                    // Rhino label (left) shows when handle is right
-                    // Revit label (right) shows when handle is left
-                    tagL.style.opacity = p > 0.3 ? '1' : '0';
-                    tagR.style.opacity = p < 0.7 ? '1' : '0';
+                // Calculate actual image bounds within contain
+                function getImageBounds() {
+                    const bg = comp.querySelector('.comp-bg');
+                    const cw = comp.clientWidth;
+                    const ch = comp.clientHeight;
+                    const nw = bg.naturalWidth || 1;
+                    const nh = bg.naturalHeight || 1;
+                    const scale = Math.min(cw / nw, ch / nh);
+                    const iw = nw * scale;
+                    const offsetX = (cw - iw) / 2;
+                    return { left: offsetX, right: offsetX + iw, width: iw };
                 }
 
-                // Start at 50% — handle in center
-                update(comp.getBoundingClientRect().left + comp.getBoundingClientRect().width * 0.5);
+                function update(x) {
+                    const r = comp.getBoundingClientRect();
+                    const bounds = getImageBounds();
+                    // Clamp to image bounds
+                    const minX = r.left + bounds.left;
+                    const maxX = r.left + bounds.right;
+                    let clampedX = Math.max(minX, Math.min(maxX, x));
+                    let p = (clampedX - r.left) / r.width;
+                    reveal.style.clipPath = 'inset(0 0 0 ' + (p * 100) + '%)';
+                    handle.style.left = (p * 100) + '%';
+                    // Labels
+                    const imgP = (clampedX - minX) / (maxX - minX);
+                    tagL.style.opacity = imgP > 0.3 ? '1' : '0';
+                    tagR.style.opacity = imgP < 0.7 ? '1' : '0';
+                }
+
+                // Start at image center
+                const bg = comp.querySelector('.comp-bg');
+                bg.addEventListener('load', function() {
+                    const r = comp.getBoundingClientRect();
+                    const bounds = getImageBounds();
+                    update(r.left + bounds.left + bounds.width / 2);
+                });
+                // Fallback if already loaded
+                if (bg.complete) {
+                    setTimeout(function() {
+                        const r = comp.getBoundingClientRect();
+                        const bounds = getImageBounds();
+                        update(r.left + bounds.left + bounds.width / 2);
+                    }, 100);
+                }
 
                 comp.addEventListener('mousedown', function(e) {
                     dragging = true; update(e.clientX);
