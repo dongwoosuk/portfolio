@@ -255,8 +255,7 @@
     font-size: 0.55em;
     color: rgba(255, 255, 255, 0.3);
     text-align: center;
-    position: absolute;
-    bottom: 5px;
+    margin-top: 200px;
     left: 50%;
     transform: translateX(-50%);
     animation: bounce 2s infinite;
