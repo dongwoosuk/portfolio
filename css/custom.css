@@ -242,11 +242,18 @@
     font-size: 0.6em;
 }
 
-/* Navigation hint */
+/* Navigation hint — default (inline) */
 .nav-hint {
     font-size: 0.55em;
     color: rgba(255, 255, 255, 0.3);
     margin-top: 1em;
+    animation: bounce 2s infinite;
+}
+
+/* Navigation hint — centered bottom (title slide only) */
+.nav-hint-center {
+    font-size: 0.55em;
+    color: rgba(255, 255, 255, 0.3);
     text-align: center;
     position: absolute;
     bottom: 5px;
