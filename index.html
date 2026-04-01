@@ -99,11 +99,24 @@
                     </div>
                 </section>
 
-                <!-- 3-1b: 5x5 Building — Before & After -->
+                <!-- 3-1b: 5x5 Building — Before & After Comparison Slider -->
                 <section>
                     <h2>5x5 Building: Rhino &rarr; Revit</h2>
-                    <div class="image-full">
-                        <img src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_Before&After.jpg" alt="Before and After" loading="lazy">
+                    <p class="subtitle">Drag the handle to compare</p>
+                    <div class="comparison-slider" id="rir-comparison">
+                        <img class="comparison-after-img" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Revit">
+                        <div class="comparison-before-clip">
+                            <img class="comparison-before-img" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Rhino 3D View.jpg" alt="Rhino">
+                        </div>
+                        <div class="comparison-handle" id="comparison-handle">
+                            <div class="handle-line"></div>
+                            <div class="handle-circle">
+                                <span>&lsaquo;&rsaquo;</span>
+                            </div>
+                            <div class="handle-line"></div>
+                        </div>
+                        <span class="comp-label comp-label-left">Rhino</span>
+                        <span class="comp-label comp-label-right">Revit</span>
                     </div>
                 </section>
 
@@ -305,6 +318,59 @@
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
     <script>
+        // Image Comparison Slider
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliders = document.querySelectorAll('.comparison-slider');
+            sliders.forEach(function(slider) {
+                const beforeClip = slider.querySelector('.comparison-before-clip');
+                const handle = slider.querySelector('.comparison-handle');
+                let isDragging = false;
+
+                function updateSlider(x) {
+                    const rect = slider.getBoundingClientRect();
+                    let pos = (x - rect.left) / rect.width;
+                    pos = Math.max(0.05, Math.min(0.95, pos));
+                    beforeClip.style.width = (pos * 100) + '%';
+                    handle.style.left = (pos * 100) + '%';
+                }
+
+                slider.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    updateSlider(e.clientX);
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mousemove', function(e) {
+                    if (isDragging) {
+                        updateSlider(e.clientX);
+                        e.preventDefault();
+                    }
+                });
+
+                document.addEventListener('mouseup', function() {
+                    isDragging = false;
+                });
+
+                // Touch support
+                slider.addEventListener('touchstart', function(e) {
+                    isDragging = true;
+                    updateSlider(e.touches[0].clientX);
+                    e.preventDefault();
+                });
+
+                document.addEventListener('touchmove', function(e) {
+                    if (isDragging) {
+                        updateSlider(e.touches[0].clientX);
+                        e.preventDefault();
+                    }
+                });
+
+                document.addEventListener('touchend', function() {
+                    isDragging = false;
+                });
+            });
+        });
+
         Reveal.initialize({
             hash: true,
             transition: 'slide',
