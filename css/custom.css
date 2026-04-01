@@ -1,0 +1,201 @@
+/* Custom styles for Dongwoo Suk Portfolio */
+
+:root {
+    --accent: #4FC3F7;
+    --accent-green: #66BB6A;
+    --text-muted: #aaa;
+    --bg-card: rgba(255, 255, 255, 0.05);
+}
+
+.reveal {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* Title Slide */
+.title-name {
+    font-size: 2.8em;
+    font-weight: 700;
+    margin-bottom: 0.1em;
+}
+
+.title-role {
+    font-size: 1.2em;
+    color: var(--accent);
+    margin-bottom: 0.2em;
+}
+
+.title-firm {
+    font-size: 1em;
+    color: var(--text-muted);
+    margin-bottom: 1em;
+}
+
+.title-links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.8em;
+}
+
+.title-links a:hover {
+    text-decoration: underline;
+}
+
+/* Subtitle */
+.subtitle {
+    color: var(--accent);
+    font-size: 0.85em;
+    margin-bottom: 1em;
+}
+
+/* Two Column Layout */
+.two-col {
+    display: flex;
+    gap: 2em;
+    text-align: left;
+    font-size: 0.75em;
+}
+
+.col {
+    flex: 1;
+}
+
+.col h3 {
+    color: var(--accent);
+    font-size: 1.1em;
+    margin-bottom: 0.5em;
+}
+
+/* Metrics */
+.metrics {
+    display: flex;
+    gap: 3em;
+    justify-content: center;
+    margin: 1em 0;
+}
+
+.metric {
+    text-align: center;
+}
+
+.metric-value {
+    display: block;
+    font-size: 2.5em;
+    font-weight: 700;
+    color: var(--accent-green);
+}
+
+.metric-label {
+    font-size: 0.7em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Lists */
+.reveal ul {
+    font-size: 0.75em;
+    text-align: left;
+}
+
+.reveal li {
+    margin-bottom: 0.3em;
+}
+
+/* Projects reference */
+.projects {
+    font-size: 0.65em;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 1em;
+}
+
+/* Goals badges */
+.goals {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    margin-top: 1.5em;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: var(--bg-card);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.4em 0.8em;
+    border-radius: 4px;
+    font-size: 0.65em;
+}
+
+/* Tools Grid */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8em;
+    margin-top: 1em;
+}
+
+.tool-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.8em;
+    text-align: left;
+}
+
+.tool-card h3 {
+    font-size: 0.7em;
+    color: var(--accent);
+    margin: 0 0 0.3em 0;
+}
+
+.tool-card p {
+    font-size: 0.55em;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.tool-card small {
+    color: var(--text-muted);
+}
+
+/* Awards */
+.awards-list, .media-list {
+    font-size: 0.9em;
+}
+
+.awards-list li, .media-list li {
+    margin-bottom: 0.2em;
+}
+
+/* Skills Table */
+.skills-table {
+    font-size: 0.85em;
+    width: 100%;
+    text-align: left;
+}
+
+.skills-table td {
+    padding: 0.2em 0.5em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skills-table td:first-child {
+    color: var(--accent);
+    width: 40%;
+}
+
+/* Responsive: tools grid on smaller screens */
+@media (max-width: 768px) {
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .two-col {
+        flex-direction: column;
+    }
+}
