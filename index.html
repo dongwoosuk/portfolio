@@ -162,7 +162,10 @@
                                 <li>Phased approach: structure &rarr; envelope &rarr; interiors</li>
                                 <li>Grasshopper script drives all Revit elements</li>
                             </ul>
-                            <img class="text-below-img" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Grasshopper Script.png" alt="Grasshopper Script" loading="lazy">
+                            <div class="magnify-wrap">
+                                <img class="text-below-img magnify-src" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Grasshopper Script.png" alt="Grasshopper Script" loading="lazy">
+                                <div class="magnify-glass"></div>
+                            </div>
                         </div>
                         <div class="slide-image">
                             <img class="img-square" src="assets/images/rir/01_5x5_building/5x5 RIR Diagram.gif" alt="5x5 RIR Diagram" loading="lazy">
@@ -457,6 +460,37 @@
                     if (dragging) { update(e.touches[0].clientX); e.preventDefault(); }
                 });
                 document.addEventListener('touchend', function() { dragging = false; });
+            });
+        });
+
+        // Magnify glass effect
+        document.querySelectorAll('.magnify-wrap').forEach(function(wrap) {
+            const img = wrap.querySelector('.magnify-src');
+            const glass = wrap.querySelector('.magnify-glass');
+            const zoom = 2.5;
+
+            wrap.addEventListener('mouseenter', function() {
+                glass.style.display = 'block';
+                glass.style.backgroundImage = 'url(' + img.src + ')';
+                glass.style.backgroundSize = (img.clientWidth * zoom) + 'px ' + (img.clientHeight * zoom) + 'px';
+            });
+
+            wrap.addEventListener('mousemove', function(e) {
+                const rect = img.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const gw = 160, gh = 160;
+
+                glass.style.left = (x - gw / 2) + 'px';
+                glass.style.top = (y - gh / 2) + 'px';
+
+                const bgX = -(x * zoom - gw / 2);
+                const bgY = -(y * zoom - gh / 2);
+                glass.style.backgroundPosition = bgX + 'px ' + bgY + 'px';
+            });
+
+            wrap.addEventListener('mouseleave', function() {
+                glass.style.display = 'none';
             });
         });
 

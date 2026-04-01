@@ -380,6 +380,26 @@
     font-size: 0.85em;
 }
 
+/* Magnify glass on hover */
+.magnify-wrap {
+    position: relative;
+    display: inline-block;
+    cursor: none;
+}
+
+.magnify-glass {
+    display: none;
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 20;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+}
+
 /* Image below text in slide-text */
 .text-below-img {
     margin-top: 0.8em;
