@@ -103,22 +103,14 @@
                 <section>
                     <h2>5x5 Building: Rhino &rarr; Revit</h2>
                     <p class="subtitle">Drag the handle to compare</p>
-                    <div class="comparison-slider" id="rir-comparison">
-                        <!-- Background: Rhino (Before) — always full -->
-                        <img class="comparison-bg" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Rhino 3D View.jpg" alt="Rhino (Before)">
-                        <!-- Overlay: Revit (After) — clipped from right -->
-                        <div class="comparison-overlay">
-                            <img class="comparison-overlay-img" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Revit (After)">
-                        </div>
-                        <div class="comparison-handle" id="comparison-handle">
-                            <div class="handle-line"></div>
-                            <div class="handle-circle">
-                                <span>&lsaquo;&rsaquo;</span>
-                            </div>
-                            <div class="handle-line"></div>
-                        </div>
-                        <span class="comp-label comp-label-left">Rhino</span>
-                        <span class="comp-label comp-label-right">Revit</span>
+                    <div class="comp" id="rir-comp">
+                        <!-- Bottom layer: Rhino (always full) -->
+                        <img class="comp-img comp-bg" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Rhino 3D View.jpg" alt="Rhino">
+                        <!-- Top layer: Revit (clip-path reveals from left as handle moves right) -->
+                        <img class="comp-img comp-reveal" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Revit">
+                        <div class="comp-handle"></div>
+                        <span class="comp-tag comp-tag-l">Rhino</span>
+                        <span class="comp-tag comp-tag-r">Revit</span>
                     </div>
                 </section>
 
@@ -320,65 +312,45 @@
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
     <script>
-        // Image Comparison Slider
-        // Before (Rhino) = background full image
-        // After (Revit) = overlay clipped from right, revealed by dragging left
+        // Image Comparison — clip-path approach
+        // Rhino (before) on top with clip-path, Revit (after) underneath
+        // Handle left = Rhino small clip = Revit visible
+        // Handle right = Rhino big clip = Rhino visible
         document.addEventListener('DOMContentLoaded', function() {
-            const sliders = document.querySelectorAll('.comparison-slider');
-            sliders.forEach(function(slider) {
-                const overlay = slider.querySelector('.comparison-overlay');
-                const handle = slider.querySelector('.comparison-handle');
-                let isDragging = false;
+            document.querySelectorAll('.comp').forEach(function(comp) {
+                const reveal = comp.querySelector('.comp-reveal');
+                const handle = comp.querySelector('.comp-handle');
+                let dragging = false;
 
-                // bg = Rhino. overlay = Revit (anchored right).
-                // handle LEFT (5%) = overlay small (5%) = Rhino visible
-                // handle RIGHT (95%) = overlay big (95%) = Revit visible
-                overlay.style.width = '5%';
-                handle.style.left = '5%';
-
-                function updateSlider(x) {
-                    const rect = slider.getBoundingClientRect();
-                    let pos = (x - rect.left) / rect.width;
-                    pos = Math.max(0.05, Math.min(0.95, pos));
-                    overlay.style.width = (pos * 100) + '%';
-                    handle.style.left = (pos * 100) + '%';
+                function update(x) {
+                    const r = comp.getBoundingClientRect();
+                    let p = (x - r.left) / r.width;
+                    p = Math.max(0.02, Math.min(0.98, p));
+                    const right = (1 - p) * 100;
+                    reveal.style.clipPath = 'inset(0 ' + right + '% 0 0)';
+                    handle.style.left = (p * 100) + '%';
                 }
 
-                slider.addEventListener('mousedown', function(e) {
-                    isDragging = true;
-                    updateSlider(e.clientX);
-                    e.preventDefault();
-                    e.stopPropagation();
-                });
+                // Start at 5% — mostly Revit visible, Rhino peek on left
+                update(comp.getBoundingClientRect().left + comp.getBoundingClientRect().width * 0.05);
 
+                comp.addEventListener('mousedown', function(e) {
+                    dragging = true; update(e.clientX);
+                    e.preventDefault(); e.stopPropagation();
+                });
                 document.addEventListener('mousemove', function(e) {
-                    if (isDragging) {
-                        updateSlider(e.clientX);
-                        e.preventDefault();
-                    }
+                    if (dragging) { update(e.clientX); e.preventDefault(); }
                 });
+                document.addEventListener('mouseup', function() { dragging = false; });
 
-                document.addEventListener('mouseup', function() {
-                    isDragging = false;
+                comp.addEventListener('touchstart', function(e) {
+                    dragging = true; update(e.touches[0].clientX);
+                    e.preventDefault(); e.stopPropagation();
                 });
-
-                slider.addEventListener('touchstart', function(e) {
-                    isDragging = true;
-                    updateSlider(e.touches[0].clientX);
-                    e.preventDefault();
-                    e.stopPropagation();
-                });
-
                 document.addEventListener('touchmove', function(e) {
-                    if (isDragging) {
-                        updateSlider(e.touches[0].clientX);
-                        e.preventDefault();
-                    }
+                    if (dragging) { update(e.touches[0].clientX); e.preventDefault(); }
                 });
-
-                document.addEventListener('touchend', function() {
-                    isDragging = false;
-                });
+                document.addEventListener('touchend', function() { dragging = false; });
             });
         });
 

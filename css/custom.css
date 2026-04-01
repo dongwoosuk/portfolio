@@ -257,105 +257,84 @@
     50% { transform: translateY(5px); }
 }
 
-/* ===== Image Comparison Slider ===== */
-.comparison-slider {
+/* ===== Image Comparison (clip-path) ===== */
+.comp {
     position: relative;
-    width: 100%;
-    max-width: 380px;
+    width: 380px;
     height: 420px;
     margin: 0.3em auto 0;
-    overflow: hidden;
     border-radius: 8px;
+    overflow: hidden;
     cursor: col-resize;
     user-select: none;
 }
 
-/* Background: Rhino — full size, always visible */
-.comparison-slider .comparison-bg {
+.comp-img {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-/* Overlay: Revit — clipped from left, grows rightward with handle */
-.comparison-slider .comparison-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 5%;
-    height: 100%;
-    overflow: hidden;
+/* Bottom: Rhino — always full */
+.comp-bg {
+    z-index: 1;
+}
+
+/* Top: Revit — clipped, revealed from left */
+.comp-reveal {
     z-index: 2;
+    clip-path: inset(0 100% 0 0); /* initially hidden */
 }
 
-.comparison-slider .comparison-overlay-img {
+/* Handle line */
+.comp-handle {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 380px;
-    max-width: none;
+    left: 5%;
+    width: 3px;
     height: 100%;
-    object-fit: contain;
-}
-
-.comparison-handle {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 4px;
-    height: 100%;
+    background: var(--accent);
     z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     transform: translateX(-50%);
     pointer-events: none;
 }
 
-.handle-line {
-    flex: 1;
-    width: 2px;
-    background: var(--accent);
-}
-
-.handle-circle {
-    width: 36px;
-    height: 36px;
+.comp-handle::after {
+    content: '\2039\203A';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background: var(--accent);
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #000;
-    font-size: 16px;
-    font-weight: bold;
     pointer-events: auto;
     cursor: col-resize;
     box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    flex-shrink: 0;
 }
 
-.comp-label {
+.comp-tag {
     position: absolute;
-    top: 10px;
+    top: 8px;
     z-index: 5;
-    font-size: 0.5em;
-    color: rgba(255,255,255,0.7);
+    font-size: 0.45em;
+    color: rgba(255,255,255,0.8);
     background: rgba(0,0,0,0.5);
-    padding: 2px 8px;
+    padding: 2px 6px;
     border-radius: 3px;
 }
 
-.comp-label-left {
-    left: 10px;
-}
-
-.comp-label-right {
-    right: 10px;
-}
+.comp-tag-l { left: 8px; }
+.comp-tag-r { right: 8px; }
 
 /* Responsive */
 @media (max-width: 768px) {
