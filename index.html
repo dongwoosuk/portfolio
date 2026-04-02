@@ -94,33 +94,43 @@
                 </section>
             </section>
 
-            <!-- SLIDE 2: Building Massing Generator -->
+            <!-- SLIDE 2: Grasshopper Python (Vertical Stack) -->
             <section>
-                <h2>Building Massing Generator</h2>
-                <p class="subtitle">Parametric Automation + Evolutionary Optimization</p>
-                <div class="slide-layout">
-                    <div class="slide-text">
-                        <div class="metrics">
-                            <div class="metric">
-                                <span class="metric-value">70-80%</span>
-                                <span class="metric-label">Time Reduction</span>
+                <!-- 2-0: Cover -->
+                <section>
+                    <h2 style="text-align:center;">Grasshopper Python</h2>
+                    <p class="subtitle" style="text-align:center;">Parametric Design Automation &amp; Optimization Scripts</p>
+                    <p class="nav-hint-center" style="margin-top:2em;">&darr; Scroll down</p>
+                </section>
+
+                <!-- 2-1: Building Massing Generator -->
+                <section>
+                    <h2>Building Massing Generator</h2>
+                    <p class="subtitle">Parametric Automation + Evolutionary Optimization</p>
+                    <div class="slide-layout">
+                        <div class="slide-text">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <span class="metric-value">70-80%</span>
+                                    <span class="metric-label">Time Reduction</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">17x</span>
+                                    <span class="metric-label">More Options</span>
+                                </div>
                             </div>
-                            <div class="metric">
-                                <span class="metric-value">17x</span>
-                                <span class="metric-label">More Options</span>
-                            </div>
+                            <ul>
+                                <li>Wallacei evolutionary optimization</li>
+                                <li>Real constraints: unit count, size, type distribution</li>
+                                <li>Weeks of manual iteration &rarr; data-driven exploration</li>
+                            </ul>
+                            <p class="projects">Applied: La Playa (526 units) &middot; San Mateo Residential</p>
                         </div>
-                        <ul>
-                            <li>Wallacei evolutionary optimization</li>
-                            <li>Real constraints: unit count, size, type distribution</li>
-                            <li>Weeks of manual iteration &rarr; data-driven exploration</li>
-                        </ul>
-                        <p class="projects">Applied: La Playa (526 units) &middot; San Mateo Residential</p>
+                        <div class="slide-image">
+                            <img src="assets/images/massing/Unit Mix-05.jpg" alt="Building Massing Generator — Unit Mix">
+                        </div>
                     </div>
-                    <div class="slide-image">
-                        <img src="assets/images/massing/Unit Mix-05.jpg" alt="Building Massing Generator — Unit Mix">
-                    </div>
-                </div>
+                </section>
             </section>
 
             <!-- SLIDE 3: RIR Workflow (Vertical Stack) -->
@@ -577,7 +587,7 @@
             minScale: 0.2,
             maxScale: 1.5,
         }).then(function() {
-            var verticalStacks = [2, 3]; // RIR=h2, OpenSource=h3
+            var verticalStacks = [1, 2, 3]; // GHPython=h1, RIR=h2, OpenSource=h3
             function updateNav() {
                 var state = Reveal.getIndices();
                 var controls = document.querySelector('.reveal .controls');
