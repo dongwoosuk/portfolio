@@ -456,7 +456,8 @@
 
                 function initCenter() {
                     const r = comp.getBoundingClientRect();
-                    update(r.left + r.width / 2);
+                    const bounds = getImageBounds();
+                    update(r.left + bounds.left + bounds.width / 2);
                 }
 
                 // Start at container center
