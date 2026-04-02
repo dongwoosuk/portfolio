@@ -422,69 +422,69 @@
         // Handle right = Rhino big clip = Rhino visible
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.comp').forEach(function(comp) {
-                const reveal = comp.querySelector('.comp-reveal');
-                const handle = comp.querySelector('.comp-handle');
-                const tagL = comp.querySelector('.comp-tag-l');
-                const tagR = comp.querySelector('.comp-tag-r');
-                let dragging = false;
-                let dragOffset = 0;
+                var reveal = comp.querySelector('.comp-reveal');
+                var handle = comp.querySelector('.comp-handle');
+                var tagL = comp.querySelector('.comp-tag-l');
+                var tagR = comp.querySelector('.comp-tag-r');
+                var dragging = false;
+                var startMouseX = 0;
+                var startPx = 0;
 
-                // Calculate actual image bounds within contain
-                function getImageBounds() {
-                    const bg = comp.querySelector('.comp-bg');
-                    const cw = comp.clientWidth;
-                    const ch = comp.clientHeight;
-                    const nw = bg.naturalWidth || 1;
-                    const nh = bg.naturalHeight || 1;
-                    const scale = Math.min(cw / nw, ch / nh);
-                    const iw = nw * scale;
-                    const offsetX = (cw - iw) / 2;
-                    return { left: offsetX, right: offsetX + iw, width: iw };
-                }
-
-                function update(x) {
-                    const r = comp.getBoundingClientRect();
-                    let clampedX = Math.max(r.left, Math.min(r.right, x));
-                    let p = (clampedX - r.left) / r.width;
-                    // Use px for clip-path to match handle exactly
-                    let px = clampedX - r.left;
+                function setPos(px) {
+                    var w = comp.clientWidth;
+                    px = Math.max(0, Math.min(w, px));
                     reveal.style.clipPath = 'inset(0 0 0 ' + px + 'px)';
                     handle.style.left = px + 'px';
-                    // Labels
+                    var p = px / w;
                     tagL.style.opacity = p > 0.3 ? '1' : '0';
                     tagR.style.opacity = p < 0.7 ? '1' : '0';
                 }
 
-                function initCenter() {
-                    const r = comp.getBoundingClientRect();
-                    const bounds = getImageBounds();
-                    update(r.left + bounds.left + bounds.width / 2 - 7);
+                // Reveal.js CSS scale factor
+                function getScale() {
+                    var r = comp.getBoundingClientRect();
+                    return r.width / comp.clientWidth;
                 }
 
-                // Start at container center
-                const bg = comp.querySelector('.comp-bg');
+                // Init at image center - 7px
+                function initCenter() {
+                    var bgEl = comp.querySelector('.comp-bg');
+                    var cw = comp.clientWidth, ch = comp.clientHeight;
+                    var nw = bgEl.naturalWidth || 1, nh = bgEl.naturalHeight || 1;
+                    var s = Math.min(cw / nw, ch / nh);
+                    var iw = nw * s;
+                    var offsetX = (cw - iw) / 2;
+                    setPos(offsetX + iw / 2 - 7);
+                }
+                var bg = comp.querySelector('.comp-bg');
                 bg.addEventListener('load', initCenter);
                 if (bg.complete) { setTimeout(initCenter, 100); }
 
                 comp.addEventListener('mousedown', function(e) {
                     dragging = true;
-                    var handleRect = handle.getBoundingClientRect();
-                    dragOffset = e.clientX - (handleRect.left + handleRect.width / 2);
+                    startMouseX = e.clientX;
+                    startPx = parseFloat(handle.style.left) || comp.clientWidth / 2;
                     e.preventDefault(); e.stopPropagation();
                 });
                 document.addEventListener('mousemove', function(e) {
-                    if (dragging) { update(e.clientX - dragOffset); e.preventDefault(); }
+                    if (!dragging) return;
+                    var delta = (e.clientX - startMouseX) / getScale();
+                    setPos(startPx + delta);
+                    e.preventDefault();
                 });
                 document.addEventListener('mouseup', function() { dragging = false; });
 
                 comp.addEventListener('touchstart', function(e) {
                     dragging = true;
-                    var handleRect = handle.getBoundingClientRect();
-                    dragOffset = e.touches[0].clientX - (handleRect.left + handleRect.width / 2);
+                    startMouseX = e.touches[0].clientX;
+                    startPx = parseFloat(handle.style.left) || comp.clientWidth / 2;
                     e.preventDefault(); e.stopPropagation();
                 });
                 document.addEventListener('touchmove', function(e) {
-                    if (dragging) { update(e.touches[0].clientX - dragOffset); e.preventDefault(); }
+                    if (!dragging) return;
+                    var delta = (e.touches[0].clientX - startMouseX) / getScale();
+                    setPos(startPx + delta);
+                    e.preventDefault();
                 });
                 document.addEventListener('touchend', function() { dragging = false; });
             });
