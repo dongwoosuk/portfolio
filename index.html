@@ -573,6 +573,9 @@
                 bg.addEventListener('load', initCenter);
                 if (bg.complete) { setTimeout(initCenter, 100); }
 
+                // Re-center when navigating to this slide via Reveal.js
+                comp._initCenter = initCenter;
+
                 comp.addEventListener('mousedown', function(e) {
                     dragging = true;
                     startMouseX = e.clientX;
@@ -656,7 +659,14 @@
                     controls.classList.remove('no-horizontal');
                 }
             }
-            Reveal.on('slidechanged', updateNav);
+            Reveal.on('slidechanged', function(event) {
+                updateNav();
+                // Re-init comparison sliders when their slide becomes visible
+                var comps = event.currentSlide.querySelectorAll('.comp');
+                comps.forEach(function(c) {
+                    if (c._initCenter) { setTimeout(c._initCenter, 50); }
+                });
+            });
             updateNav();
         });
     </script>
