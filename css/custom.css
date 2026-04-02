@@ -303,7 +303,7 @@
 .comp-handle {
     position: absolute;
     top: 0;
-    left: 5%;
+    left: 50%;
     width: 3px;
     height: 100%;
     background: var(--accent);
