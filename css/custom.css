@@ -84,6 +84,18 @@
     text-align: center;
 }
 
+.title-tagline a {
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.title-tagline a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
 /* Subtitle */
 .subtitle {
     color: var(--accent);
