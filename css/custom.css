@@ -96,6 +96,17 @@
     border-color: var(--accent);
 }
 
+/* Keyboard hint — fixed above Reveal.js controls */
+.keyboard-hint {
+    position: fixed;
+    bottom: 50px;
+    right: 12px;
+    font-size: 0.4em;
+    color: rgba(255, 255, 255, 0.25);
+    z-index: 30;
+    pointer-events: none;
+}
+
 /* Subtitle */
 .subtitle {
     color: var(--accent);
