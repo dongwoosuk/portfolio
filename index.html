@@ -427,6 +427,7 @@
                 const tagL = comp.querySelector('.comp-tag-l');
                 const tagR = comp.querySelector('.comp-tag-r');
                 let dragging = false;
+                let dragOffset = 0;
 
                 // Calculate actual image bounds within contain
                 function getImageBounds() {
@@ -466,20 +467,24 @@
                 if (bg.complete) { setTimeout(initCenter, 100); }
 
                 comp.addEventListener('mousedown', function(e) {
-                    dragging = true; update(e.clientX);
+                    dragging = true;
+                    var handleRect = handle.getBoundingClientRect();
+                    dragOffset = e.clientX - (handleRect.left + handleRect.width / 2);
                     e.preventDefault(); e.stopPropagation();
                 });
                 document.addEventListener('mousemove', function(e) {
-                    if (dragging) { update(e.clientX); e.preventDefault(); }
+                    if (dragging) { update(e.clientX - dragOffset); e.preventDefault(); }
                 });
                 document.addEventListener('mouseup', function() { dragging = false; });
 
                 comp.addEventListener('touchstart', function(e) {
-                    dragging = true; update(e.touches[0].clientX);
+                    dragging = true;
+                    var handleRect = handle.getBoundingClientRect();
+                    dragOffset = e.touches[0].clientX - (handleRect.left + handleRect.width / 2);
                     e.preventDefault(); e.stopPropagation();
                 });
                 document.addEventListener('touchmove', function(e) {
-                    if (dragging) { update(e.touches[0].clientX); e.preventDefault(); }
+                    if (dragging) { update(e.touches[0].clientX - dragOffset); e.preventDefault(); }
                 });
                 document.addEventListener('touchend', function() { dragging = false; });
             });
