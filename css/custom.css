@@ -466,6 +466,23 @@
     text-align: center;
 }
 
+/* 2-column image grid */
+.image-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8em;
+    margin-top: 0.5em;
+    text-align: center;
+}
+
+.image-grid-2 img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
 /* Auto-slide image carousel */
 .auto-slide {
     position: relative;
