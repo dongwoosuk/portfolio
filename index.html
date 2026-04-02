@@ -443,31 +443,26 @@
 
                 function update(x) {
                     const r = comp.getBoundingClientRect();
-                    // Clamp to full container width (0% to 100%)
                     let clampedX = Math.max(r.left, Math.min(r.right, x));
                     let p = (clampedX - r.left) / r.width;
-                    reveal.style.clipPath = 'inset(0 0 0 ' + (p * 100) + '%)';
-                    handle.style.left = (p * 100) + '%';
+                    // Use px for clip-path to match handle exactly
+                    let px = clampedX - r.left;
+                    reveal.style.clipPath = 'inset(0 0 0 ' + px + 'px)';
+                    handle.style.left = px + 'px';
                     // Labels
                     tagL.style.opacity = p > 0.3 ? '1' : '0';
                     tagR.style.opacity = p < 0.7 ? '1' : '0';
                 }
 
-                // Start at image center
-                const bg = comp.querySelector('.comp-bg');
-                bg.addEventListener('load', function() {
+                function initCenter() {
                     const r = comp.getBoundingClientRect();
-                    const bounds = getImageBounds();
-                    update(r.left + bounds.left + bounds.width / 2);
-                });
-                // Fallback if already loaded
-                if (bg.complete) {
-                    setTimeout(function() {
-                        const r = comp.getBoundingClientRect();
-                        const bounds = getImageBounds();
-                        update(r.left + bounds.left + bounds.width / 2);
-                    }, 100);
+                    update(r.left + r.width / 2);
                 }
+
+                // Start at container center
+                const bg = comp.querySelector('.comp-bg');
+                bg.addEventListener('load', initCenter);
+                if (bg.complete) { setTimeout(initCenter, 100); }
 
                 comp.addEventListener('mousedown', function(e) {
                     dragging = true; update(e.clientX);
