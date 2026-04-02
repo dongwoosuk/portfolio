@@ -443,18 +443,14 @@
 
                 function update(x) {
                     const r = comp.getBoundingClientRect();
-                    const bounds = getImageBounds();
-                    // Clamp to image bounds
-                    const minX = r.left + bounds.left;
-                    const maxX = r.left + bounds.right;
-                    let clampedX = Math.max(minX, Math.min(maxX, x));
+                    // Clamp to full container width (0% to 100%)
+                    let clampedX = Math.max(r.left, Math.min(r.right, x));
                     let p = (clampedX - r.left) / r.width;
                     reveal.style.clipPath = 'inset(0 0 0 ' + (p * 100) + '%)';
                     handle.style.left = (p * 100) + '%';
                     // Labels
-                    const imgP = (clampedX - minX) / (maxX - minX);
-                    tagL.style.opacity = imgP > 0.3 ? '1' : '0';
-                    tagR.style.opacity = imgP < 0.7 ? '1' : '0';
+                    tagL.style.opacity = p > 0.3 ? '1' : '0';
+                    tagR.style.opacity = p < 0.7 ? '1' : '0';
                 }
 
                 // Start at image center
