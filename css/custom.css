@@ -466,6 +466,59 @@
     text-align: center;
 }
 
+/* TOC cards */
+.toc-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.2em 0.8em;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    min-height: 120px;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.case-nav-item:hover .toc-card {
+    border-color: var(--accent);
+    background: rgba(79, 195, 247, 0.08);
+}
+
+.toc-icon {
+    font-size: 2em;
+    margin-bottom: 0.3em;
+}
+
+.toc-card strong {
+    font-size: 0.9em;
+    margin-bottom: 0.2em;
+}
+
+.toc-card small {
+    font-size: 0.7em;
+    color: var(--text-muted);
+}
+
+/* Next section hint */
+.next-section {
+    text-align: right;
+    margin-top: 0.5em;
+}
+
+.next-section a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.55em;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.next-section a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
 /* 2-column image grid */
 .image-grid-2 {
     display: grid;
