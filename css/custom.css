@@ -466,6 +466,17 @@
     text-align: center;
 }
 
+/* 5-column case nav variant */
+.case-nav-5 .case-nav-item {
+    width: 17%;
+}
+
+/* Hide left/right controls inside vertical stacks */
+.controls.no-horizontal .navigate-left,
+.controls.no-horizontal .navigate-right {
+    display: none !important;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .slide-layout {
