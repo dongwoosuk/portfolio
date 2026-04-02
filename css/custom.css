@@ -466,6 +466,34 @@
     text-align: center;
 }
 
+/* Auto-slide image carousel */
+.auto-slide {
+    position: relative;
+    width: 100%;
+    max-height: 380px;
+}
+
+.auto-slide-img {
+    max-width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.auto-slide-img:first-child {
+    position: relative;
+}
+
+.auto-slide-img.active {
+    opacity: 1;
+}
+
 /* 5-column case nav variant */
 .case-nav-5 .case-nav-item {
     width: 17%;
