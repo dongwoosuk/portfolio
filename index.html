@@ -685,10 +685,51 @@
                 });
             });
 
+            // On cover pages (v=0), left arrow goes to previous section's cover (v=0)
+            Reveal.addKeyBinding(37, function() { // left arrow
+                var state = Reveal.getIndices();
+                if (state.v === 0 && state.h > 0) {
+                    Reveal.slide(state.h - 1, 0);
+                } else {
+                    Reveal.prev();
+                }
+            });
+            // Also override right arrow on cover pages to go to next section's cover
+            Reveal.addKeyBinding(39, function() { // right arrow
+                var state = Reveal.getIndices();
+                if (state.v === 0) {
+                    var totalH = Reveal.getTotalSlides ? Reveal.getHorizontalSlides().length : 99;
+                    if (state.h < totalH - 1) {
+                        Reveal.slide(state.h + 1, 0);
+                    }
+                } else {
+                    Reveal.next();
+                }
+            });
+
+            // Override UI arrow clicks on cover pages
+            var controls = document.querySelector('.reveal .controls');
+            controls.querySelector('.navigate-left').addEventListener('click', function(e) {
+                var state = Reveal.getIndices();
+                if (state.v === 0 && state.h > 0) {
+                    e.stopImmediatePropagation();
+                    Reveal.slide(state.h - 1, 0);
+                }
+            }, true);
+            controls.querySelector('.navigate-right').addEventListener('click', function(e) {
+                var state = Reveal.getIndices();
+                if (state.v === 0) {
+                    e.stopImmediatePropagation();
+                    var totalH = Reveal.getHorizontalSlides().length;
+                    if (state.h < totalH - 1) {
+                        Reveal.slide(state.h + 1, 0);
+                    }
+                }
+            }, true);
+
             var verticalStacks = [1, 2, 3]; // GHPython=h1, RIR=h2, OpenSource=h3
             function updateNav() {
                 var state = Reveal.getIndices();
-                var controls = document.querySelector('.reveal .controls');
                 if (verticalStacks.indexOf(state.h) !== -1 && state.v > 0) {
                     controls.classList.add('no-horizontal');
                 } else {
