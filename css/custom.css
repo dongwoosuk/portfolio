@@ -700,11 +700,10 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
-    max-height: 260px;
 }
 
-.hover-reveal-off,
-.hover-reveal-on {
+.hover-reveal-off {
+    display: block;
     max-height: 260px;
     transition: opacity 0.4s ease;
 }
@@ -713,7 +712,11 @@
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
 .hover-reveal:hover .hover-reveal-off {
