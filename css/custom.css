@@ -600,14 +600,15 @@
 
 /* Popup triggers — clickable text */
 .popup-trigger {
-    color: var(--accent);
+    color: inherit;
     cursor: pointer;
-    border-bottom: 1px dashed var(--accent);
-    transition: opacity 0.2s;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+    transition: color 0.2s, border-color 0.2s;
 }
 
 .popup-trigger:hover {
-    opacity: 0.8;
+    color: var(--accent);
+    border-color: var(--accent);
 }
 
 /* Tooltip triggers — hover text */
