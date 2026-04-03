@@ -189,7 +189,7 @@
                                 <li><strong>Elefront Integration:</strong> Auto attribute &amp; layer assignment</li>
                                 <li><strong>SH Brand Colors:</strong> Firm color palette applied</li>
                             </ul>
-                            <p class="projects">Applied: 188 West Saint James</p>
+                            <p class="projects">Applied: <span class="popup-trigger" data-popup="188wsj">188 West Saint James</span></p>
                         </div>
                         <div class="slide-image">
                             <img src="assets/images/gh_python/parking/0331_03.png" alt="Parking Stall Tracker — Rhino color-coded visualization">
@@ -651,8 +651,11 @@
     <!-- Image Popup Modal -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-content">
+            <button class="popup-prev" id="popupPrev">&lsaquo;</button>
             <img id="popupImg" src="" alt="">
+            <button class="popup-next" id="popupNext">&rsaquo;</button>
             <p id="popupCaption"></p>
+            <span id="popupCounter"></span>
             <button class="popup-close">&times;</button>
         </div>
     </div>
@@ -680,33 +683,83 @@
             clara: {
                 img: 'assets/images/career/the-clara.jpg',
                 caption: 'The Clara — Mixed-Use Residential, SVBJ Structures Award (Steinberg Hart)'
+            },
+            '188wsj': {
+                gallery: [
+                    { img: 'assets/images/reference/188 St James Interview Deck_ Page 001.jpg', caption: '188 West Saint James — Cover' },
+                    { img: 'assets/images/reference/188 WSJ_V01-Lobby.jpg', caption: '188 West Saint James — Lobby' },
+                    { img: 'assets/images/reference/188 WSJ_V02-Owners Lounge1.jpg', caption: '188 West Saint James — Owners Lounge 1' },
+                    { img: 'assets/images/reference/188 WSJ_V02-Owners Lounge2.jpg', caption: '188 West Saint James — Owners Lounge 2' },
+                    { img: 'assets/images/reference/188 WSJ_V04-Activity deck.jpg', caption: '188 West Saint James — Activity Deck' },
+                    { img: 'assets/images/reference/188 WSJ_V05-Pool Deck.jpg', caption: '188 West Saint James — Pool Deck' },
+                    { img: 'assets/images/reference/188 WSJ_V06-Pool Bar.jpg', caption: '188 West Saint James — Pool Bar' }
+                ]
             }
         };
 
-        // Popup triggers
+        // Popup triggers + gallery
         document.addEventListener('DOMContentLoaded', function() {
             var overlay = document.getElementById('popupOverlay');
             var popupImg = document.getElementById('popupImg');
             var popupCaption = document.getElementById('popupCaption');
+            var popupCounter = document.getElementById('popupCounter');
+            var popupPrev = document.getElementById('popupPrev');
+            var popupNext = document.getElementById('popupNext');
+            var galleryItems = null;
+            var galleryIndex = 0;
+
+            function showGalleryItem(i) {
+                galleryIndex = i;
+                popupImg.src = galleryItems[i].img;
+                popupCaption.textContent = galleryItems[i].caption;
+                popupCounter.textContent = (i + 1) + ' / ' + galleryItems.length;
+                popupPrev.style.display = galleryItems.length > 1 ? 'flex' : 'none';
+                popupNext.style.display = galleryItems.length > 1 ? 'flex' : 'none';
+            }
 
             document.querySelectorAll('.popup-trigger').forEach(function(el) {
                 el.addEventListener('click', function(e) {
                     e.stopPropagation();
                     var key = this.getAttribute('data-popup');
                     var data = popupData[key];
-                    if (data) {
-                        popupImg.src = data.img;
-                        popupCaption.textContent = data.caption;
-                        overlay.classList.add('active');
+                    if (!data) return;
+                    if (data.gallery) {
+                        galleryItems = data.gallery;
+                        showGalleryItem(0);
+                    } else {
+                        galleryItems = [{ img: data.img, caption: data.caption }];
+                        showGalleryItem(0);
                     }
+                    overlay.classList.add('active');
                 });
             });
 
-            overlay.addEventListener('click', function() {
-                overlay.classList.remove('active');
+            popupPrev.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (galleryItems) showGalleryItem((galleryIndex - 1 + galleryItems.length) % galleryItems.length);
+            });
+            popupNext.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (galleryItems) showGalleryItem((galleryIndex + 1) % galleryItems.length);
+            });
+
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) overlay.classList.remove('active');
             });
             overlay.querySelector('.popup-close').addEventListener('click', function() {
                 overlay.classList.remove('active');
+            });
+
+            // Keyboard nav for gallery
+            document.addEventListener('keydown', function(e) {
+                if (!overlay.classList.contains('active')) return;
+                if (e.key === 'Escape') overlay.classList.remove('active');
+                if (e.key === 'ArrowLeft' && galleryItems && galleryItems.length > 1) {
+                    showGalleryItem((galleryIndex - 1 + galleryItems.length) % galleryItems.length);
+                }
+                if (e.key === 'ArrowRight' && galleryItems && galleryItems.length > 1) {
+                    showGalleryItem((galleryIndex + 1) % galleryItems.length);
+                }
             });
         });
 
