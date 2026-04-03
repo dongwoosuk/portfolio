@@ -734,6 +734,11 @@
                 });
             });
 
+            popupImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (galleryItems && galleryItems.length > 1) showGalleryItem((galleryIndex + 1) % galleryItems.length);
+            });
+
             popupPrev.addEventListener('click', function(e) {
                 e.stopPropagation();
                 if (galleryItems) showGalleryItem((galleryIndex - 1 + galleryItems.length) % galleryItems.length);
