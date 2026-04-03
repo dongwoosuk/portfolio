@@ -695,6 +695,33 @@
     justify-content: center;
 }
 
+/* Hover reveal image swap */
+.hover-reveal {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.hover-reveal-on {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.hover-reveal:hover .hover-reveal-off {
+    opacity: 0;
+}
+
+.hover-reveal:hover .hover-reveal-on {
+    opacity: 1;
+}
+
+.hover-reveal-off {
+    transition: opacity 0.4s ease;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .slide-layout {
