@@ -52,9 +52,9 @@
                         <div class="col">
                             <h3>Experience</h3>
                             <ul>
-                                <li><strong>Steinberg Hart</strong> (2022&ndash;Present)<br><small>Computational Design Specialist / ADG Lead<br>~10 members across 6 offices</small></li>
+                                <li><strong>Steinberg Hart</strong> (2022&ndash;Present)<br><small>Computational Design Specialist / <span class="tip-trigger" data-tip="Adaptive Design Group — Computational Design initiative across the firm">ADG</span> Lead<br>~10 members across 6 offices</small></li>
                                 <li><strong>The Code Solution</strong> (2019&ndash;2021)<br><small>Junior Designer</small></li>
-                                <li><strong>Oyler Wu Collaborative</strong> (2017, 2019)<br><small>Intern Designer &mdash; Design &amp; fabrication for award-winning pavilion / exhibition</small></li>
+                                <li><strong>Oyler Wu Collaborative</strong> (2017, 2019)<br><small>Intern Designer &mdash; Design &amp; fabrication for <span class="popup-trigger" data-popup="pavilion">award-winning pavilion</span> / <span class="popup-trigger" data-popup="exhibition">exhibition</span></small></li>
                             </ul>
                         </div>
                     </div>
@@ -540,8 +540,56 @@
         </div>
     </div>
 
+    <!-- Image Popup Modal -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+            <img id="popupImg" src="" alt="">
+            <p id="popupCaption"></p>
+            <button class="popup-close">&times;</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
     <script>
+        // Popup data
+        var popupData = {
+            pavilion: {
+                img: 'assets/images/career/the-exchange.jpg',
+                caption: 'The Exchange — Miller Prize Winning Pavilion, Exhibit Columbus (Oyler Wu Collaborative)'
+            },
+            exhibition: {
+                img: 'assets/images/career/quicksilver.jpg',
+                caption: 'Quicksilver Installation — JUT Art Museum, Taipei (Oyler Wu Collaborative)'
+            }
+        };
+
+        // Popup triggers
+        document.addEventListener('DOMContentLoaded', function() {
+            var overlay = document.getElementById('popupOverlay');
+            var popupImg = document.getElementById('popupImg');
+            var popupCaption = document.getElementById('popupCaption');
+
+            document.querySelectorAll('.popup-trigger').forEach(function(el) {
+                el.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var key = this.getAttribute('data-popup');
+                    var data = popupData[key];
+                    if (data) {
+                        popupImg.src = data.img;
+                        popupCaption.textContent = data.caption;
+                        overlay.classList.add('active');
+                    }
+                });
+            });
+
+            overlay.addEventListener('click', function() {
+                overlay.classList.remove('active');
+            });
+            overlay.querySelector('.popup-close').addEventListener('click', function() {
+                overlay.classList.remove('active');
+            });
+        });
+
         // Image Comparison — clip-path approach
         // Rhino (before) on top with clip-path, Revit (after) underneath
         // Handle left = Rhino small clip = Revit visible
