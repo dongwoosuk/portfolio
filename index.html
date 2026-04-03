@@ -23,9 +23,9 @@
                         <a href="https://linkedin.com/in/dongwoosuk" target="_blank">LinkedIn</a>
                     </div>
                     <div class="title-tagline">
-                        <a href="#" onclick="Reveal.slide(1,0);return false;">Parametric design</a> &middot;
-                        <a href="#" onclick="Reveal.slide(2,0);return false;">BIM workflows</a> &middot;
-                        <a href="#" onclick="Reveal.slide(3,0);return false;">Open-source AI tools</a>
+                        <a class="jump-link" data-h="1">Parametric design</a> &middot;
+                        <a class="jump-link" data-h="2">BIM workflows</a> &middot;
+                        <a class="jump-link" data-h="3">Open-source AI tools</a>
                     </div>
                     <p class="nav-hint-center">&darr; Scroll down for CV</p>
                     <p class="keyboard-hint">&larr; &rarr; &uarr; &darr; or click arrows to navigate</p>
@@ -96,7 +96,7 @@
                             </ul>
                         </div>
                     </div>
-                    <p class="next-section"><a href="#" onclick="Reveal.slide(1,0);return false;">&rarr; Next: Grasshopper Python</a></p>
+                    <p class="next-section"><a class="jump-link" data-h="1">&rarr; Next: Grasshopper Python</a></p>
                 </section>
             </section>
 
@@ -195,7 +195,7 @@
                             <img src="assets/images/gh_python/parking/0331_03.png" alt="Parking Stall Tracker — Rhino color-coded visualization">
                         </div>
                     </div>
-                    <p class="next-section"><a href="#" onclick="Reveal.slide(2,0);return false;">&rarr; Next: Rhino.Inside.Revit</a></p>
+                    <p class="next-section"><a class="jump-link" data-h="2">&rarr; Next: Rhino.Inside.Revit</a></p>
                 </section>
             </section>
 
@@ -378,7 +378,7 @@
                         <img src="assets/images/rir/04_frit_pattern/25-1111_Axon.gif" alt="Frit Pattern Axon" loading="lazy">
                         <div style="overflow:hidden;"><img src="assets/images/rir/04_frit_pattern/Untitled-10.gif" alt="Frit Pattern Detail" loading="lazy" style="margin:0 -200px; max-width:calc(100% + 400px);"></div>
                     </div>
-                    <p class="next-section"><a href="#" onclick="Reveal.slide(3,0);return false;">&rarr; Next: Open-Source Development</a></p>
+                    <p class="next-section"><a class="jump-link" data-h="3">&rarr; Next: Open-Source Development</a></p>
                 </section>
             </section>
 
@@ -674,6 +674,17 @@
             minScale: 0.2,
             maxScale: 1.5,
         }).then(function() {
+            // Jump links — bypass Reveal.js event interception
+            document.querySelectorAll('.jump-link').forEach(function(link) {
+                link.style.cursor = 'pointer';
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var h = parseInt(this.getAttribute('data-h'));
+                    Reveal.slide(h, 0);
+                });
+            });
+
             var verticalStacks = [1, 2, 3]; // GHPython=h1, RIR=h2, OpenSource=h3
             function updateNav() {
                 var state = Reveal.getIndices();
