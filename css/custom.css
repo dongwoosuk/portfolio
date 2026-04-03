@@ -704,8 +704,9 @@
 
 .hover-reveal-on {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     opacity: 0;
     transition: opacity 0.4s ease;
 }
