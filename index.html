@@ -4,8 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dongwoo Suk — Computational Design Portfolio</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+    <meta name="description" content="Dongwoo Suk — Computational Design Specialist. Parametric design automation, Rhino.Inside.Revit BIM workflows, and open-source AEC AI tools.">
+    <meta name="author" content="Dongwoo Suk">
+    <meta name="keywords" content="computational design, parametric design, Grasshopper, Rhino, Revit, BIM, AEC, architecture">
+    <meta property="og:title" content="Dongwoo Suk — Computational Design Portfolio">
+    <meta property="og:description" content="Parametric design automation, BIM workflows, and open-source AEC AI tools.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dongwoosuk.github.io/portfolio/">
+    <meta property="og:image" content="https://dongwoosuk.github.io/portfolio/assets/images/rir/00_rir/RIR Logo_01-feather.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://dongwoosuk.github.io/portfolio/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" crossorigin="anonymous">
     <link rel="stylesheet" href="css/custom.css">
 </head>
 <body>
@@ -104,8 +114,8 @@
             <section>
                 <!-- 2-0: Cover -->
                 <section>
-                    <h2 style="text-align:center;">Grasshopper Python</h2>
-                    <p class="subtitle" style="text-align:center;">Parametric Design Automation &amp; Optimization Scripts</p>
+                    <h2 class="text-center">Grasshopper Python</h2>
+                    <p class="subtitle text-center">Parametric Design Automation &amp; Optimization Scripts</p>
                     <p class="nav-hint-center" style="margin-top:2em;">&darr; Scroll down</p>
                 </section>
 
@@ -117,13 +127,14 @@
                         <div class="slide-text">
                             <div class="metrics">
                                 <div class="metric">
-                                    <span class="metric-value">2</span>
+                                    <span class="metric-value">3</span>
                                     <span class="metric-label">Projects</span>
                                 </div>
                             </div>
                             <ul>
                                 <li>Rhino 8 CPython 3 + Grasshopper integration</li>
                                 <li>Excel data &harr; Rhino geometry automation</li>
+                                <li>Facade panelization &amp; vector analysis</li>
                                 <li>Evolutionary optimization (Wallacei)</li>
                                 <li>Elefront attribute &amp; layer management</li>
                             </ul>
@@ -134,13 +145,17 @@
 
                 <!-- 2-2: Thumbnail Nav -->
                 <section>
-                    <h2 style="text-align:center; margin-bottom:0.5em;">Projects</h2>
+                    <h2 class="text-center mb-half">Projects</h2>
                     <div class="case-nav">
                         <a class="case-nav-item" href="#/1/3">
-                            <img src="assets/images/gh_python/massing/Unit Mix-05.jpg" alt="Building Massing">
+                            <img src="assets/images/gh_python/massing/Unit Mix-05.jpg" alt="Building Massing" loading="lazy">
                             <span>Building Massing Generator</span>
                         </a>
                         <a class="case-nav-item" href="#/1/4">
+                            <div class="placeholder" style="height:180px;min-height:180px;"><span>Screenshot</span></div>
+                            <span>Facade Panelization</span>
+                        </a>
+                        <a class="case-nav-item" href="#/1/5">
                             <div class="placeholder" style="height:180px;min-height:180px;"><span>Screenshot</span></div>
                             <span>Parking Stall Tracker</span>
                         </a>
@@ -171,12 +186,46 @@
                             <p class="projects">Applied: La Playa (526 units) &middot; San Mateo Residential</p>
                         </div>
                         <div class="slide-image">
-                            <img src="assets/images/gh_python/massing/Unit Mix-05.jpg" alt="Building Massing Generator — Unit Mix">
+                            <img src="assets/images/gh_python/massing/Unit Mix-05.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
                         </div>
                     </div>
                 </section>
 
-                <!-- 2-4: Parking Stall Tracker -->
+                <!-- 2-4: Facade Panelization -->
+                <section>
+                    <h2>Facade Panelization Tool</h2>
+                    <p class="subtitle">Automated Panel Placement &amp; Vector Analysis on Curved Facades</p>
+                    <div class="slide-layout">
+                        <div class="slide-text">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <span class="metric-value">159</span>
+                                    <span class="metric-label">Components</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">UV</span>
+                                    <span class="metric-label">Grid Control</span>
+                                </div>
+                            </div>
+                            <ul>
+                                <li><strong>Face Classification:</strong> Auto-separate Top/Bottom/Sides from building Brep</li>
+                                <li><strong>UV Grid Division:</strong> Parametric panel density (U &amp; V sliders)</li>
+                                <li><strong>Twisted Box + Box Morph:</strong> Panel geometry morphed onto curved surfaces</li>
+                                <li><strong>Vector Analysis:</strong> 7 display layers for panel normal &amp; direction visualization</li>
+                                <li><strong>Edge/Interior Split:</strong> Data tree filtering for boundary vs. interior panels</li>
+                            </ul>
+                            <p class="projects">ADG Pilot Project &middot; EleFront + Wombat</p>
+                        </div>
+                        <div class="slide-image">
+                            <div class="placeholder">
+                                <span>Screenshot / GIF</span>
+                                <small>assets/images/gh_python/facade/</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2-5: Parking Stall Tracker -->
                 <section>
                     <h2>Parking Stall Tracker</h2>
                     <p class="subtitle">Excel-Driven Parking Data Visualization in Rhino</p>
@@ -192,7 +241,7 @@
                             <p class="projects">Applied: <span class="popup-trigger" data-popup="188wsj">188 West Saint James</span></p>
                         </div>
                         <div class="slide-image">
-                            <img src="assets/images/gh_python/parking/0331_03.png" alt="Parking Stall Tracker — Rhino color-coded visualization">
+                            <img src="assets/images/gh_python/parking/0331_03.png" alt="Parking Stall Tracker — Rhino color-coded visualization" loading="lazy">
                         </div>
                     </div>
                     <p class="next-section"><a class="jump-link" data-h="2">&rarr; Next: Rhino.Inside.Revit</a></p>
@@ -202,13 +251,13 @@
             <!-- SLIDE 3: RIR Workflow (Vertical Stack) -->
             <section>
                 <!-- 3-0: Cover -->
-                <section style="text-align:center;">
+                <section class="text-center">
                     <h2>Rhino.Inside.Revit Workflow</h2>
                     <p class="subtitle">Bridging Parametric Design and BIM Documentation</p>
                     <div style="display:flex; justify-content:center; margin-top:1em;">
-                        <a class="hover-reveal" href="#/2/1" onclick="Reveal.slide(2,1);return false;">
-                            <img class="hover-reveal-off" src="assets/images/rir/00_rir/RIR Logo_01-feather.png" alt="Rhino.Inside.Revit">
-                            <img class="hover-reveal-on" src="assets/images/rir/00_rir/RIR Logo_02-feather.png" alt="Rhino.Inside.Revit — Hover">
+                        <a class="hover-reveal" href="#/2/1">
+                            <img class="hover-reveal-off" src="assets/images/rir/00_rir/RIR Logo_01-feather.png" alt="Rhino.Inside.Revit" loading="lazy">
+                            <img class="hover-reveal-on" src="assets/images/rir/00_rir/RIR Logo_02-feather.png" alt="Rhino.Inside.Revit — Hover" loading="lazy">
                         </a>
                     </div>
                     <p class="nav-hint-center" style="margin-top:1em;">&darr; Scroll down</p>
@@ -239,8 +288,8 @@
                         </div>
                         <div class="slide-image">
                             <div class="auto-slide">
-                                <img class="auto-slide-img" src="assets/images/rir/0630_RIR Screenshot-01.png" alt="RIR — Perspective View">
-                                <img class="auto-slide-img" src="assets/images/rir/0630_RIR Screenshot-04.png" alt="RIR — Elevation View">
+                                <img class="auto-slide-img" src="assets/images/rir/0630_RIR Screenshot-01.png" alt="RIR — Perspective View" loading="lazy">
+                                <img class="auto-slide-img" src="assets/images/rir/0630_RIR Screenshot-04.png" alt="RIR — Elevation View" loading="lazy">
                             </div>
                         </div>
                     </div>
@@ -248,22 +297,22 @@
 
                 <!-- 3-nav: Case Study Thumbnails -->
                 <section>
-                    <h2 style="text-align:center; margin-bottom:0.5em;">Case Studies</h2>
+                    <h2 class="text-center mb-half">Case Studies</h2>
                     <div class="case-nav">
                         <a class="case-nav-item" href="#/2/3">
-                            <img src="assets/images/rir/01_5x5_building/5x5 RIR Diagram.gif" alt="5x5 Building">
+                            <img src="assets/images/rir/01_5x5_building/5x5 RIR Diagram.gif" alt="5x5 Building" loading="lazy">
                             <span>5x5 Building Elefront</span>
                         </a>
                         <a class="case-nav-item" href="#/2/8">
-                            <img src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.gif" alt="Cal Poly">
+                            <img src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.gif" alt="Cal Poly" loading="lazy">
                             <span>Cal Poly Modular</span>
                         </a>
                         <a class="case-nav-item" href="#/2/11">
-                            <img src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form.gif" alt="Adaptive CW">
+                            <img src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form.gif" alt="Adaptive CW" loading="lazy">
                             <span>Adaptive Curtain Wall</span>
                         </a>
                         <a class="case-nav-item" href="#/2/15">
-                            <img src="assets/images/rir/04_frit_pattern/25-1111_Axon.gif" alt="Frit Pattern">
+                            <img src="assets/images/rir/04_frit_pattern/25-1111_Axon.gif" alt="Frit Pattern" loading="lazy">
                             <span>Frit Pattern Design</span>
                         </a>
                     </div>
@@ -298,9 +347,9 @@
                     <p class="subtitle">Drag the handle to compare</p>
                     <div class="comp" id="rir-comp">
                         <!-- Background: Rhino (always full, left side) -->
-                        <img class="comp-img comp-bg" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Rhino 3D View.jpg" alt="Rhino">
+                        <img class="comp-img comp-bg" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Rhino 3D View.jpg" alt="Rhino" loading="lazy">
                         <!-- Overlay: Revit (clipped, revealed from right as handle goes left) -->
-                        <img class="comp-img comp-reveal" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Revit">
+                        <img class="comp-img comp-reveal" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Revit" loading="lazy">
                         <div class="comp-handle"></div>
                         <span class="comp-tag comp-tag-l">Rhino</span>
                         <span class="comp-tag comp-tag-r">Revit</span>
@@ -494,14 +543,14 @@
             <section>
                 <!-- 4-0: Cover -->
                 <section>
-                    <h2 style="text-align:center;">Open-Source Development</h2>
-                    <p class="subtitle" style="text-align:center;">AEC Tools &amp; AI-Powered Applications</p>
+                    <h2 class="text-center">Open-Source Development</h2>
+                    <p class="subtitle text-center">AEC Tools &amp; AI-Powered Applications</p>
                     <p class="nav-hint-center" style="margin-top:2em;">&darr; Scroll down for projects</p>
                 </section>
 
                 <!-- 4-1: Thumbnail Nav -->
                 <section>
-                    <h2 style="text-align:center; margin-bottom:0.5em;">Projects</h2>
+                    <h2 class="text-center mb-half">Projects</h2>
                     <div class="case-nav case-nav-5">
                         <a class="case-nav-item" href="#/3/2">
                             <div class="placeholder" style="height:120px;min-height:120px;"><span>GH MCP</span></div>
@@ -651,328 +700,18 @@
     <!-- Image Popup Modal -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-content">
-            <button class="popup-prev" id="popupPrev">&lsaquo;</button>
-            <img id="popupImg" src="" alt="">
-            <button class="popup-next" id="popupNext">&rsaquo;</button>
+            <button class="popup-prev" id="popupPrev" aria-label="Previous image">&lsaquo;</button>
+            <img id="popupImg" src="" alt="Popup image">
+            <button class="popup-next" id="popupNext" aria-label="Next image">&rsaquo;</button>
             <p id="popupCaption"></p>
             <span id="popupCounter"></span>
-            <button class="popup-close">&times;</button>
+            <button class="popup-close" aria-label="Close popup">&times;</button>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
-    <script>
-        // Popup data
-        var popupData = {
-            pavilion: {
-                img: 'assets/images/career/the-exchange.jpg',
-                caption: 'The Exchange — Miller Prize Winning Pavilion, Exhibit Columbus (Oyler Wu Collaborative)'
-            },
-            exhibition: {
-                img: 'assets/images/career/quicksilver.jpg',
-                caption: 'Quicksilver Installation — JUT Art Museum, Taipei (Oyler Wu Collaborative)'
-            },
-            exchange: {
-                img: 'assets/images/career/the-exchange.jpg',
-                caption: 'The Exchange — Miller Prize + MCHAP Selected, Exhibit Columbus (Oyler Wu Collaborative)'
-            },
-            ellore: {
-                img: 'assets/images/career/ellore.jpg',
-                caption: 'Ellore — Senior Living Community, Gold Nugget Grand Award (Steinberg Hart)'
-            },
-            clara: {
-                img: 'assets/images/career/the-clara.jpg',
-                caption: 'The Clara — Mixed-Use Residential, SVBJ Structures Award (Steinberg Hart)'
-            },
-            '188wsj': {
-                gallery: [
-                    { img: 'assets/images/reference/188 St James Interview Deck_ Page 001.jpg', caption: '188 West Saint James — Cover' },
-                    { img: 'assets/images/reference/188 WSJ_V01-Lobby.jpg', caption: '188 West Saint James — Lobby' },
-                    { img: 'assets/images/reference/188 WSJ_V02-Owners Lounge1.jpg', caption: '188 West Saint James — Owners Lounge 1' },
-                    { img: 'assets/images/reference/188 WSJ_V02-Owners Lounge2.jpg', caption: '188 West Saint James — Owners Lounge 2' },
-                    { img: 'assets/images/reference/188 WSJ_V04-Activity deck.jpg', caption: '188 West Saint James — Activity Deck' },
-                    { img: 'assets/images/reference/188 WSJ_V05-Pool Deck.jpg', caption: '188 West Saint James — Pool Deck' },
-                    { img: 'assets/images/reference/188 WSJ_V06-Pool Bar.jpg', caption: '188 West Saint James — Pool Bar' }
-                ]
-            }
-        };
-
-        // Popup triggers + gallery
-        document.addEventListener('DOMContentLoaded', function() {
-            var overlay = document.getElementById('popupOverlay');
-            var popupImg = document.getElementById('popupImg');
-            var popupCaption = document.getElementById('popupCaption');
-            var popupCounter = document.getElementById('popupCounter');
-            var popupPrev = document.getElementById('popupPrev');
-            var popupNext = document.getElementById('popupNext');
-            var galleryItems = null;
-            var galleryIndex = 0;
-
-            function showGalleryItem(i) {
-                galleryIndex = i;
-                popupImg.src = galleryItems[i].img;
-                popupCaption.textContent = galleryItems[i].caption;
-                popupCounter.textContent = (i + 1) + ' / ' + galleryItems.length;
-                popupPrev.style.display = galleryItems.length > 1 ? 'flex' : 'none';
-                popupNext.style.display = galleryItems.length > 1 ? 'flex' : 'none';
-            }
-
-            document.querySelectorAll('.popup-trigger').forEach(function(el) {
-                el.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    var key = this.getAttribute('data-popup');
-                    var data = popupData[key];
-                    if (!data) return;
-                    if (data.gallery) {
-                        galleryItems = data.gallery;
-                        showGalleryItem(0);
-                    } else {
-                        galleryItems = [{ img: data.img, caption: data.caption }];
-                        showGalleryItem(0);
-                    }
-                    overlay.classList.add('active');
-                });
-            });
-
-            popupImg.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (galleryItems && galleryItems.length > 1) showGalleryItem((galleryIndex + 1) % galleryItems.length);
-            });
-
-            popupPrev.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (galleryItems) showGalleryItem((galleryIndex - 1 + galleryItems.length) % galleryItems.length);
-            });
-            popupNext.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (galleryItems) showGalleryItem((galleryIndex + 1) % galleryItems.length);
-            });
-
-            overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) overlay.classList.remove('active');
-            });
-            overlay.querySelector('.popup-close').addEventListener('click', function() {
-                overlay.classList.remove('active');
-            });
-
-            // Keyboard nav for gallery
-            document.addEventListener('keydown', function(e) {
-                if (!overlay.classList.contains('active')) return;
-                if (e.key === 'Escape') overlay.classList.remove('active');
-                if (e.key === 'ArrowLeft' && galleryItems && galleryItems.length > 1) {
-                    showGalleryItem((galleryIndex - 1 + galleryItems.length) % galleryItems.length);
-                }
-                if (e.key === 'ArrowRight' && galleryItems && galleryItems.length > 1) {
-                    showGalleryItem((galleryIndex + 1) % galleryItems.length);
-                }
-            });
-        });
-
-        // Image Comparison — clip-path approach
-        // Rhino (before) on top with clip-path, Revit (after) underneath
-        // Handle left = Rhino small clip = Revit visible
-        // Handle right = Rhino big clip = Rhino visible
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.comp').forEach(function(comp) {
-                var reveal = comp.querySelector('.comp-reveal');
-                var handle = comp.querySelector('.comp-handle');
-                var tagL = comp.querySelector('.comp-tag-l');
-                var tagR = comp.querySelector('.comp-tag-r');
-                var dragging = false;
-                var startMouseX = 0;
-                var startPx = 0;
-
-                function setPos(px) {
-                    var w = comp.clientWidth;
-                    px = Math.max(0, Math.min(w, px));
-                    reveal.style.clipPath = 'inset(0 0 0 ' + px + 'px)';
-                    handle.style.left = px + 'px';
-                    var p = px / w;
-                    tagL.style.opacity = p > 0.3 ? '1' : '0';
-                    tagR.style.opacity = p < 0.7 ? '1' : '0';
-                }
-
-                // Reveal.js CSS scale factor
-                function getScale() {
-                    var r = comp.getBoundingClientRect();
-                    return r.width / comp.clientWidth;
-                }
-
-                // Init at image center - 7px
-                function initCenter() {
-                    var bgEl = comp.querySelector('.comp-bg');
-                    var cw = comp.clientWidth, ch = comp.clientHeight;
-                    var nw = bgEl.naturalWidth || 1, nh = bgEl.naturalHeight || 1;
-                    var s = Math.min(cw / nw, ch / nh);
-                    var iw = nw * s;
-                    var offsetX = (cw - iw) / 2;
-                    setPos(offsetX + iw / 2 - 7);
-                }
-                var bg = comp.querySelector('.comp-bg');
-                bg.addEventListener('load', initCenter);
-                if (bg.complete) { setTimeout(initCenter, 100); }
-
-                // Re-center when navigating to this slide via Reveal.js
-                comp._initCenter = initCenter;
-
-                comp.addEventListener('mousedown', function(e) {
-                    dragging = true;
-                    startMouseX = e.clientX;
-                    startPx = parseFloat(handle.style.left) || comp.clientWidth / 2;
-                    e.preventDefault(); e.stopPropagation();
-                });
-                document.addEventListener('mousemove', function(e) {
-                    if (!dragging) return;
-                    var delta = (e.clientX - startMouseX) / getScale();
-                    setPos(startPx + delta);
-                    e.preventDefault();
-                });
-                document.addEventListener('mouseup', function() { dragging = false; });
-
-                comp.addEventListener('touchstart', function(e) {
-                    dragging = true;
-                    startMouseX = e.touches[0].clientX;
-                    startPx = parseFloat(handle.style.left) || comp.clientWidth / 2;
-                    e.preventDefault(); e.stopPropagation();
-                });
-                document.addEventListener('touchmove', function(e) {
-                    if (!dragging) return;
-                    var delta = (e.touches[0].clientX - startMouseX) / getScale();
-                    setPos(startPx + delta);
-                    e.preventDefault();
-                });
-                document.addEventListener('touchend', function() { dragging = false; });
-            });
-        });
-
-        // Magnify glass effect
-        document.querySelectorAll('.magnify-wrap').forEach(function(wrap) {
-            const img = wrap.querySelector('.magnify-src');
-            const glass = wrap.querySelector('.magnify-glass');
-            const zoom = 10;
-
-            wrap.addEventListener('mouseenter', function() {
-                glass.style.display = 'block';
-                glass.style.backgroundImage = 'url(' + img.src + ')';
-                glass.style.backgroundSize = (img.clientWidth * zoom) + 'px ' + (img.clientHeight * zoom) + 'px';
-            });
-
-            wrap.addEventListener('mousemove', function(e) {
-                const rect = img.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const gw = 160, gh = 160;
-
-                glass.style.left = (x - gw / 2) + 'px';
-                glass.style.top = (y - gh / 2) + 'px';
-
-                const bgX = -(x * zoom - gw / 2);
-                const bgY = -(y * zoom - gh / 2);
-                glass.style.backgroundPosition = bgX + 'px ' + bgY + 'px';
-            });
-
-            wrap.addEventListener('mouseleave', function() {
-                glass.style.display = 'none';
-            });
-        });
-
-        // Auto-slide image carousel
-        document.querySelectorAll('.auto-slide').forEach(function(slide) {
-            var imgs = slide.querySelectorAll('.auto-slide-img');
-            if (imgs.length === 0) return;
-            var current = 0;
-            imgs[0].classList.add('active');
-            setInterval(function() {
-                imgs[current].classList.remove('active');
-                current = (current + 1) % imgs.length;
-                imgs[current].classList.add('active');
-            }, 4000);
-        });
-
-        Reveal.initialize({
-            hash: true,
-            transition: 'slide',
-            slideNumber: true,
-            controls: true,
-            progress: true,
-            width: 1200,
-            height: 700,
-            margin: 0.02,
-            minScale: 0.2,
-            maxScale: 1.5,
-        }).then(function() {
-            // Jump links — bypass Reveal.js event interception
-            document.querySelectorAll('.jump-link').forEach(function(link) {
-                link.style.cursor = 'pointer';
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    var h = parseInt(this.getAttribute('data-h'));
-                    Reveal.slide(h, 0);
-                });
-            });
-
-            // On cover pages (v=0), left arrow goes to previous section's cover (v=0)
-            Reveal.addKeyBinding(37, function() { // left arrow
-                var state = Reveal.getIndices();
-                if (state.v === 0 && state.h > 0) {
-                    Reveal.slide(state.h - 1, 0);
-                } else {
-                    Reveal.prev();
-                }
-            });
-            // Also override right arrow on cover pages to go to next section's cover
-            Reveal.addKeyBinding(39, function() { // right arrow
-                var state = Reveal.getIndices();
-                if (state.v === 0) {
-                    var totalH = Reveal.getTotalSlides ? Reveal.getHorizontalSlides().length : 99;
-                    if (state.h < totalH - 1) {
-                        Reveal.slide(state.h + 1, 0);
-                    }
-                } else {
-                    Reveal.next();
-                }
-            });
-
-            // Override UI arrow clicks on cover pages
-            var controls = document.querySelector('.reveal .controls');
-            controls.querySelector('.navigate-left').addEventListener('click', function(e) {
-                var state = Reveal.getIndices();
-                if (state.v === 0 && state.h > 0) {
-                    e.stopImmediatePropagation();
-                    Reveal.slide(state.h - 1, 0);
-                }
-            }, true);
-            controls.querySelector('.navigate-right').addEventListener('click', function(e) {
-                var state = Reveal.getIndices();
-                if (state.v === 0) {
-                    e.stopImmediatePropagation();
-                    var totalH = Reveal.getHorizontalSlides().length;
-                    if (state.h < totalH - 1) {
-                        Reveal.slide(state.h + 1, 0);
-                    }
-                }
-            }, true);
-
-            var verticalStacks = [1, 2, 3]; // GHPython=h1, RIR=h2, OpenSource=h3
-            function updateNav() {
-                var state = Reveal.getIndices();
-                if (verticalStacks.indexOf(state.h) !== -1 && state.v > 0) {
-                    controls.classList.add('no-horizontal');
-                } else {
-                    controls.classList.remove('no-horizontal');
-                }
-            }
-            Reveal.on('slidechanged', function(event) {
-                updateNav();
-                // Re-init comparison sliders when their slide becomes visible
-                var comps = event.currentSlide.querySelectorAll('.comp');
-                comps.forEach(function(c) {
-                    if (c._initCenter) { setTimeout(c._initCenter, 50); }
-                });
-            });
-            updateNav();
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js" crossorigin="anonymous"></script>
+    <script src="js/popup.js"></script>
+    <script src="js/interactive.js"></script>
+    <script src="js/reveal-config.js"></script>
 </body>
 </html>
