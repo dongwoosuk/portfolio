@@ -466,7 +466,8 @@
     opacity: 0.85;
 }
 
-.case-nav-item img {
+.case-nav-item img,
+.case-nav-item video {
     width: 100%;
     height: 180px;
     object-fit: cover;
@@ -476,7 +477,8 @@
     transition: border-color 0.2s;
 }
 
-.case-nav-item:hover img {
+.case-nav-item:hover img,
+.case-nav-item:hover video {
     border-color: var(--accent);
 }
 
