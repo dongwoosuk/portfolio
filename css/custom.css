@@ -590,6 +590,11 @@
     width: 17%;
 }
 
+/* 6-column case nav variant */
+.case-nav-6 .case-nav-item {
+    width: 14%;
+}
+
 /* Hide left/right controls inside vertical stacks */
 .controls.no-horizontal .navigate-left,
 .controls.no-horizontal .navigate-right {
