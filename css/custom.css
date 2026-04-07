@@ -754,6 +754,50 @@
     opacity: 1;
 }
 
+/* Video elements — same styling as images */
+.reveal .slides video {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.slide-image video {
+    max-height: 380px;
+    object-fit: contain;
+}
+
+.image-full video {
+    max-width: 90%;
+    max-height: 480px;
+    object-fit: contain;
+}
+
+.image-grid-2 video {
+    width: 100%;
+    max-height: 450px;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.grid-item video {
+    width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.reveal .slides .video-square {
+    width: 500px;
+    height: 500px;
+    max-width: 500px;
+    max-height: 500px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0;
+}
+
 /* Utility classes */
 .text-center { text-align: center; }
 .mb-half { margin-bottom: 0.5em; }
