@@ -123,6 +123,7 @@ Reveal.initialize({
         var baseTransform = '';
 
         function applyPan() {
+            slidesEl.style.transition = 'transform 0.05s ease-out';
             slidesEl.style.transform = baseTransform + ' translate(' + panX + 'px, ' + panY + 'px)';
         }
 
@@ -156,13 +157,13 @@ Reveal.initialize({
             revealEl.style.cursor = Reveal.isOverview() ? 'grab' : '';
         });
 
-        // Wheel scroll in overview (vertical pan)
+        // Wheel scroll in overview (vertical pan) — 2x speed
         revealEl.addEventListener('wheel', function(e) {
             if (!Reveal.isOverview()) return;
             if (!baseTransform) captureBase();
             e.preventDefault();
-            panY -= e.deltaY;
-            panX -= e.deltaX;
+            panY -= e.deltaY * 2;
+            panX -= e.deltaX * 2;
             applyPan();
         }, { passive: false });
 
