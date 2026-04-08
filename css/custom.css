@@ -618,10 +618,15 @@
 
 /* Tooltip triggers — hover text */
 .tip-trigger {
-    color: var(--accent);
+    color: rgba(79, 195, 247, 0.5);
     cursor: help;
-    border-bottom: 1px dotted var(--accent);
+    border-bottom: 1px dotted rgba(79, 195, 247, 0.3);
     position: relative;
+}
+
+.tip-trigger:hover {
+    color: var(--accent);
+    border-color: var(--accent);
 }
 
 .tip-trigger::after {
