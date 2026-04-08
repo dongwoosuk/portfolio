@@ -618,11 +618,17 @@
                         <div class="col">
                             <h3>Problem: Default Components</h3>
                             <img src="assets/images/opensource/reticle/GH Default Curve Division Component.png" alt="Default GH Curve Division" loading="lazy" style="max-height:280px; border-radius:6px; margin-bottom:0.5em;">
+                            <h3>Divide Curve</h3>
                             <ul>
-                                <li><strong>Divide Curve:</strong> Count-based &mdash; no dimensional control; multiple curves get different segment sizes</li>
-                                <li><strong>Divide Distance / Length:</strong> Always start from one end &rarr; asymmetric remainder at far end</li>
+                                <li>Count-based &mdash; no dimensional control</li>
+                                <li>Not suitable when exact spacing is required (architectural dimensions)</li>
+                                <li>Multiple curves &rarr; each gets different segment sizes</li>
+                            </ul>
+                            <h3>Divide Distance / Length</h3>
+                            <ul>
+                                <li>Always start from one end &rarr; <strong>asymmetric remainder</strong> at far end</li>
                                 <li>Cumulative error on curved geometry</li>
-                                <li>Not suitable for exact architectural dimensions</li>
+                                <li>Similar results despite different calculation methods</li>
                             </ul>
                         </div>
                         <div class="col">
