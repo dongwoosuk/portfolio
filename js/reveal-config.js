@@ -123,7 +123,7 @@ Reveal.initialize({
         var baseTransform = '';
 
         function applyPan() {
-            slidesEl.style.transition = 'transform 0.05s ease-out';
+            slidesEl.style.transition = 'none';
             slidesEl.style.transform = baseTransform + ' translate(' + panX + 'px, ' + panY + 'px)';
         }
 
@@ -162,8 +162,8 @@ Reveal.initialize({
             if (!Reveal.isOverview()) return;
             if (!baseTransform) captureBase();
             e.preventDefault();
-            panY -= e.deltaY * 2;
-            panX -= e.deltaX * 2;
+            panY -= e.deltaY * 3;
+            panX -= e.deltaX * 3;
             applyPan();
         }, { passive: false });
 
