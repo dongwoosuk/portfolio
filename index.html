@@ -662,16 +662,15 @@
                         <div class="col">
                             <h3>Problem: Default Components</h3>
                             <img src="assets/images/opensource/reticle/GH Default Surface Division Component.png" alt="Default GH Surface Division" loading="lazy" style="max-height:280px; border-radius:6px; margin-bottom:0.5em;">
-                            <h3>Divide Surface</h3>
+                            <h3>Divide Surface / Isotrim</h3>
                             <ul>
-                                <li>Count-based (U/V count) &mdash; no distance control</li>
-                                <li>Outputs points only &mdash; no sub-surfaces</li>
-                                <li>No remainder information</li>
+                                <li>Count-based (U/V count) &mdash; <strong>no distance control</strong></li>
+                                <li>No full control of output sub-surfaces in equal size when input surfaces are different sizes</li>
+                                <li><strong>No equal spacing</strong> on curvature surfaces</li>
                             </ul>
-                            <h3>Isotrim + Divide Domain</h3>
+                            <p style="font-size:0.85em; color:var(--text-muted); margin:0.3em 0;">As a result &darr;</p>
                             <ul>
-                                <li>Starts from UV origin &rarr; <strong>asymmetric remainders</strong></li>
-                                <li>Requires multi-component workaround</li>
+                                <li>Requires multi-component workaround to get measurable outcomes</li>
                                 <li>Complex data tree management</li>
                             </ul>
                         </div>
