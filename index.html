@@ -579,23 +579,101 @@
                     </div>
                 </section>
 
-                <!-- 4-2: Reticle GH Plugin -->
+                <!-- 4-2a: Reticle — Overview -->
                 <section>
                     <h2>Reticle</h2>
                     <p class="subtitle">Grasshopper Plugin — Center-Based Division for Curves &amp; Surfaces</p>
                     <div class="slide-layout">
                         <div class="slide-text">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <span class="metric-value">2</span>
+                                    <span class="metric-label">Components</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">C#</span>
+                                    <span class="metric-label">.NET 4.8</span>
+                                </div>
+                            </div>
                             <ul>
-                                <li><strong>Divide Centered:</strong> Curve center-based equal spacing with symmetric remainders</li>
-                                <li><strong>Divide Surface Centered:</strong> UV center-based surface division with DataTree output</li>
-                                <li><strong>C# / .NET 4.8:</strong> Native Grasshopper SDK component</li>
-                                <li><strong>Published:</strong> GitHub + Yak Package Manager + Food4Rhino</li>
+                                <li><strong>Divide Centered:</strong> Curve center-based equal spacing</li>
+                                <li><strong>Divide Surface Centered:</strong> UV center-based surface division</li>
+                                <li><strong>Published:</strong> GitHub + Yak + Food4Rhino</li>
                             </ul>
                             <p class="repo-link"><a href="https://github.com/dongwoosuk/Reticle" target="_blank">github.com/dongwoosuk/Reticle</a></p>
                         </div>
                         <div class="slide-image">
                             <img src="assets/images/opensource/reticle/Reticle Component Hi-Res.png" alt="Reticle — Divide Centered & Divide Surface Centered components" loading="lazy">
                         </div>
+                    </div>
+                </section>
+
+                <!-- 4-2b: Reticle — Curve: Problem vs Solution -->
+                <section>
+                    <h2>Divide Centered: Why?</h2>
+                    <p class="subtitle">Default GH Components vs Reticle</p>
+                    <div class="slide-layout">
+                        <div class="slide-text">
+                            <h3>Problem</h3>
+                            <ul>
+                                <li>Divide Curve / Distance / Length all start from one end</li>
+                                <li>Uneven remainder at the opposite end</li>
+                                <li>No center-aligned option</li>
+                            </ul>
+                            <h3>Solution</h3>
+                            <ul>
+                                <li>Divide from center outward</li>
+                                <li>Equal remainders on both ends</li>
+                                <li>Toggle for including endpoints</li>
+                            </ul>
+                        </div>
+                        <div class="slide-image">
+                            <img src="assets/images/opensource/reticle/GH Default Curve Division Component.png" alt="Default GH Curve Division Components" loading="lazy">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4-2c: Reticle — Demo Part 1 (Curve) -->
+                <section>
+                    <h2>Divide Centered: Demo</h2>
+                    <p class="subtitle">Center-based curve division in action</p>
+                    <div class="image-full">
+                        <video src="assets/images/opensource/reticle/Reticle Demo Part1.mp4" autoplay loop muted playsinline></video>
+                    </div>
+                </section>
+
+                <!-- 4-2d: Reticle — Surface: Problem vs Solution -->
+                <section>
+                    <h2>Divide Surface Centered: Why?</h2>
+                    <p class="subtitle">Default Divide Surface vs Reticle</p>
+                    <div class="slide-layout">
+                        <div class="slide-text">
+                            <h3>Problem</h3>
+                            <ul>
+                                <li>Default Divide Surface starts from UV origin</li>
+                                <li>Uneven panels at opposite edges</li>
+                                <li>No sub-surface output</li>
+                            </ul>
+                            <h3>Solution</h3>
+                            <ul>
+                                <li>UV center-based division</li>
+                                <li>Symmetric remainders on all edges</li>
+                                <li>Sub-Surfaces + U/V Remainder output</li>
+                                <li>Independent endpoint toggles (Eu, Ev)</li>
+                            </ul>
+                        </div>
+                        <div class="slide-image">
+                            <img src="assets/images/opensource/reticle/Screenshot_03.png" alt="Divide Surface Centered — Rhino viewport result" loading="lazy">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4-2e: Reticle — Demo Part 2 (Surface) -->
+                <section>
+                    <h2>Divide Surface Centered: Demo</h2>
+                    <p class="subtitle">Center-based surface division in action</p>
+                    <div class="image-full">
+                        <video src="assets/images/opensource/reticle/Reticle Demo Part2.mp4" autoplay loop muted playsinline></video>
                     </div>
                 </section>
 
