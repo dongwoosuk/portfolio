@@ -75,12 +75,41 @@ Reveal.initialize({
             controls.classList.remove('no-horizontal');
         }
     }
+
+    // Vertical dot indicator
+    var dotsEl = document.getElementById('slideDots');
+    function updateDots() {
+        var indices = Reveal.getIndices();
+        var currentSlide = Reveal.getCurrentSlide();
+        var parent = currentSlide.parentElement;
+        var siblings = parent.querySelectorAll(':scope > section');
+        var total = siblings.length;
+
+        if (total <= 1) { dotsEl.innerHTML = ''; return; }
+
+        var html = '';
+        for (var i = 0; i < total; i++) {
+            html += '<span class="dot' + (i === indices.v ? ' active' : '') + '" data-v="' + i + '"></span>';
+        }
+        dotsEl.innerHTML = html;
+    }
+
+    dotsEl.addEventListener('click', function(e) {
+        if (e.target.classList.contains('dot')) {
+            var v = parseInt(e.target.getAttribute('data-v'));
+            var h = Reveal.getIndices().h;
+            Reveal.slide(h, v);
+        }
+    });
+
     Reveal.on('slidechanged', function(event) {
         updateNav();
+        updateDots();
         var comps = event.currentSlide.querySelectorAll('.comp');
         comps.forEach(function(c) {
             if (c._initCenter) { setTimeout(c._initCenter, 50); }
         });
     });
     updateNav();
+    updateDots();
 });

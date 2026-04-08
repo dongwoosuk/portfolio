@@ -766,6 +766,40 @@
     opacity: 1;
 }
 
+/* Vertical dot navigation */
+.slide-dots {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.slide-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.slide-dots .dot.active {
+    background: var(--accent);
+    transform: scale(1.4);
+}
+
+.slide-dots .dot:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.slide-dots:empty {
+    display: none;
+}
+
 /* Video elements — same styling as images */
 .reveal .slides video {
     max-width: 100%;
