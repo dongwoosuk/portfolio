@@ -613,30 +613,28 @@
                 <!-- 4-2b: Reticle — Curve: Problem vs Solution -->
                 <section>
                     <h2>Divide Centered: Why?</h2>
-                    <p class="subtitle">Limitations of Default GH Curve Division</p>
-                    <div class="slide-layout">
-                        <div class="slide-text">
-                            <h3>Divide Curve (Count)</h3>
+                    <p class="subtitle">Default GH Components vs Reticle</p>
+                    <div class="two-col">
+                        <div class="col">
+                            <h3>Problem: Default Components</h3>
+                            <img src="assets/images/opensource/reticle/GH Default Curve Division Component.png" alt="Default GH Curve Division" loading="lazy" style="max-height:160px; border-radius:6px; margin-bottom:0.5em;">
                             <ul>
-                                <li>Splits into N equal segments &mdash; simple but no dimensional control</li>
-                                <li>Not suitable when exact spacing is required (e.g. architectural dimensions)</li>
-                                <li>Multiple curves with different lengths &rarr; each gets different segment sizes</li>
-                            </ul>
-                            <h3>Divide Distance / Length</h3>
-                            <ul>
-                                <li>Accept distance input, but always start from one end</li>
+                                <li><strong>Divide Curve:</strong> Count-based &mdash; no dimensional control; multiple curves get different segment sizes</li>
+                                <li><strong>Divide Distance / Length:</strong> Always start from one end &rarr; asymmetric remainder at far end</li>
                                 <li>Cumulative error on curved geometry</li>
-                                <li><strong>Asymmetric remainder</strong> &mdash; leftover segment only at the far end</li>
-                            </ul>
-                            <h3>Divide Centered &rarr; Solution</h3>
-                            <ul>
-                                <li>Divides from <strong>center outward</strong> &mdash; symmetric remainders on both ends</li>
-                                <li>Exact distance-based spacing across any curve length</li>
-                                <li>Toggle for including/excluding endpoints</li>
+                                <li>Not suitable for exact architectural dimensions</li>
                             </ul>
                         </div>
-                        <div class="slide-image">
-                            <img src="assets/images/opensource/reticle/GH Default Curve Division Component.png" alt="Default GH Curve Division Components" loading="lazy">
+                        <div class="col">
+                            <h3>Solution: Divide Centered</h3>
+                            <img src="assets/images/opensource/reticle/Reticle Component Hi-Res.png" alt="Reticle Divide Centered" loading="lazy" style="max-height:160px; border-radius:6px; margin-bottom:0.5em;">
+                            <ul>
+                                <li>Divides from <strong>center outward</strong></li>
+                                <li><strong>Symmetric remainders</strong> on both ends</li>
+                                <li>Exact distance-based spacing across any curve length</li>
+                                <li>Consistent segments across multiple curves</li>
+                                <li>Toggle for including/excluding endpoints</li>
+                            </ul>
                         </div>
                     </div>
                 </section>
