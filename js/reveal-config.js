@@ -112,4 +112,53 @@ Reveal.initialize({
     });
     updateNav();
     updateDots();
+
+    // Overview mode — mouse pan
+    (function() {
+        var slidesEl = document.querySelector('.reveal .slides');
+        var panning = false;
+        var startX = 0, startY = 0;
+        var panX = 0, panY = 0;
+
+        function applyPan() {
+            slidesEl.style.transform = 'translate(' + panX + 'px, ' + panY + 'px)';
+        }
+
+        document.addEventListener('mousedown', function(e) {
+            if (!Reveal.isOverview()) return;
+            // Ignore clicks on slides (let Reveal handle selection)
+            if (e.target.closest('section')) return;
+            panning = true;
+            startX = e.clientX - panX;
+            startY = e.clientY - panY;
+            slidesEl.style.cursor = 'grabbing';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!panning) return;
+            panX = e.clientX - startX;
+            panY = e.clientY - startY;
+            applyPan();
+            e.preventDefault();
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (!panning) return;
+            panning = false;
+            slidesEl.style.cursor = '';
+        });
+
+        // Reset pan when leaving overview
+        Reveal.on('overviewhidden', function() {
+            panX = 0;
+            panY = 0;
+            slidesEl.style.transform = '';
+        });
+
+        // Set grab cursor in overview
+        Reveal.on('overviewshown', function() {
+            slidesEl.style.cursor = 'grab';
+        });
+    })();
 });
