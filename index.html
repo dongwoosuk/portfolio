@@ -657,25 +657,35 @@
                 <!-- 4-2d: Reticle — Surface: Problem vs Solution -->
                 <section>
                     <h2>Divide Surface Centered: Why?</h2>
-                    <p class="subtitle">Default Divide Surface vs Reticle</p>
-                    <div class="slide-layout">
-                        <div class="slide-text">
-                            <h3>Problem</h3>
+                    <p class="subtitle">Default GH Components vs Reticle</p>
+                    <div class="two-col">
+                        <div class="col">
+                            <h3>Problem: Default Components</h3>
+                            <img src="assets/images/opensource/reticle/GH Default Surface Division Component.png" alt="Default GH Surface Division" loading="lazy" style="max-height:280px; border-radius:6px; margin-bottom:0.5em;">
+                            <h3>Divide Surface</h3>
                             <ul>
-                                <li>Default Divide Surface starts from UV origin</li>
-                                <li>Uneven panels at opposite edges</li>
-                                <li>No sub-surface output</li>
+                                <li>Count-based (U/V count) &mdash; no distance control</li>
+                                <li>Outputs points only &mdash; no sub-surfaces</li>
+                                <li>No remainder information</li>
                             </ul>
-                            <h3>Solution</h3>
+                            <h3>Isotrim + Divide Domain</h3>
                             <ul>
-                                <li>UV center-based division</li>
-                                <li>Symmetric remainders on all edges</li>
-                                <li>Sub-Surfaces + U/V Remainder output</li>
-                                <li>Independent endpoint toggles (Eu, Ev)</li>
+                                <li>Starts from UV origin &rarr; <strong>asymmetric remainders</strong></li>
+                                <li>Requires multi-component workaround</li>
+                                <li>Complex data tree management</li>
                             </ul>
                         </div>
-                        <div class="slide-image">
-                            <img src="assets/images/opensource/reticle/Screenshot_03.png" alt="Divide Surface Centered — Rhino viewport result" loading="lazy">
+                        <div class="col">
+                            <h3>Solution: Divide Surface Centered</h3>
+                            <img src="assets/images/opensource/reticle/Divided Surface Centered Component.png" alt="Reticle Divide Surface Centered" loading="lazy" style="max-height:280px; border-radius:6px; margin-bottom:0.5em;">
+                            <ul>
+                                <li>UV <strong>center-based</strong> division</li>
+                                <li><strong>Symmetric remainders</strong> on all edges</li>
+                                <li>Sub-Surfaces output (ready for paneling)</li>
+                                <li>U/V Remainder values as output</li>
+                                <li>Independent endpoint toggles (Eu, Ev)</li>
+                                <li>Single component replaces multi-step workflow</li>
+                            </ul>
                         </div>
                     </div>
                 </section>
