@@ -113,25 +113,32 @@ Reveal.initialize({
     updateNav();
     updateDots();
 
-    // Overview mode — mouse pan
+    // Overview mode — mouse pan + wheel scroll
     (function() {
+        var revealEl = document.querySelector('.reveal');
         var slidesEl = document.querySelector('.reveal .slides');
         var panning = false;
         var startX = 0, startY = 0;
         var panX = 0, panY = 0;
+        var baseTransform = '';
 
         function applyPan() {
-            slidesEl.style.transform = 'translate(' + panX + 'px, ' + panY + 'px)';
+            slidesEl.style.transform = baseTransform + ' translate(' + panX + 'px, ' + panY + 'px)';
+        }
+
+        function captureBase() {
+            // Capture Reveal.js's own transform before we modify it
+            baseTransform = slidesEl.style.transform || '';
         }
 
         document.addEventListener('mousedown', function(e) {
             if (!Reveal.isOverview()) return;
-            // Ignore clicks on slides (let Reveal handle selection)
             if (e.target.closest('section')) return;
+            if (!baseTransform) captureBase();
             panning = true;
             startX = e.clientX - panX;
             startY = e.clientY - panY;
-            slidesEl.style.cursor = 'grabbing';
+            revealEl.style.cursor = 'grabbing';
             e.preventDefault();
         });
 
@@ -146,19 +153,36 @@ Reveal.initialize({
         document.addEventListener('mouseup', function() {
             if (!panning) return;
             panning = false;
-            slidesEl.style.cursor = '';
+            revealEl.style.cursor = Reveal.isOverview() ? 'grab' : '';
         });
+
+        // Wheel scroll in overview (vertical pan)
+        revealEl.addEventListener('wheel', function(e) {
+            if (!Reveal.isOverview()) return;
+            if (!baseTransform) captureBase();
+            e.preventDefault();
+            panY -= e.deltaY;
+            panX -= e.deltaX;
+            applyPan();
+        }, { passive: false });
 
         // Reset pan when leaving overview
         Reveal.on('overviewhidden', function() {
             panX = 0;
             panY = 0;
             slidesEl.style.transform = '';
+            revealEl.style.cursor = '';
+            baseTransform = '';
         });
 
-        // Set grab cursor in overview
+        // Capture base transform + set cursor when entering overview
         Reveal.on('overviewshown', function() {
-            slidesEl.style.cursor = 'grab';
+            panX = 0;
+            panY = 0;
+            setTimeout(function() {
+                captureBase();
+                revealEl.style.cursor = 'grab';
+            }, 100);
         });
     })();
 });
