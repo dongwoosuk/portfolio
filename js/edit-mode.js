@@ -9,8 +9,11 @@
 
     // ===== State =====
     var selectedEl = null;
+    var selectionType = null; // 'image' | 'container'
     var resizeOverlay = null;
     var guideOverlay = null;
+    var centerGuideV = null;
+    var centerGuideH = null;
     var dragging = false;
     var resizing = false;
     var resizeHandle = null;
@@ -20,6 +23,8 @@
     var historyIndex = -1;
     var editIdCounter = 0;
     var SNAP_THRESHOLD = 6; // px in slide coords
+    var BORDER_ZONE = 18; // px from image edge → container selection
+    var CONTAINER_SELECTORS = '.slide-image, .slide-text, .auto-slide, .slide-layout, .image-grid-2, .image-grid-3, .image-full, .two-col, .col, .metrics, .slide-layout > div';
 
     // ===== Unique ID =====
     function getEditId(el) {
@@ -114,43 +119,104 @@
         });
     }
 
+    // ===== Check if click is in border zone of element =====
+    function isInBorderZone(e, el) {
+        var rect = el.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        return x < BORDER_ZONE || y < BORDER_ZONE ||
+               rect.width - x < BORDER_ZONE || rect.height - y < BORDER_ZONE;
+    }
+
+    // ===== Find closest container ancestor =====
+    function findContainer(el) {
+        var current = el.parentElement;
+        while (current && !current.classList.contains('slides')) {
+            if (current.matches && current.matches(CONTAINER_SELECTORS)) {
+                return current;
+            }
+            current = current.parentElement;
+        }
+        return el.parentElement;
+    }
+
     // ===== Image/video edit setup =====
     function setupImageEdit() {
         document.querySelectorAll('.reveal .slides img, .reveal .slides video').forEach(function(el) {
             getEditId(el);
+            // Hover: show crosshair cursor in border zone
+            el.addEventListener('mousemove', function(e) {
+                if (dragging || resizing) return;
+                if (isInBorderZone(e, el)) {
+                    el.classList.add('hover-border');
+                } else {
+                    el.classList.remove('hover-border');
+                }
+            });
+            el.addEventListener('mouseleave', function() {
+                el.classList.remove('hover-border');
+            });
             el.addEventListener('mousedown', function(e) {
                 if (e.target !== el) return;
+                if (e.button !== 0) return; // only left click
                 e.preventDefault();
                 e.stopPropagation();
-                // Click already-selected element → select parent
-                if (selectedEl === el) {
-                    if (el.parentElement && !el.parentElement.classList.contains('slides')) {
-                        selectElement(el.parentElement);
+
+                // Border zone → select container
+                if (isInBorderZone(e, el)) {
+                    var container = findContainer(el);
+                    if (container) {
+                        selectElement(container, 'container');
+                        startDrag(e);
                         return;
                     }
                 }
-                selectElement(el);
+
+                // Click already-selected image → select parent
+                if (selectedEl === el) {
+                    var parent = findContainer(el);
+                    if (parent) {
+                        selectElement(parent, 'container');
+                        return;
+                    }
+                }
+                selectElement(el, 'image');
                 startDrag(e);
+            });
+            // Right-click context menu
+            el.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (selectedEl !== el) selectElement(el, 'image');
+                showContextMenu(e.clientX, e.clientY);
             });
         });
     }
 
     // ===== Selection =====
-    function selectElement(el) {
+    function selectElement(el, type) {
         clearSelection();
         selectedEl = el;
+        selectionType = type || 'image';
         getEditId(el);
-        el.classList.add('edit-selected');
+        if (selectionType === 'container') {
+            el.classList.add('edit-selected-container');
+        } else {
+            el.classList.add('edit-selected-image');
+        }
         showResizeHandles(el);
         updateBreadcrumb();
     }
 
     function clearSelection() {
         if (selectedEl) {
-            selectedEl.classList.remove('edit-selected');
+            selectedEl.classList.remove('edit-selected-image');
+            selectedEl.classList.remove('edit-selected-container');
             selectedEl = null;
+            selectionType = null;
         }
         if (resizeOverlay) { resizeOverlay.remove(); resizeOverlay = null; }
+        hideContextMenu();
         updateBreadcrumb();
     }
 
@@ -179,7 +245,7 @@
         if (resizeOverlay) resizeOverlay.remove();
         var rect = el.getBoundingClientRect();
         resizeOverlay = document.createElement('div');
-        resizeOverlay.className = 'edit-resize-overlay';
+        resizeOverlay.className = 'edit-resize-overlay' + (selectionType === 'container' ? ' container' : '');
         resizeOverlay.style.left = rect.left + 'px';
         resizeOverlay.style.top = rect.top + 'px';
         resizeOverlay.style.width = rect.width + 'px';
@@ -258,6 +324,8 @@
 
             applyEditState(selectedEl, newState);
             updateOverlayPosition();
+            // Container center guides
+            drawContainerCenterGuides(selectedEl);
         } else if (resizing && selectedEl) {
             var scale = getScale();
             var dx = (e.clientX - dragStart.x) / scale;
@@ -403,6 +471,226 @@
 
     function clearGuides() {
         if (guideOverlay) guideOverlay.innerHTML = '';
+        if (centerGuideV) { centerGuideV.remove(); centerGuideV = null; }
+        if (centerGuideH) { centerGuideH.remove(); centerGuideH = null; }
+    }
+
+    // ===== Container center guides (crosshair) =====
+    function drawContainerCenterGuides(movingEl) {
+        var container = findContainer(movingEl);
+        if (!container) return;
+        var cRect = container.getBoundingClientRect();
+        var mRect = movingEl.getBoundingClientRect();
+        var cCx = (cRect.left + cRect.right) / 2;
+        var cCy = (cRect.top + cRect.bottom) / 2;
+        var mCx = (mRect.left + mRect.right) / 2;
+        var mCy = (mRect.top + mRect.bottom) / 2;
+
+        // Show vertical center guide if image center is close to container center X
+        if (Math.abs(mCx - cCx) < SNAP_THRESHOLD * getScale() * 2) {
+            if (!centerGuideV) {
+                centerGuideV = document.createElement('div');
+                centerGuideV.className = 'edit-center-guide v';
+                document.body.appendChild(centerGuideV);
+            }
+            centerGuideV.style.left = cCx + 'px';
+            centerGuideV.style.top = cRect.top + 'px';
+            centerGuideV.style.height = cRect.height + 'px';
+        } else if (centerGuideV) {
+            centerGuideV.remove();
+            centerGuideV = null;
+        }
+        // Horizontal center guide
+        if (Math.abs(mCy - cCy) < SNAP_THRESHOLD * getScale() * 2) {
+            if (!centerGuideH) {
+                centerGuideH = document.createElement('div');
+                centerGuideH.className = 'edit-center-guide h';
+                document.body.appendChild(centerGuideH);
+            }
+            centerGuideH.style.top = cCy + 'px';
+            centerGuideH.style.left = cRect.left + 'px';
+            centerGuideH.style.width = cRect.width + 'px';
+        } else if (centerGuideH) {
+            centerGuideH.remove();
+            centerGuideH = null;
+        }
+    }
+
+    // ===== Context Menu =====
+    var contextMenuEl = null;
+    function showContextMenu(x, y) {
+        hideContextMenu();
+        contextMenuEl = document.createElement('div');
+        contextMenuEl.className = 'edit-context-menu';
+        var items = [
+            { header: 'Selection: ' + (selectionType || 'none') },
+            { label: 'Fit Image to Frame', action: fitImageToFrame, disabled: selectionType !== 'image' },
+            { label: 'Fit Frame to Image', action: fitFrameToImage, disabled: selectionType !== 'image' },
+            { label: 'Center in Container', action: centerInContainer, disabled: !selectedEl },
+            { divider: true },
+            { label: 'Align with Siblings', action: alignWithSiblings, disabled: !selectedEl },
+            { label: 'Copy Position to Siblings', action: copyToSiblings, disabled: !selectedEl },
+            { divider: true },
+            { label: 'Select Parent Container', action: function() {
+                if (selectedEl) {
+                    var p = findContainer(selectedEl);
+                    if (p) selectElement(p, 'container');
+                }
+                hideContextMenu();
+            }, disabled: !selectedEl },
+            { label: 'Delete Transform', action: function() {
+                if (selectedEl) {
+                    var before = cloneState(getEditState(selectedEl));
+                    applyEditState(selectedEl, { tx: 0, ty: 0, sx: 1, sy: 1 });
+                    pushHistory({ type: 'transform', editId: selectedEl.dataset.editId, before: before, after: { tx: 0, ty: 0, sx: 1, sy: 1 } });
+                    updateOverlayPosition();
+                }
+                hideContextMenu();
+            }, disabled: !selectedEl }
+        ];
+        items.forEach(function(item) {
+            if (item.header) {
+                var h = document.createElement('div');
+                h.className = 'menu-header';
+                h.textContent = item.header;
+                contextMenuEl.appendChild(h);
+                return;
+            }
+            if (item.divider) {
+                var d = document.createElement('div');
+                d.className = 'menu-divider';
+                contextMenuEl.appendChild(d);
+                return;
+            }
+            var mi = document.createElement('div');
+            mi.className = 'menu-item' + (item.disabled ? ' disabled' : '');
+            mi.textContent = item.label;
+            if (!item.disabled) {
+                mi.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    item.action();
+                    hideContextMenu();
+                });
+            }
+            contextMenuEl.appendChild(mi);
+        });
+        contextMenuEl.style.left = x + 'px';
+        contextMenuEl.style.top = y + 'px';
+        document.body.appendChild(contextMenuEl);
+        // Clamp to viewport
+        var mRect = contextMenuEl.getBoundingClientRect();
+        if (mRect.right > window.innerWidth) {
+            contextMenuEl.style.left = (window.innerWidth - mRect.width - 10) + 'px';
+        }
+        if (mRect.bottom > window.innerHeight) {
+            contextMenuEl.style.top = (window.innerHeight - mRect.height - 10) + 'px';
+        }
+    }
+
+    function hideContextMenu() {
+        if (contextMenuEl) { contextMenuEl.remove(); contextMenuEl = null; }
+    }
+
+    document.addEventListener('click', function(e) {
+        if (contextMenuEl && !contextMenuEl.contains(e.target)) hideContextMenu();
+    });
+    document.addEventListener('contextmenu', function(e) {
+        // Prevent default browser context menu anywhere in edit mode
+        if (!e.target.closest('img') && !e.target.closest('video')) {
+            hideContextMenu();
+        }
+    });
+
+    // ===== Fit functions =====
+    function fitImageToFrame() {
+        // Apply object-fit: cover to the image so it fills container
+        if (!selectedEl) return;
+        var before = { objectFit: selectedEl.style.objectFit, width: selectedEl.style.width, height: selectedEl.style.height };
+        selectedEl.style.objectFit = 'cover';
+        selectedEl.style.width = '100%';
+        selectedEl.style.height = '100%';
+        pushHistory({
+            type: 'style',
+            editId: selectedEl.dataset.editId,
+            before: before,
+            after: { objectFit: 'cover', width: '100%', height: '100%' }
+        });
+        updateOverlayPosition();
+    }
+
+    function fitFrameToImage() {
+        // Reset container to natural size of image
+        if (!selectedEl) return;
+        var container = findContainer(selectedEl);
+        if (!container) return;
+        getEditId(container);
+        var imgRect = selectedEl.getBoundingClientRect();
+        var scale = getScale();
+        var w = imgRect.width / scale;
+        var h = imgRect.height / scale;
+        var before = { width: container.style.width, height: container.style.height, maxWidth: container.style.maxWidth, maxHeight: container.style.maxHeight };
+        container.style.width = Math.round(w) + 'px';
+        container.style.height = Math.round(h) + 'px';
+        container.style.maxWidth = 'none';
+        container.style.maxHeight = 'none';
+        pushHistory({
+            type: 'style',
+            editId: container.dataset.editId,
+            before: before,
+            after: { width: container.style.width, height: container.style.height, maxWidth: 'none', maxHeight: 'none' }
+        });
+        updateOverlayPosition();
+    }
+
+    function centerInContainer() {
+        if (!selectedEl) return;
+        var container = findContainer(selectedEl);
+        if (!container) return;
+        var cRect = container.getBoundingClientRect();
+        var mRect = selectedEl.getBoundingClientRect();
+        var scale = getScale();
+        var dx = ((cRect.left + cRect.right) / 2 - (mRect.left + mRect.right) / 2) / scale;
+        var dy = ((cRect.top + cRect.bottom) / 2 - (mRect.top + mRect.bottom) / 2) / scale;
+        var before = cloneState(getEditState(selectedEl));
+        var after = cloneState(before);
+        after.tx = before.tx + dx;
+        after.ty = before.ty + dy;
+        applyEditState(selectedEl, after);
+        pushHistory({ type: 'transform', editId: selectedEl.dataset.editId, before: before, after: after });
+        updateOverlayPosition();
+    }
+
+    // ===== Align slideshow siblings =====
+    function getSiblingImages(el) {
+        // Find siblings within auto-slide, image-grid-2, image-grid-3, slide-layout
+        var parent = el.parentElement;
+        while (parent && !parent.matches('.auto-slide, .image-grid-2, .image-grid-3')) {
+            parent = parent.parentElement;
+            if (!parent || parent.classList.contains('slides')) return [];
+        }
+        if (!parent) return [];
+        return Array.from(parent.querySelectorAll('img, video')).filter(function(s) { return s !== el; });
+    }
+
+    function alignWithSiblings() {
+        if (!selectedEl) return;
+        var siblings = getSiblingImages(selectedEl);
+        if (siblings.length === 0) {
+            alert('No sibling images found (must be inside .auto-slide, .image-grid-2, or .image-grid-3)');
+            return;
+        }
+        // Align all siblings to current element's transform
+        var targetState = cloneState(getEditState(selectedEl));
+        siblings.forEach(function(s) {
+            getEditId(s);
+            var before = cloneState(getEditState(s));
+            applyEditState(s, targetState);
+            pushHistory({ type: 'transform', editId: s.dataset.editId, before: before, after: cloneState(targetState) });
+        });
+    }
+
+    function copyToSiblings() {
+        alignWithSiblings();
     }
 
     // ===== History (undo/redo) =====
