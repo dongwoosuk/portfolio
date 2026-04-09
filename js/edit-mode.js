@@ -128,7 +128,7 @@
         bar.className = 'edit-toolbar';
         bar.innerHTML =
             '<span class="edit-toolbar-title">EDIT</span>' +
-            '<span class="edit-toolbar-status" id="editStatus">Click element to select · drag to move · handles to resize · click again for parent</span>' +
+            '<span class="edit-toolbar-status" id="editStatus">Click image center = image · click image edge = frame · right-click for options</span>' +
             '<button class="edit-btn" id="editUndo" title="Ctrl+Z">↶ Undo</button>' +
             '<button class="edit-btn" id="editRedo" title="Ctrl+Y">↷ Redo</button>' +
             '<button class="edit-btn danger" id="editReset">Reset</button>' +
@@ -294,7 +294,8 @@
             parts.unshift(tag);
             cur = cur.parentElement;
         }
-        status.innerHTML = '<strong>Selected:</strong> ' + parts.join(' › ') + ' · <em>click again for parent</em>';
+        var label = selectionType === 'container' ? '<span style="color:#ff9800">FRAME</span>' : '<span style="color:#4FC3F7">IMAGE</span>';
+        status.innerHTML = label + ' · ' + parts.join(' › ');
     }
 
     function showResizeHandles(el) {
@@ -603,31 +604,34 @@
         hideContextMenu();
         contextMenuEl = document.createElement('div');
         contextMenuEl.className = 'edit-context-menu';
+        // Snapshot selected element so async click handlers don't lose it
+        var snapEl = selectedEl;
+        var snapType = selectionType;
         var items = [
-            { header: 'Selection: ' + (selectionType || 'none') },
-            { label: 'Fit Image to Frame', action: fitImageToFrame, disabled: selectionType !== 'image' },
-            { label: 'Fit Frame to Image', action: fitFrameToImage, disabled: selectionType !== 'image' },
-            { label: 'Center in Container', action: centerInContainer, disabled: !selectedEl },
+            { header: 'Selected: ' + (snapType === 'container' ? 'frame' : (snapType || 'none')) },
+            { label: 'Fit Image to Frame', action: function() { fitImageToFrame(snapEl); }, disabled: snapType !== 'image' },
+            { label: 'Fit Frame to Image', action: function() { fitFrameToImage(snapEl); }, disabled: snapType !== 'image' },
+            { label: 'Center in Frame', action: function() { centerInFrame(snapEl); }, disabled: !snapEl },
             { divider: true },
-            { label: 'Align with Siblings', action: alignWithSiblings, disabled: !selectedEl },
-            { label: 'Copy Position to Siblings', action: copyToSiblings, disabled: !selectedEl },
+            { label: 'Align with Siblings', action: function() { alignWithSiblings(snapEl); }, disabled: !snapEl },
+            { label: 'Copy Position to Siblings', action: function() { alignWithSiblings(snapEl); }, disabled: !snapEl },
             { divider: true },
-            { label: 'Select Parent Container', action: function() {
-                if (selectedEl) {
-                    var p = findContainer(selectedEl);
+            { label: 'Select Parent Frame', action: function() {
+                if (snapEl) {
+                    var p = findContainer(snapEl);
                     if (p) selectElement(p, 'container');
                 }
-                hideContextMenu();
-            }, disabled: !selectedEl },
-            { label: 'Delete Transform', action: function() {
-                if (selectedEl) {
-                    var before = cloneState(getEditState(selectedEl));
-                    applyEditState(selectedEl, { tx: 0, ty: 0, sx: 1, sy: 1 });
-                    pushHistory({ type: 'transform', editId: selectedEl.dataset.editId, before: before, after: { tx: 0, ty: 0, sx: 1, sy: 1 } });
-                    updateOverlayPosition();
-                }
-                hideContextMenu();
-            }, disabled: !selectedEl }
+            }, disabled: !snapEl },
+            { label: 'Reset Transform', action: function() {
+                if (!snapEl) return;
+                var before = cloneState(getEditState(snapEl));
+                var resetState = before.type === 'container'
+                    ? { type: 'container', tx: 0, ty: 0, w: before.w, h: before.h }
+                    : { type: 'image', tx: 0, ty: 0, sx: 1, sy: 1 };
+                applyEditState(snapEl, resetState);
+                pushHistory({ type: 'transform', editId: snapEl.dataset.editId, before: before, after: resetState });
+                updateOverlayPosition();
+            }, disabled: !snapEl }
         ];
         items.forEach(function(item) {
             if (item.header) {
@@ -683,61 +687,84 @@
     });
 
     // ===== Fit functions =====
-    function fitImageToFrame() {
-        // Apply object-fit: cover to the image so it fills container
-        if (!selectedEl) return;
-        var before = { objectFit: selectedEl.style.objectFit, width: selectedEl.style.width, height: selectedEl.style.height };
-        selectedEl.style.objectFit = 'cover';
-        selectedEl.style.width = '100%';
-        selectedEl.style.height = '100%';
+    function fitImageToFrame(el) {
+        el = el || selectedEl;
+        if (!el) return;
+        var before = {
+            objectFit: el.style.objectFit,
+            width: el.style.width,
+            height: el.style.height,
+            maxWidth: el.style.maxWidth,
+            maxHeight: el.style.maxHeight
+        };
+        // Reset transform so cover fills frame
+        if (el._editState && el._editState.type === 'image') {
+            applyEditState(el, { type: 'image', tx: 0, ty: 0, sx: 1, sy: 1 });
+        }
+        el.style.objectFit = 'cover';
+        el.style.width = '100%';
+        el.style.height = '100%';
+        el.style.maxWidth = 'none';
+        el.style.maxHeight = 'none';
         pushHistory({
-            type: 'style',
-            editId: selectedEl.dataset.editId,
+            type: 'css',
+            editId: el.dataset.editId,
             before: before,
-            after: { objectFit: 'cover', width: '100%', height: '100%' }
+            after: { objectFit: 'cover', width: '100%', height: '100%', maxWidth: 'none', maxHeight: 'none' }
         });
         updateOverlayPosition();
     }
 
-    function fitFrameToImage() {
-        // Reset container to natural size of image
-        if (!selectedEl) return;
-        var container = findContainer(selectedEl);
-        if (!container) return;
-        getEditId(container);
-        var imgRect = selectedEl.getBoundingClientRect();
+    function fitFrameToImage(el) {
+        el = el || selectedEl;
+        if (!el) return;
+        var frame = findContainer(el);
+        if (!frame) return;
+        getEditId(frame);
+        var imgRect = el.getBoundingClientRect();
         var scale = getScale();
         var w = imgRect.width / scale;
         var h = imgRect.height / scale;
-        var before = { width: container.style.width, height: container.style.height, maxWidth: container.style.maxWidth, maxHeight: container.style.maxHeight };
-        container.style.width = Math.round(w) + 'px';
-        container.style.height = Math.round(h) + 'px';
-        container.style.maxWidth = 'none';
-        container.style.maxHeight = 'none';
+        var before = {
+            width: frame.style.width,
+            height: frame.style.height,
+            maxWidth: frame.style.maxWidth,
+            maxHeight: frame.style.maxHeight
+        };
+        frame.style.width = Math.round(w) + 'px';
+        frame.style.height = Math.round(h) + 'px';
+        frame.style.maxWidth = 'none';
+        frame.style.maxHeight = 'none';
+        // Update frame's edit state if it had one
+        if (frame._editState && frame._editState.type === 'container') {
+            frame._editState.w = w;
+            frame._editState.h = h;
+        }
         pushHistory({
-            type: 'style',
-            editId: container.dataset.editId,
+            type: 'css',
+            editId: frame.dataset.editId,
             before: before,
-            after: { width: container.style.width, height: container.style.height, maxWidth: 'none', maxHeight: 'none' }
+            after: { width: frame.style.width, height: frame.style.height, maxWidth: 'none', maxHeight: 'none' }
         });
         updateOverlayPosition();
     }
 
-    function centerInContainer() {
-        if (!selectedEl) return;
-        var container = findContainer(selectedEl);
-        if (!container) return;
-        var cRect = container.getBoundingClientRect();
-        var mRect = selectedEl.getBoundingClientRect();
+    function centerInFrame(el) {
+        el = el || selectedEl;
+        if (!el) return;
+        var frame = findContainer(el);
+        if (!frame) return;
+        var cRect = frame.getBoundingClientRect();
+        var mRect = el.getBoundingClientRect();
         var scale = getScale();
         var dx = ((cRect.left + cRect.right) / 2 - (mRect.left + mRect.right) / 2) / scale;
         var dy = ((cRect.top + cRect.bottom) / 2 - (mRect.top + mRect.bottom) / 2) / scale;
-        var before = cloneState(getEditState(selectedEl));
+        var before = cloneState(getEditState(el));
         var after = cloneState(before);
         after.tx = before.tx + dx;
         after.ty = before.ty + dy;
-        applyEditState(selectedEl, after);
-        pushHistory({ type: 'transform', editId: selectedEl.dataset.editId, before: before, after: after });
+        applyEditState(el, after);
+        pushHistory({ type: 'transform', editId: el.dataset.editId, before: before, after: after });
         updateOverlayPosition();
     }
 
@@ -753,25 +780,22 @@
         return Array.from(parent.querySelectorAll('img, video')).filter(function(s) { return s !== el; });
     }
 
-    function alignWithSiblings() {
-        if (!selectedEl) return;
-        var siblings = getSiblingImages(selectedEl);
+    function alignWithSiblings(el) {
+        el = el || selectedEl;
+        if (!el) return;
+        var siblings = getSiblingImages(el);
         if (siblings.length === 0) {
             alert('No sibling images found (must be inside .auto-slide, .image-grid-2, or .image-grid-3)');
             return;
         }
         // Align all siblings to current element's transform
-        var targetState = cloneState(getEditState(selectedEl));
+        var targetState = cloneState(getEditState(el));
         siblings.forEach(function(s) {
             getEditId(s);
             var before = cloneState(getEditState(s));
-            applyEditState(s, targetState);
+            applyEditState(s, cloneState(targetState));
             pushHistory({ type: 'transform', editId: s.dataset.editId, before: before, after: cloneState(targetState) });
         });
-    }
-
-    function copyToSiblings() {
-        alignWithSiblings();
     }
 
     // ===== History (undo/redo) =====
@@ -783,6 +807,14 @@
         updateBreadcrumb();
     }
 
+    function applyCssSnapshot(el, snap) {
+        if (!snap) return;
+        Object.keys(snap).forEach(function(prop) {
+            var cssProp = prop.replace(/[A-Z]/g, function(m) { return '-' + m.toLowerCase(); });
+            el.style[prop] = snap[prop] || '';
+        });
+    }
+
     function undo() {
         if (historyIndex < 0) return;
         var entry = history[historyIndex];
@@ -792,6 +824,8 @@
                 applyEditState(el, entry.before);
             } else if (entry.type === 'text') {
                 el.innerHTML = entry.before;
+            } else if (entry.type === 'css') {
+                applyCssSnapshot(el, entry.before);
             }
         }
         historyIndex--;
@@ -809,6 +843,8 @@
                 applyEditState(el, entry.after);
             } else if (entry.type === 'text') {
                 el.innerHTML = entry.after;
+            } else if (entry.type === 'css') {
+                applyCssSnapshot(el, entry.after);
             }
         }
         updateOverlayPosition();
@@ -818,9 +854,11 @@
     // ===== Click outside to deselect =====
     document.addEventListener('mousedown', function(e) {
         if (!selectedEl) return;
+        if (e.button !== 0) return; // ignore right-click
         if (e.target === selectedEl) return;
         if (e.target.classList && e.target.classList.contains('edit-handle')) return;
         if (e.target.closest('.edit-toolbar') || e.target.closest('.edit-modal')) return;
+        if (e.target.closest('.edit-context-menu')) return;
         if (e.target.closest('[contenteditable="true"]')) return;
         if (selectedEl.contains(e.target)) return;
         clearSelection();
