@@ -128,7 +128,7 @@
         bar.className = 'edit-toolbar';
         bar.innerHTML =
             '<span class="edit-toolbar-title">EDIT</span>' +
-            '<span class="edit-toolbar-status" id="editStatus">Click center=image · edge=frame · Shift=free/constrain · Alt=scale from center · right-click=menu</span>' +
+            '<span class="edit-toolbar-status" id="editStatus">Click center=image · edge/Alt+click=frame · Shift=free · Alt=center scale · right-click=menu</span>' +
             '<button class="edit-btn" id="editUndo" title="Ctrl+Z">↶ Undo</button>' +
             '<button class="edit-btn" id="editRedo" title="Ctrl+Y">↷ Redo</button>' +
             '<button class="edit-btn danger" id="editReset">Reset</button>' +
@@ -218,6 +218,16 @@
                 e.preventDefault();
                 e.stopPropagation();
 
+                // Alt+click = select parent frame (explicit)
+                if (e.altKey) {
+                    var frameAlt = findContainer(el);
+                    if (frameAlt) {
+                        selectElement(frameAlt, 'container');
+                        startDrag(e);
+                        return;
+                    }
+                }
+
                 // If a frame is currently selected AND this image is inside it,
                 // drag the whole frame (image moves along via CSS transform cascade)
                 if (selectionType === 'container' && selectedEl && selectedEl.contains(el)) {
@@ -225,7 +235,7 @@
                     return;
                 }
 
-                // Border zone → select parent frame
+                // Border zone → select parent frame + start drag
                 if (isInBorderZone(e, el)) {
                     var frame = findContainer(el);
                     if (frame) {
@@ -235,15 +245,11 @@
                     }
                 }
 
-                // Click already-selected image → select parent frame
-                if (selectedEl === el) {
-                    var parent = findContainer(el);
-                    if (parent) {
-                        selectElement(parent, 'container');
-                        return;
-                    }
+                // Image center click → select image and start drag
+                // (re-click on same image also starts drag — no more re-click-to-parent trap)
+                if (selectedEl !== el) {
+                    selectElement(el, 'image');
                 }
-                selectElement(el, 'image');
                 startDrag(e);
             });
             // Right-click context menu
