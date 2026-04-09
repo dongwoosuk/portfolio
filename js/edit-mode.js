@@ -1,7 +1,8 @@
-// ===== Portfolio Edit Mode v2 =====
-// ?edit=1 to activate
+// ===== Portfolio Edit Mode v3 =====
+// Add ?edit to URL to activate (e.g., /?edit#/2/11)
 // Features: drag, resize (transform-based, no layout shift),
-//           smart alignment guides, undo/redo, parent selection
+//           smart alignment guides, undo/redo, parent selection,
+//           frame/image color distinction, context menu
 
 (function() {
     var params = new URLSearchParams(window.location.search);
