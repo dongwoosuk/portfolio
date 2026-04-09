@@ -563,6 +563,7 @@
 .auto-slide {
     position: relative;
     width: 100%;
+    min-height: 300px;
     max-height: 380px;
 }
 
