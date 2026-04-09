@@ -114,7 +114,7 @@
     margin-bottom: 0.3em;
 }
 
-/* Slide Layout: Text Left + Image Right */
+/* Slide Layout: Text Left + Image Right (50/50) */
 .slide-layout {
     display: flex;
     gap: 1.5em;
@@ -123,12 +123,12 @@
 }
 
 .slide-text {
-    flex: 1;
+    flex: 1 1 50%;
     font-size: 0.7em;
 }
 
 .slide-image {
-    flex: 0 0 auto;
+    flex: 1 1 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -765,17 +765,6 @@
 
 .hover-reveal:hover .hover-reveal-on {
     opacity: 1;
-}
-
-/* Cropped image using background-image */
-.cropped-image {
-    width: 380px;
-    height: 380px;
-    background-size: 210% auto;
-    background-position: center 38%;
-    background-repeat: no-repeat;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Vertical dot navigation */
