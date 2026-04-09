@@ -128,7 +128,7 @@
         bar.className = 'edit-toolbar';
         bar.innerHTML =
             '<span class="edit-toolbar-title">EDIT</span>' +
-            '<span class="edit-toolbar-status" id="editStatus">Click image center = image · click image edge = frame · right-click for options</span>' +
+            '<span class="edit-toolbar-status" id="editStatus">Click center=image · edge=frame · Shift=free/constrain · Alt=scale from center · right-click=menu</span>' +
             '<button class="edit-btn" id="editUndo" title="Ctrl+Z">↶ Undo</button>' +
             '<button class="edit-btn" id="editRedo" title="Ctrl+Y">↷ Redo</button>' +
             '<button class="edit-btn danger" id="editReset">Reset</button>' +
@@ -422,31 +422,55 @@
             if (resizeHandle.indexOf('w') !== -1) dw = -dx;
             if (resizeHandle.indexOf('s') !== -1) dh = dy;
             if (resizeHandle.indexOf('n') !== -1) dh = -dy;
-            // Aspect ratio for corner (unless Shift)
-            if (!e.shiftKey && resizeHandle.length === 2) {
-                var ratio = w / h;
+
+            var isCorner = resizeHandle.length === 2;
+            var ratio = w / h;
+
+            // Aspect ratio logic:
+            //   Corner default: maintain ratio (Shift to break free)
+            //   Edge default: single axis (Shift to maintain ratio)
+            if (isCorner && !e.shiftKey) {
                 if (Math.abs(dw) > Math.abs(dh)) dh = dw / ratio;
                 else dw = dh * ratio;
+            } else if (!isCorner && e.shiftKey) {
+                if (dw !== 0) dh = dw / ratio;
+                else if (dh !== 0) dw = dh * ratio;
             }
-            var newW = Math.max(20, w + dw);
-            var newH = Math.max(20, h + dh);
+
+            // Alt = scale from center (both sides move symmetrically)
+            var centerScale = e.altKey;
+            var wMultiplier = centerScale ? 2 : 1;
+            var hMultiplier = centerScale ? 2 : 1;
+
+            var newW = Math.max(20, w + dw * wMultiplier);
+            var newH = Math.max(20, h + dh * hMultiplier);
+            // Actual delta applied (after clamping to 20 minimum)
+            var actualDw = (newW - w) / wMultiplier;
+            var actualDh = (newH - h) / hMultiplier;
 
             if (origState.type === 'container') {
-                // Container: set w/h directly
                 newState.w = newW;
                 newState.h = newH;
             } else {
-                // Image: scale via transform
                 newState.sx = newW / w * origState.sx;
                 newState.sy = newH / h * origState.sy;
             }
-            // Adjust translate for w/n handles so opposite edge stays put
-            if (resizeHandle.indexOf('w') !== -1) {
-                newState.tx = origState.tx + (w - newW);
+
+            // Translate adjustment
+            if (centerScale) {
+                // Anchor center: both X and Y shift by half the delta
+                newState.tx = origState.tx - actualDw;
+                newState.ty = origState.ty - actualDh;
+            } else {
+                // Anchor opposite edge
+                if (resizeHandle.indexOf('w') !== -1) {
+                    newState.tx = origState.tx - actualDw;
+                }
+                if (resizeHandle.indexOf('n') !== -1) {
+                    newState.ty = origState.ty - actualDh;
+                }
             }
-            if (resizeHandle.indexOf('n') !== -1) {
-                newState.ty = origState.ty + (h - newH);
-            }
+
             applyEditState(selectedEl, newState);
             updateOverlayPosition();
         }

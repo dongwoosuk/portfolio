@@ -240,6 +240,16 @@ body.edit-mode .slide-dots {
     display: none;
 }
 
+/* Frames crop overflow content in edit mode */
+body.edit-mode .slide-image,
+body.edit-mode .slide-text,
+body.edit-mode .auto-slide,
+body.edit-mode .image-full,
+body.edit-mode .image-grid-2 > *,
+body.edit-mode .image-grid-3 > * {
+    overflow: hidden;
+}
+
 /* Context menu */
 .edit-context-menu {
     position: fixed;
