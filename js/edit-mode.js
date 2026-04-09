@@ -218,17 +218,24 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                // Border zone → select container
+                // If a frame is currently selected AND this image is inside it,
+                // drag the whole frame (image moves along via CSS transform cascade)
+                if (selectionType === 'container' && selectedEl && selectedEl.contains(el)) {
+                    startDrag(e);
+                    return;
+                }
+
+                // Border zone → select parent frame
                 if (isInBorderZone(e, el)) {
-                    var container = findContainer(el);
-                    if (container) {
-                        selectElement(container, 'container');
+                    var frame = findContainer(el);
+                    if (frame) {
+                        selectElement(frame, 'container');
                         startDrag(e);
                         return;
                     }
                 }
 
-                // Click already-selected image → select parent
+                // Click already-selected image → select parent frame
                 if (selectedEl === el) {
                     var parent = findContainer(el);
                     if (parent) {
