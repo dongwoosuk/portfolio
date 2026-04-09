@@ -1,157 +1,148 @@
-// ===== Portfolio Edit Mode =====
-// Activate by adding ?edit=1 to URL
-// Provides: text contenteditable, image drag/resize, CSS export
+// ===== Portfolio Edit Mode v2 =====
+// ?edit=1 to activate
+// Features: drag, resize (transform-based, no layout shift),
+//           smart alignment guides, undo/redo, parent selection
 
 (function() {
-    // Check URL parameter
     var params = new URLSearchParams(window.location.search);
     if (params.get('edit') !== '1') return;
 
     // ===== State =====
-    var changes = {
-        styles: {},  // selector → { property: value }
-        texts: {}    // selector → { original, current }
-    };
     var selectedEl = null;
     var resizeOverlay = null;
+    var guideOverlay = null;
     var dragging = false;
     var resizing = false;
-    var dragStart = { x: 0, y: 0 };
-    var origTransform = { x: 0, y: 0 };
     var resizeHandle = null;
-    var origRect = null;
+    var dragStart = { x: 0, y: 0 };
+    var origState = null;
+    var history = [];
+    var historyIndex = -1;
+    var editIdCounter = 0;
+    var SNAP_THRESHOLD = 6; // px in slide coords
 
-    // ===== Utility: get Reveal scale =====
+    // ===== Unique ID =====
+    function getEditId(el) {
+        if (!el.dataset.editId) {
+            el.dataset.editId = 'e' + (++editIdCounter);
+        }
+        return el.dataset.editId;
+    }
+
+    // ===== Transform state (per element) =====
+    // Stored as { tx, ty, sx, sy } applied as translate + scale
+    function getEditState(el) {
+        if (!el._editState) {
+            el._editState = { tx: 0, ty: 0, sx: 1, sy: 1 };
+            el._originalTransform = el.style.transform || '';
+        }
+        return el._editState;
+    }
+
+    function applyEditState(el, state) {
+        el._editState = Object.assign({}, state);
+        var base = el._originalTransform || '';
+        var edit = 'translate(' + state.tx + 'px, ' + state.ty + 'px) scale(' + state.sx + ', ' + state.sy + ')';
+        el.style.transform = (base + ' ' + edit).trim();
+        el.style.transformOrigin = 'top left';
+    }
+
+    function cloneState(s) {
+        return { tx: s.tx, ty: s.ty, sx: s.sx, sy: s.sy };
+    }
+
+    // ===== Reveal scale factor =====
     function getScale() {
         var slidesEl = document.querySelector('.reveal .slides');
         if (!slidesEl) return 1;
-        var transform = window.getComputedStyle(slidesEl).transform;
-        if (transform === 'none') return 1;
-        var match = transform.match(/matrix\(([^)]+)\)/);
+        var cs = window.getComputedStyle(slidesEl);
+        var match = cs.transform.match(/matrix\(([^)]+)\)/);
         if (!match) return 1;
         return parseFloat(match[1].split(',')[0]) || 1;
     }
 
-    // ===== Utility: build CSS selector for element =====
-    function buildSelector(el) {
-        if (el.id) return '#' + el.id;
-        var parts = [];
-        var current = el;
-        var depth = 0;
-        while (current && current.tagName !== 'BODY' && depth < 5) {
-            var part = current.tagName.toLowerCase();
-            if (current.className && typeof current.className === 'string') {
-                var classes = current.className.split(/\s+/).filter(function(c) {
-                    return c && !c.startsWith('edit-') && c !== 'present' && c !== 'past' && c !== 'future';
-                });
-                if (classes.length) part += '.' + classes.join('.');
-            }
-            // Add nth-child if siblings exist with same tag
-            var parent = current.parentElement;
-            if (parent) {
-                var siblings = Array.from(parent.children).filter(function(c) {
-                    return c.tagName === current.tagName;
-                });
-                if (siblings.length > 1) {
-                    var idx = siblings.indexOf(current) + 1;
-                    part += ':nth-of-type(' + idx + ')';
-                }
-            }
-            parts.unshift(part);
-            current = current.parentElement;
-            depth++;
-        }
-        return parts.join(' > ');
-    }
-
-    // ===== Utility: parse current transform translate =====
-    function getTransformXY(el) {
-        var t = el.style.transform || '';
-        var m = t.match(/translate\(([-0-9.]+)px,\s*([-0-9.]+)px\)/);
-        if (m) return { x: parseFloat(m[1]), y: parseFloat(m[2]) };
-        return { x: 0, y: 0 };
-    }
-
-    function setTransformXY(el, x, y) {
-        // Preserve other transforms if any
-        var t = el.style.transform || '';
-        var stripped = t.replace(/translate\([^)]+\)/g, '').trim();
-        el.style.transform = (stripped + ' translate(' + x + 'px, ' + y + 'px)').trim();
-    }
-
-    // ===== Build toolbar =====
+    // ===== Toolbar =====
     function buildToolbar() {
         var bar = document.createElement('div');
         bar.className = 'edit-toolbar';
         bar.innerHTML =
-            '<span class="edit-toolbar-title">EDIT MODE</span>' +
-            '<span class="edit-toolbar-status" id="editStatus">Click any text to edit, drag images to move/resize</span>' +
+            '<span class="edit-toolbar-title">EDIT</span>' +
+            '<span class="edit-toolbar-status" id="editStatus">Click element to select · drag to move · handles to resize · click again for parent</span>' +
+            '<button class="edit-btn" id="editUndo" title="Ctrl+Z">↶ Undo</button>' +
+            '<button class="edit-btn" id="editRedo" title="Ctrl+Y">↷ Redo</button>' +
             '<button class="edit-btn danger" id="editReset">Reset</button>' +
             '<button class="edit-btn primary" id="editExport">Export CSS</button>' +
             '<button class="edit-btn" id="editExit">Exit</button>';
         document.body.appendChild(bar);
         document.body.classList.add('edit-mode');
 
+        document.getElementById('editUndo').addEventListener('click', undo);
+        document.getElementById('editRedo').addEventListener('click', redo);
         document.getElementById('editReset').addEventListener('click', resetChanges);
         document.getElementById('editExport').addEventListener('click', exportChanges);
         document.getElementById('editExit').addEventListener('click', exitEditMode);
     }
 
-    // ===== Make text editable =====
-    var TEXT_TAGS = ['H1', 'H2', 'H3', 'H4', 'P', 'LI', 'SPAN', 'SMALL', 'STRONG'];
+    // ===== Text editing =====
     function setupTextEdit() {
-        document.querySelectorAll('.reveal .slides h1, .reveal .slides h2, .reveal .slides h3, .reveal .slides h4, .reveal .slides p, .reveal .slides li, .reveal .slides small').forEach(function(el) {
-            // Skip if contains other editable children
-            var hasEditableChild = el.querySelector('h1, h2, h3, p, li, ul, ol');
-            if (hasEditableChild) return;
-            // Save original
-            el.dataset.originalText = el.innerHTML;
-            el.setAttribute('contenteditable', 'true');
-            el.addEventListener('blur', function() {
-                if (el.innerHTML !== el.dataset.originalText) {
-                    var sel = buildSelector(el);
-                    changes.texts[sel] = {
-                        original: el.dataset.originalText,
-                        current: el.innerHTML
-                    };
-                    updateStatus();
-                }
-            });
-            el.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') el.blur();
+        var tags = 'h1, h2, h3, h4, p, li, small, strong';
+        document.querySelectorAll('.reveal .slides').forEach(function(slides) {
+            slides.querySelectorAll(tags).forEach(function(el) {
+                // Skip if has structural children
+                if (el.querySelector('h1, h2, h3, p, li, ul, ol, img, video')) return;
+                getEditId(el);
+                el.dataset.originalText = el.innerHTML;
+                el.setAttribute('contenteditable', 'true');
+                var beforeText = null;
+                el.addEventListener('focus', function() {
+                    beforeText = el.innerHTML;
+                });
+                el.addEventListener('blur', function() {
+                    if (beforeText !== null && el.innerHTML !== beforeText) {
+                        pushHistory({
+                            type: 'text',
+                            editId: el.dataset.editId,
+                            before: beforeText,
+                            after: el.innerHTML
+                        });
+                    }
+                });
+                el.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') el.blur();
+                });
             });
         });
     }
 
-    // ===== Image/video drag + resize =====
+    // ===== Image/video edit setup =====
     function setupImageEdit() {
         document.querySelectorAll('.reveal .slides img, .reveal .slides video').forEach(function(el) {
-            // Save original transform
-            el.dataset.originalTransform = el.style.transform || '';
-            el.dataset.originalWidth = el.style.width || '';
-            el.dataset.originalHeight = el.style.height || '';
-            el.dataset.originalMaxWidth = el.style.maxWidth || '';
-            el.dataset.originalMaxHeight = el.style.maxHeight || '';
-
+            getEditId(el);
             el.addEventListener('mousedown', function(e) {
                 if (e.target !== el) return;
                 e.preventDefault();
                 e.stopPropagation();
-                selectImage(el);
+                // Click already-selected element → select parent
+                if (selectedEl === el) {
+                    if (el.parentElement && !el.parentElement.classList.contains('slides')) {
+                        selectElement(el.parentElement);
+                        return;
+                    }
+                }
+                selectElement(el);
                 startDrag(e);
             });
         });
-
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
     }
 
-    function selectImage(el) {
-        if (selectedEl === el) return;
+    // ===== Selection =====
+    function selectElement(el) {
         clearSelection();
         selectedEl = el;
+        getEditId(el);
         el.classList.add('edit-selected');
         showResizeHandles(el);
+        updateBreadcrumb();
     }
 
     function clearSelection() {
@@ -159,10 +150,29 @@
             selectedEl.classList.remove('edit-selected');
             selectedEl = null;
         }
-        if (resizeOverlay) {
-            resizeOverlay.remove();
-            resizeOverlay = null;
+        if (resizeOverlay) { resizeOverlay.remove(); resizeOverlay = null; }
+        updateBreadcrumb();
+    }
+
+    function updateBreadcrumb() {
+        var status = document.getElementById('editStatus');
+        if (!status) return;
+        if (!selectedEl) {
+            status.textContent = history.length + ' change(s) · Click any element to select';
+            return;
         }
+        var parts = [];
+        var cur = selectedEl;
+        while (cur && cur.tagName !== 'SECTION' && parts.length < 5) {
+            var tag = cur.tagName.toLowerCase();
+            if (cur.className && typeof cur.className === 'string') {
+                var cls = cur.className.split(/\s+/).filter(function(c){return c && !c.startsWith('edit-');})[0];
+                if (cls) tag += '.' + cls;
+            }
+            parts.unshift(tag);
+            cur = cur.parentElement;
+        }
+        status.innerHTML = '<strong>Selected:</strong> ' + parts.join(' › ') + ' · <em>click again for parent</em>';
     }
 
     function showResizeHandles(el) {
@@ -175,8 +185,7 @@
         resizeOverlay.style.width = rect.width + 'px';
         resizeOverlay.style.height = rect.height + 'px';
 
-        var handles = ['nw', 'n', 'ne', 'w', 'e', 'sw', 's', 'se'];
-        handles.forEach(function(dir) {
+        ['nw','n','ne','w','e','sw','s','se'].forEach(function(dir) {
             var h = document.createElement('div');
             h.className = 'edit-handle ' + dir;
             h.dataset.dir = dir;
@@ -207,84 +216,234 @@
         if (badge) badge.textContent = Math.round(rect.width) + ' × ' + Math.round(rect.height);
     }
 
+    // ===== Drag =====
     function startDrag(e) {
         dragging = true;
-        var scale = getScale();
         dragStart.x = e.clientX;
         dragStart.y = e.clientY;
-        origTransform = getTransformXY(selectedEl);
+        origState = cloneState(getEditState(selectedEl));
         document.body.style.cursor = 'move';
     }
 
+    // ===== Resize =====
     function startResize(e, dir) {
         resizing = true;
         resizeHandle = dir;
+        dragStart.x = e.clientX;
+        dragStart.y = e.clientY;
+        origState = cloneState(getEditState(selectedEl));
+        // Capture original unscaled size (slide coords)
         var rect = selectedEl.getBoundingClientRect();
         var scale = getScale();
-        origRect = {
-            x: e.clientX,
-            y: e.clientY,
-            width: rect.width / scale,
-            height: rect.height / scale
-        };
+        origState.origW = rect.width / scale / origState.sx;
+        origState.origH = rect.height / scale / origState.sy;
         document.body.style.cursor = dir + '-resize';
     }
 
-    function onMouseMove(e) {
+    // ===== Mouse move/up =====
+    document.addEventListener('mousemove', function(e) {
         if (dragging && selectedEl) {
             var scale = getScale();
             var dx = (e.clientX - dragStart.x) / scale;
             var dy = (e.clientY - dragStart.y) / scale;
-            setTransformXY(selectedEl, origTransform.x + dx, origTransform.y + dy);
+            var newState = cloneState(origState);
+            newState.tx = origState.tx + dx;
+            newState.ty = origState.ty + dy;
+
+            // Smart alignment guides + snap
+            var snap = computeSnap(selectedEl, newState);
+            newState.tx += snap.dx;
+            newState.ty += snap.dy;
+            drawGuides(snap.guides);
+
+            applyEditState(selectedEl, newState);
             updateOverlayPosition();
-            recordStyleChange(selectedEl, 'transform', selectedEl.style.transform);
         } else if (resizing && selectedEl) {
             var scale = getScale();
-            var dx = (e.clientX - origRect.x) / scale;
-            var dy = (e.clientY - origRect.y) / scale;
-            var newW = origRect.width;
-            var newH = origRect.height;
-            if (resizeHandle.includes('e')) newW = origRect.width + dx;
-            if (resizeHandle.includes('w')) newW = origRect.width - dx;
-            if (resizeHandle.includes('s')) newH = origRect.height + dy;
-            if (resizeHandle.includes('n')) newH = origRect.height - dy;
-            // Maintain aspect ratio for corner handles unless Shift held
+            var dx = (e.clientX - dragStart.x) / scale;
+            var dy = (e.clientY - dragStart.y) / scale;
+            var newState = cloneState(origState);
+            var w = origState.origW;
+            var h = origState.origH;
+            var dw = 0, dh = 0;
+            if (resizeHandle.indexOf('e') !== -1) dw = dx;
+            if (resizeHandle.indexOf('w') !== -1) dw = -dx;
+            if (resizeHandle.indexOf('s') !== -1) dh = dy;
+            if (resizeHandle.indexOf('n') !== -1) dh = -dy;
+            // Aspect ratio for corner (unless Shift)
             if (!e.shiftKey && resizeHandle.length === 2) {
-                var ratio = origRect.width / origRect.height;
-                if (Math.abs(dx) > Math.abs(dy)) {
-                    newH = newW / ratio;
-                } else {
-                    newW = newH * ratio;
+                var ratio = w / h;
+                if (Math.abs(dw) > Math.abs(dh)) dh = dw / ratio;
+                else dw = dh * ratio;
+            }
+            var newW = Math.max(20, w + dw);
+            var newH = Math.max(20, h + dh);
+            newState.sx = newW / w * origState.sx;
+            newState.sy = newH / h * origState.sy;
+            // Adjust translate for w/n handles so opposite edge stays put
+            if (resizeHandle.indexOf('w') !== -1) {
+                newState.tx = origState.tx + (w - newW);
+            }
+            if (resizeHandle.indexOf('n') !== -1) {
+                newState.ty = origState.ty + (h - newH);
+            }
+            applyEditState(selectedEl, newState);
+            updateOverlayPosition();
+        }
+    });
+
+    document.addEventListener('mouseup', function() {
+        if (dragging || resizing) {
+            clearGuides();
+            document.body.style.cursor = '';
+            if (selectedEl && origState) {
+                var after = cloneState(getEditState(selectedEl));
+                if (after.tx !== origState.tx || after.ty !== origState.ty ||
+                    after.sx !== origState.sx || after.sy !== origState.sy) {
+                    pushHistory({
+                        type: 'transform',
+                        editId: selectedEl.dataset.editId,
+                        before: { tx: origState.tx, ty: origState.ty, sx: origState.sx, sy: origState.sy },
+                        after: after
+                    });
                 }
             }
-            newW = Math.max(20, newW);
-            newH = Math.max(20, newH);
-            selectedEl.style.width = Math.round(newW) + 'px';
-            selectedEl.style.height = Math.round(newH) + 'px';
-            selectedEl.style.maxWidth = 'none';
-            selectedEl.style.maxHeight = 'none';
-            updateOverlayPosition();
-            recordStyleChange(selectedEl, 'width', selectedEl.style.width);
-            recordStyleChange(selectedEl, 'height', selectedEl.style.height);
-            recordStyleChange(selectedEl, 'max-width', 'none');
-            recordStyleChange(selectedEl, 'max-height', 'none');
-        }
-    }
-
-    function onMouseUp() {
-        if (dragging || resizing) {
             dragging = false;
             resizing = false;
-            resizeHandle = null;
-            document.body.style.cursor = '';
-            updateStatus();
+            origState = null;
         }
+    });
+
+    // ===== Smart guides =====
+    function computeSnap(movingEl, state) {
+        var scale = getScale();
+        // Compute proposed rect in screen coords
+        var rect = movingEl.getBoundingClientRect();
+        // Apply delta from original to get projected rect
+        var delta = {
+            x: (state.tx - origState.tx) * scale,
+            y: (state.ty - origState.ty) * scale
+        };
+        var proposed = {
+            left: rect.left + delta.x,
+            top: rect.top + delta.y,
+            right: rect.right + delta.x,
+            bottom: rect.bottom + delta.y,
+            cx: (rect.left + rect.right) / 2 + delta.x,
+            cy: (rect.top + rect.bottom) / 2 + delta.y
+        };
+        // Find alignment with other elements
+        var guides = [];
+        var snapDx = 0, snapDy = 0;
+        var minDx = SNAP_THRESHOLD * scale + 1;
+        var minDy = SNAP_THRESHOLD * scale + 1;
+
+        var candidates = document.querySelectorAll('.reveal .slides img, .reveal .slides video, .reveal .slides .slide-image, .reveal .slides .slide-text, .reveal .slides .auto-slide');
+        candidates.forEach(function(other) {
+            if (other === movingEl) return;
+            // Skip children of movingEl
+            if (movingEl.contains(other) || other.contains(movingEl)) return;
+            var r = other.getBoundingClientRect();
+            var oCx = (r.left + r.right) / 2;
+            var oCy = (r.top + r.bottom) / 2;
+
+            // Vertical edges (left, cx, right)
+            [[proposed.left, r.left, 'left'], [proposed.left, r.right, 'left-right'],
+             [proposed.right, r.left, 'right-left'], [proposed.right, r.right, 'right'],
+             [proposed.cx, oCx, 'centerX']].forEach(function(pair) {
+                var d = pair[1] - pair[0];
+                if (Math.abs(d) < minDx) {
+                    minDx = Math.abs(d);
+                    snapDx = d / scale;
+                    guides.push({ type: 'v', x: pair[1], y1: Math.min(r.top, proposed.top), y2: Math.max(r.bottom, proposed.bottom) });
+                }
+            });
+            // Horizontal edges (top, cy, bottom)
+            [[proposed.top, r.top, 'top'], [proposed.top, r.bottom, 'top-bottom'],
+             [proposed.bottom, r.top, 'bottom-top'], [proposed.bottom, r.bottom, 'bottom'],
+             [proposed.cy, oCy, 'centerY']].forEach(function(pair) {
+                var d = pair[1] - pair[0];
+                if (Math.abs(d) < minDy) {
+                    minDy = Math.abs(d);
+                    snapDy = d / scale;
+                    guides.push({ type: 'h', y: pair[1], x1: Math.min(r.left, proposed.left), x2: Math.max(r.right, proposed.right) });
+                }
+            });
+        });
+
+        return { dx: snapDx, dy: snapDy, guides: guides };
     }
 
-    function recordStyleChange(el, prop, value) {
-        var sel = buildSelector(el);
-        if (!changes.styles[sel]) changes.styles[sel] = {};
-        changes.styles[sel][prop] = value;
+    function drawGuides(guides) {
+        if (!guideOverlay) {
+            guideOverlay = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            guideOverlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+            document.body.appendChild(guideOverlay);
+        }
+        guideOverlay.innerHTML = '';
+        guides.forEach(function(g) {
+            var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            if (g.type === 'v') {
+                line.setAttribute('x1', g.x);
+                line.setAttribute('x2', g.x);
+                line.setAttribute('y1', g.y1 - 20);
+                line.setAttribute('y2', g.y2 + 20);
+            } else {
+                line.setAttribute('x1', g.x1 - 20);
+                line.setAttribute('x2', g.x2 + 20);
+                line.setAttribute('y1', g.y);
+                line.setAttribute('y2', g.y);
+            }
+            line.setAttribute('stroke', '#ff4080');
+            line.setAttribute('stroke-width', '1');
+            line.setAttribute('stroke-dasharray', '4 2');
+            guideOverlay.appendChild(line);
+        });
+    }
+
+    function clearGuides() {
+        if (guideOverlay) guideOverlay.innerHTML = '';
+    }
+
+    // ===== History (undo/redo) =====
+    function pushHistory(entry) {
+        // Drop any redo history
+        history = history.slice(0, historyIndex + 1);
+        history.push(entry);
+        historyIndex = history.length - 1;
+        updateBreadcrumb();
+    }
+
+    function undo() {
+        if (historyIndex < 0) return;
+        var entry = history[historyIndex];
+        var el = document.querySelector('[data-edit-id="' + entry.editId + '"]');
+        if (el) {
+            if (entry.type === 'transform') {
+                applyEditState(el, entry.before);
+            } else if (entry.type === 'text') {
+                el.innerHTML = entry.before;
+            }
+        }
+        historyIndex--;
+        updateOverlayPosition();
+        updateBreadcrumb();
+    }
+
+    function redo() {
+        if (historyIndex >= history.length - 1) return;
+        historyIndex++;
+        var entry = history[historyIndex];
+        var el = document.querySelector('[data-edit-id="' + entry.editId + '"]');
+        if (el) {
+            if (entry.type === 'transform') {
+                applyEditState(el, entry.after);
+            } else if (entry.type === 'text') {
+                el.innerHTML = entry.after;
+            }
+        }
+        updateOverlayPosition();
+        updateBreadcrumb();
     }
 
     // ===== Click outside to deselect =====
@@ -293,82 +452,120 @@
         if (e.target === selectedEl) return;
         if (e.target.classList && e.target.classList.contains('edit-handle')) return;
         if (e.target.closest('.edit-toolbar') || e.target.closest('.edit-modal')) return;
+        if (e.target.closest('[contenteditable="true"]')) return;
+        if (selectedEl.contains(e.target)) return;
         clearSelection();
     });
 
-    // ===== Status update =====
-    function updateStatus() {
-        var styleCount = Object.keys(changes.styles).length;
-        var textCount = Object.keys(changes.texts).length;
-        var status = document.getElementById('editStatus');
-        if (status) {
-            status.textContent = styleCount + ' style change(s), ' + textCount + ' text change(s)';
+    // ===== Keyboard shortcuts =====
+    document.addEventListener('keydown', function(e) {
+        // Don't capture while editing text
+        if (document.activeElement && document.activeElement.isContentEditable) return;
+        if (e.ctrlKey || e.metaKey) {
+            if (e.key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
+            else if (e.key === 'y' || (e.key === 'z' && e.shiftKey)) { e.preventDefault(); redo(); }
+        } else if (e.key === 'Escape') {
+            clearSelection();
         }
-    }
+    });
 
     // ===== Reset =====
     function resetChanges() {
         if (!confirm('Reset all changes?')) return;
-        // Restore styles
-        Object.keys(changes.styles).forEach(function(sel) {
-            // Find element via stored data
-            var el = document.querySelector(sel);
-            if (el) {
-                el.style.transform = el.dataset.originalTransform || '';
-                el.style.width = el.dataset.originalWidth || '';
-                el.style.height = el.dataset.originalHeight || '';
-                el.style.maxWidth = el.dataset.originalMaxWidth || '';
-                el.style.maxHeight = el.dataset.originalMaxHeight || '';
+        document.querySelectorAll('[data-edit-id]').forEach(function(el) {
+            if (el._editState) {
+                el._editState = { tx: 0, ty: 0, sx: 1, sy: 1 };
+                el.style.transform = el._originalTransform || '';
+            }
+            if (el.dataset.originalText && el.getAttribute('contenteditable') === 'true') {
+                el.innerHTML = el.dataset.originalText;
             }
         });
-        // Restore texts
-        document.querySelectorAll('[contenteditable="true"]').forEach(function(el) {
-            if (el.dataset.originalText) el.innerHTML = el.dataset.originalText;
-        });
-        changes = { styles: {}, texts: {} };
+        history = [];
+        historyIndex = -1;
         clearSelection();
-        updateStatus();
+        updateBreadcrumb();
     }
 
     // ===== Export =====
-    function exportChanges() {
-        var lines = [];
-        var date = new Date().toISOString().slice(0, 10);
-        lines.push('/* Edit Mode Export — ' + date + ' */');
-        lines.push('');
-
-        // CSS section
-        if (Object.keys(changes.styles).length) {
-            lines.push('/* ===== Style Changes ===== */');
-            Object.keys(changes.styles).forEach(function(sel) {
-                lines.push(sel + ' {');
-                var props = changes.styles[sel];
-                Object.keys(props).forEach(function(prop) {
-                    lines.push('    ' + prop + ': ' + props[prop] + ' !important;');
+    function buildUniqueSelector(el) {
+        if (el.id) return '#' + el.id;
+        var parts = [];
+        var current = el;
+        var depth = 0;
+        while (current && current.tagName !== 'BODY' && depth < 8) {
+            var part = current.tagName.toLowerCase();
+            if (current.className && typeof current.className === 'string') {
+                var classes = current.className.split(/\s+/).filter(function(c){
+                    return c && !c.startsWith('edit-') && c !== 'present' && c !== 'past' && c !== 'future';
                 });
+                if (classes.length) part += '.' + classes.slice(0, 2).join('.');
+            }
+            var parent = current.parentElement;
+            if (parent) {
+                var siblings = Array.from(parent.children).filter(function(c) {
+                    return c.tagName === current.tagName;
+                });
+                if (siblings.length > 1) {
+                    part += ':nth-of-type(' + (siblings.indexOf(current) + 1) + ')';
+                }
+            }
+            parts.unshift(part);
+            current = current.parentElement;
+            depth++;
+        }
+        return parts.join(' > ');
+    }
+
+    function exportChanges() {
+        var date = new Date().toISOString().slice(0, 10);
+        var lines = ['/* Edit Mode Export — ' + date + ' */', ''];
+
+        // Style changes (from final states)
+        var styleElements = [];
+        document.querySelectorAll('[data-edit-id]').forEach(function(el) {
+            if (el._editState) {
+                var s = el._editState;
+                if (s.tx !== 0 || s.ty !== 0 || s.sx !== 1 || s.sy !== 1) {
+                    styleElements.push(el);
+                }
+            }
+        });
+        if (styleElements.length) {
+            lines.push('/* ===== Style Changes ===== */');
+            styleElements.forEach(function(el) {
+                var sel = buildUniqueSelector(el);
+                var s = el._editState;
+                lines.push(sel + ' {');
+                var parts = [];
+                if (s.tx !== 0 || s.ty !== 0) parts.push('translate(' + s.tx.toFixed(1) + 'px, ' + s.ty.toFixed(1) + 'px)');
+                if (s.sx !== 1 || s.sy !== 1) parts.push('scale(' + s.sx.toFixed(3) + ', ' + s.sy.toFixed(3) + ')');
+                lines.push('    transform: ' + parts.join(' ') + ' !important;');
+                lines.push('    transform-origin: top left !important;');
                 lines.push('}');
                 lines.push('');
             });
         }
 
-        // Text section
-        if (Object.keys(changes.texts).length) {
-            lines.push('/* ===== Text Changes ===== */');
-            Object.keys(changes.texts).forEach(function(sel) {
-                var t = changes.texts[sel];
-                lines.push('/* ' + sel + ' */');
-                lines.push('/*   FROM: ' + t.original.replace(/\n/g, ' ') + ' */');
-                lines.push('/*   TO:   ' + t.current.replace(/\n/g, ' ') + ' */');
+        // Text changes
+        var textChanges = [];
+        document.querySelectorAll('[data-edit-id][contenteditable="true"]').forEach(function(el) {
+            if (el.dataset.originalText && el.dataset.originalText !== el.innerHTML) {
+                textChanges.push({ sel: buildUniqueSelector(el), before: el.dataset.originalText, after: el.innerHTML });
+            }
+        });
+        if (textChanges.length) {
+            lines.push('/* ===== Text Changes (manual HTML edits needed) ===== */');
+            textChanges.forEach(function(t) {
+                lines.push('/* ' + t.sel + ' */');
+                lines.push('/*   FROM: ' + t.before.replace(/\n/g, ' ') + ' */');
+                lines.push('/*   TO:   ' + t.after.replace(/\n/g, ' ') + ' */');
                 lines.push('');
             });
         }
 
-        if (lines.length === 2) {
-            lines.push('/* No changes yet */');
-        }
-
-        var output = lines.join('\n');
-        showExportModal(output);
+        if (lines.length === 2) lines.push('/* No changes */');
+        showExportModal(lines.join('\n'));
     }
 
     function showExportModal(output) {
@@ -379,10 +576,10 @@
         overlay.id = 'editModal';
         overlay.innerHTML =
             '<div class="edit-modal">' +
-                '<h3>Export — Copy &amp; paste into custom.css</h3>' +
+                '<h3>Export — Paste into custom.css</h3>' +
                 '<div class="edit-modal-body"><pre id="editExportPre"></pre></div>' +
                 '<div class="edit-modal-actions">' +
-                    '<button class="edit-btn primary" id="editCopyBtn">Copy to Clipboard</button>' +
+                    '<button class="edit-btn primary" id="editCopyBtn">Copy</button>' +
                     '<button class="edit-btn" id="editCloseModal">Close</button>' +
                 '</div>' +
             '</div>';
@@ -390,22 +587,15 @@
         document.getElementById('editExportPre').textContent = output;
         document.getElementById('editCopyBtn').addEventListener('click', function() {
             navigator.clipboard.writeText(output).then(function() {
-                document.getElementById('editCopyBtn').textContent = 'Copied!';
-                setTimeout(function() {
-                    var b = document.getElementById('editCopyBtn');
-                    if (b) b.textContent = 'Copy to Clipboard';
-                }, 1500);
+                var b = document.getElementById('editCopyBtn');
+                b.textContent = 'Copied!';
+                setTimeout(function() { if (b) b.textContent = 'Copy'; }, 1500);
             });
         });
-        document.getElementById('editCloseModal').addEventListener('click', function() {
-            overlay.remove();
-        });
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) overlay.remove();
-        });
+        document.getElementById('editCloseModal').addEventListener('click', function() { overlay.remove(); });
+        overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
     }
 
-    // ===== Exit =====
     function exitEditMode() {
         var url = new URL(window.location);
         url.searchParams.delete('edit');
@@ -415,27 +605,38 @@
     // ===== Init =====
     function init() {
         buildToolbar();
-        // Wait for Reveal to be ready
         if (typeof Reveal !== 'undefined' && Reveal.isReady && Reveal.isReady()) {
-            setupAfterReveal();
+            setupAll();
         } else if (typeof Reveal !== 'undefined') {
-            Reveal.on('ready', setupAfterReveal);
+            Reveal.on('ready', setupAll);
         } else {
-            setTimeout(setupAfterReveal, 500);
+            setTimeout(setupAll, 500);
         }
     }
 
-    function setupAfterReveal() {
+    function setupAll() {
         setupTextEdit();
         setupImageEdit();
-        // Update overlay on slide change
+        // Also make .slide-layout, .slide-image, .slide-text, .auto-slide clickable for container selection via Alt+Click
+        document.querySelectorAll('.reveal .slides .slide-image, .reveal .slides .slide-text, .reveal .slides .auto-slide, .reveal .slides .slide-layout').forEach(function(el) {
+            getEditId(el);
+            el.addEventListener('mousedown', function(e) {
+                if (!e.altKey) return;
+                if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') return;
+                e.preventDefault();
+                e.stopPropagation();
+                selectElement(el);
+                startDrag(e);
+            });
+        });
         if (typeof Reveal !== 'undefined') {
             Reveal.on('slidechanged', function() {
                 clearSelection();
+                clearGuides();
             });
         }
-        // Reposition overlay on scroll/resize
         window.addEventListener('resize', updateOverlayPosition);
+        updateBreadcrumb();
     }
 
     if (document.readyState === 'loading') {
