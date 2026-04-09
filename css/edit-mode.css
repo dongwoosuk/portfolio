@@ -1,0 +1,224 @@
+/* ===== Edit Mode Styles ===== */
+
+/* Top toolbar */
+.edit-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 44px;
+    background: rgba(20, 20, 25, 0.95);
+    border-bottom: 2px solid var(--accent);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 12px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+    backdrop-filter: blur(8px);
+}
+
+.edit-toolbar-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: 8px;
+}
+
+.edit-toolbar-status {
+    font-size: 12px;
+    color: #aaa;
+    flex: 1;
+}
+
+.edit-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    font-family: inherit;
+}
+
+.edit-btn:hover {
+    background: rgba(79, 195, 247, 0.2);
+    border-color: var(--accent);
+}
+
+.edit-btn.primary {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    font-weight: 600;
+}
+
+.edit-btn.primary:hover {
+    background: #6fd0fa;
+}
+
+.edit-btn.danger:hover {
+    background: rgba(255, 100, 100, 0.25);
+    border-color: #ff6464;
+}
+
+/* Body adjustments when in edit mode */
+body.edit-mode {
+    padding-top: 44px;
+}
+
+body.edit-mode .reveal {
+    top: 44px !important;
+    height: calc(100vh - 44px) !important;
+}
+
+/* Editable text styling */
+.edit-mode [contenteditable="true"] {
+    outline: 1px dashed rgba(79, 195, 247, 0.4);
+    outline-offset: 2px;
+    cursor: text;
+    transition: outline-color 0.15s;
+}
+
+.edit-mode [contenteditable="true"]:hover {
+    outline-color: var(--accent);
+}
+
+.edit-mode [contenteditable="true"]:focus {
+    outline: 2px solid var(--accent);
+    background: rgba(79, 195, 247, 0.08);
+}
+
+/* Editable image/video wrapper */
+.edit-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+.edit-mode img:hover,
+.edit-mode video:hover {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    cursor: move;
+}
+
+.edit-mode img.edit-selected,
+.edit-mode video.edit-selected {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Resize handles (overlay) */
+.edit-resize-overlay {
+    position: absolute;
+    pointer-events: none;
+    z-index: 9999;
+    border: 2px solid var(--accent);
+    box-sizing: border-box;
+}
+
+.edit-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border: 1px solid #000;
+    pointer-events: auto;
+    z-index: 10000;
+}
+
+.edit-handle.nw { top: -5px; left: -5px; cursor: nwse-resize; }
+.edit-handle.n  { top: -5px; left: 50%; margin-left: -5px; cursor: ns-resize; }
+.edit-handle.ne { top: -5px; right: -5px; cursor: nesw-resize; }
+.edit-handle.w  { top: 50%; left: -5px; margin-top: -5px; cursor: ew-resize; }
+.edit-handle.e  { top: 50%; right: -5px; margin-top: -5px; cursor: ew-resize; }
+.edit-handle.sw { bottom: -5px; left: -5px; cursor: nesw-resize; }
+.edit-handle.s  { bottom: -5px; left: 50%; margin-left: -5px; cursor: ns-resize; }
+.edit-handle.se { bottom: -5px; right: -5px; cursor: nwse-resize; }
+
+/* Size info badge */
+.edit-size-badge {
+    position: absolute;
+    top: -28px;
+    left: 0;
+    background: var(--accent);
+    color: #000;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+    pointer-events: none;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Export modal */
+.edit-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 20000;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-modal-overlay.active {
+    display: flex;
+}
+
+.edit-modal {
+    background: #1a1a1f;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 24px;
+    max-width: 800px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+}
+
+.edit-modal h3 {
+    margin: 0 0 12px 0;
+    color: var(--accent);
+    font-size: 18px;
+}
+
+.edit-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    background: #0d0d12;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.edit-modal-body pre {
+    margin: 0;
+    color: #e0e0e0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.edit-modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* Hide dots indicator in edit mode to avoid conflicts */
+body.edit-mode .slide-dots {
+    display: none;
+}

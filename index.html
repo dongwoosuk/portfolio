@@ -17,6 +17,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" crossorigin="anonymous">
     <link rel="stylesheet" href="css/custom.css">
+    <script>
+        // Conditionally load edit mode CSS if ?edit=1
+        if (new URLSearchParams(window.location.search).get('edit') === '1') {
+            var l = document.createElement('link');
+            l.rel = 'stylesheet';
+            l.href = 'css/edit-mode.css';
+            document.head.appendChild(l);
+        }
+    </script>
 </head>
 <body>
     <div class="reveal">
@@ -831,5 +840,6 @@
     <script src="js/popup.js"></script>
     <script src="js/interactive.js"></script>
     <script src="js/reveal-config.js"></script>
+    <script src="js/edit-mode.js"></script>
 </body>
 </html>
