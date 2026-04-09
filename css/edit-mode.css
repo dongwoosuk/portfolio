@@ -104,15 +104,12 @@ body.edit-mode .reveal {
     outline-offset: 2px;
 }
 
+/* Selected elements — visual outline is provided by .edit-resize-overlay,
+   so no double border here */
 .edit-mode img.edit-selected-image,
-.edit-mode video.edit-selected-image {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-}
-
+.edit-mode video.edit-selected-image,
 .edit-mode .edit-selected-container {
-    outline: 2px dashed #ff9800 !important;
-    outline-offset: 4px;
+    /* intentionally empty — overlay shows the border */
 }
 
 /* Resize handles (overlay) */
