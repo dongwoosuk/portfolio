@@ -321,9 +321,36 @@
         status.innerHTML = label + ' · ' + parts.join(' › ');
     }
 
+    // Compute the actual visible content rect of an image/video, accounting for object-fit
+    function getVisibleRect(el) {
+        var rect = el.getBoundingClientRect();
+        if (el.tagName !== 'IMG' && el.tagName !== 'VIDEO') return rect;
+        var naturalW = el.naturalWidth || el.videoWidth || 0;
+        var naturalH = el.naturalHeight || el.videoHeight || 0;
+        if (!naturalW || !naturalH) return rect;
+        var objectFit = window.getComputedStyle(el).objectFit || 'fill';
+        if (objectFit === 'fill') return rect;
+        var imgRatio = naturalW / naturalH;
+        var elemRatio = rect.width / rect.height;
+        var w = rect.width, h = rect.height, x = rect.left, y = rect.top;
+        if (objectFit === 'contain') {
+            if (imgRatio > elemRatio) {
+                h = rect.width / imgRatio;
+                y = rect.top + (rect.height - h) / 2;
+            } else {
+                w = rect.height * imgRatio;
+                x = rect.left + (rect.width - w) / 2;
+            }
+        } else if (objectFit === 'cover') {
+            // Cover: visible area = element (content overflows)
+            // Return element rect as-is
+        }
+        return { left: x, top: y, width: w, height: h, right: x + w, bottom: y + h };
+    }
+
     function showResizeHandles(el) {
         if (resizeOverlay) resizeOverlay.remove();
-        var rect = el.getBoundingClientRect();
+        var rect = getVisibleRect(el);
         resizeOverlay = document.createElement('div');
         resizeOverlay.className = 'edit-resize-overlay' + (selectionType === 'container' ? ' container' : '');
         resizeOverlay.style.left = rect.left + 'px';
@@ -353,7 +380,7 @@
 
     function updateOverlayPosition() {
         if (!resizeOverlay || !selectedEl) return;
-        var rect = selectedEl.getBoundingClientRect();
+        var rect = getVisibleRect(selectedEl);
         resizeOverlay.style.left = rect.left + 'px';
         resizeOverlay.style.top = rect.top + 'px';
         resizeOverlay.style.width = rect.width + 'px';
