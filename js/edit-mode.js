@@ -276,6 +276,16 @@
         updateBreadcrumb();
     }
 
+    function flashStatus(msg, isError) {
+        var status = document.getElementById('editStatus');
+        if (!status) return;
+        var prevHtml = status.innerHTML;
+        status.innerHTML = '<span style="color:' + (isError ? '#ff6464' : '#66BB6A') + '">' + msg + '</span>';
+        setTimeout(function() {
+            updateBreadcrumb();
+        }, 1800);
+    }
+
     function updateBreadcrumb() {
         var status = document.getElementById('editStatus');
         if (!status) return;
@@ -651,9 +661,16 @@
             mi.className = 'menu-item' + (item.disabled ? ' disabled' : '');
             mi.textContent = item.label;
             if (!item.disabled) {
-                mi.addEventListener('click', function(e) {
+                mi.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
                     e.stopPropagation();
-                    item.action();
+                    try {
+                        item.action();
+                        flashStatus('✓ ' + item.label);
+                    } catch (err) {
+                        flashStatus('✗ ' + err.message, true);
+                        console.error('Edit action failed:', err);
+                    }
                     hideContextMenu();
                 });
             }
@@ -689,7 +706,8 @@
     // ===== Fit functions =====
     function fitImageToFrame(el) {
         el = el || selectedEl;
-        if (!el) return;
+        if (!el) throw new Error('No element selected');
+        if (el.tagName !== 'IMG' && el.tagName !== 'VIDEO') throw new Error('Select an image first');
         var before = {
             objectFit: el.style.objectFit,
             width: el.style.width,
@@ -717,9 +735,10 @@
 
     function fitFrameToImage(el) {
         el = el || selectedEl;
-        if (!el) return;
+        if (!el) throw new Error('No element selected');
+        if (el.tagName !== 'IMG' && el.tagName !== 'VIDEO') throw new Error('Select an image first');
         var frame = findContainer(el);
-        if (!frame) return;
+        if (!frame) throw new Error('No parent frame found');
         getEditId(frame);
         var imgRect = el.getBoundingClientRect();
         var scale = getScale();
@@ -751,14 +770,17 @@
 
     function centerInFrame(el) {
         el = el || selectedEl;
-        if (!el) return;
+        if (!el) throw new Error('No element selected');
         var frame = findContainer(el);
-        if (!frame) return;
+        if (!frame) throw new Error('No parent frame found');
         var cRect = frame.getBoundingClientRect();
         var mRect = el.getBoundingClientRect();
         var scale = getScale();
         var dx = ((cRect.left + cRect.right) / 2 - (mRect.left + mRect.right) / 2) / scale;
         var dy = ((cRect.top + cRect.bottom) / 2 - (mRect.top + mRect.bottom) / 2) / scale;
+        if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
+            throw new Error('Already centered');
+        }
         var before = cloneState(getEditState(el));
         var after = cloneState(before);
         after.tx = before.tx + dx;
@@ -782,11 +804,10 @@
 
     function alignWithSiblings(el) {
         el = el || selectedEl;
-        if (!el) return;
+        if (!el) throw new Error('No element selected');
         var siblings = getSiblingImages(el);
         if (siblings.length === 0) {
-            alert('No sibling images found (must be inside .auto-slide, .image-grid-2, or .image-grid-3)');
-            return;
+            throw new Error('No siblings (need auto-slide/image-grid)');
         }
         // Align all siblings to current element's transform
         var targetState = cloneState(getEditState(el));
