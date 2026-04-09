@@ -109,6 +109,13 @@ Reveal.initialize({
         comps.forEach(function(c) {
             if (c._initCenter) { setTimeout(c._initCenter, 50); }
         });
+        // Restart videos in the current slide
+        var videos = event.currentSlide.querySelectorAll('video');
+        videos.forEach(function(v) {
+            v.currentTime = 0;
+            var p = v.play();
+            if (p && typeof p.catch === 'function') { p.catch(function() {}); }
+        });
     });
     updateNav();
     updateDots();
