@@ -86,6 +86,42 @@
         });
     }
 
+    // Lock parent flex/grid layout so resizing one child doesn't shift siblings
+    function freezeParentLayout(el) {
+        var parent = el.parentElement;
+        if (!parent) return;
+        var cs = window.getComputedStyle(parent);
+        if (cs.display !== 'grid' && cs.display !== 'flex') return;
+        if (parent._layoutFrozen) return;
+        var scale = getScale();
+        var rect = parent.getBoundingClientRect();
+        parent._layoutFrozenBefore = {
+            height: parent.style.height,
+            minHeight: parent.style.minHeight,
+            alignItems: parent.style.alignItems
+        };
+        parent.style.height = (rect.height / scale) + 'px';
+        parent.style.minHeight = (rect.height / scale) + 'px';
+        // Also freeze siblings' positions so they don't reflow
+        Array.from(parent.children).forEach(function(sibling) {
+            if (sibling === el) return;
+            if (sibling._siblingFrozen) return;
+            var sRect = sibling.getBoundingClientRect();
+            sibling._siblingFrozenBefore = {
+                width: sibling.style.width,
+                height: sibling.style.height,
+                position: sibling.style.position,
+                left: sibling.style.left,
+                top: sibling.style.top,
+                alignSelf: sibling.style.alignSelf
+            };
+            sibling.style.width = (sRect.width / scale) + 'px';
+            sibling.style.height = (sRect.height / scale) + 'px';
+            sibling._siblingFrozen = true;
+        });
+        parent._layoutFrozen = true;
+    }
+
     function applyEditState(el, state) {
         el._editState = Object.assign({}, state);
         var base = el._originalTransform || '';
@@ -440,9 +476,11 @@
         dragStart.y = e.clientY;
         var state = getEditState(selectedEl);
         origState = cloneState(state);
-        // For containers, freeze child images so they don't scale along
+        // For containers, freeze child images so they don't scale along,
+        // and lock parent grid/flex layout so siblings don't reflow
         if (state.type === 'container') {
             freezeChildren(selectedEl);
+            freezeParentLayout(selectedEl);
         }
         // Capture original unscaled size (slide coords)
         var rect = selectedEl.getBoundingClientRect();
@@ -1014,6 +1052,20 @@
                 el.style.maxHeight = el._frozenBefore.maxHeight;
                 el._sizesFrozen = false;
                 el._frozenBefore = null;
+            }
+            if (el._layoutFrozenBefore) {
+                el.style.height = el._layoutFrozenBefore.height;
+                el.style.minHeight = el._layoutFrozenBefore.minHeight;
+                el.style.alignItems = el._layoutFrozenBefore.alignItems;
+                el._layoutFrozen = false;
+                el._layoutFrozenBefore = null;
+            }
+            if (el._siblingFrozenBefore) {
+                Object.keys(el._siblingFrozenBefore).forEach(function(k) {
+                    el.style[k] = el._siblingFrozenBefore[k];
+                });
+                el._siblingFrozen = false;
+                el._siblingFrozenBefore = null;
             }
             if (el.dataset.originalText && el.getAttribute('contenteditable') === 'true') {
                 el.innerHTML = el.dataset.originalText;
