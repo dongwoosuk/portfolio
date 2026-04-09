@@ -34,26 +34,82 @@
         return el.dataset.editId;
     }
 
+    // ===== Container detection =====
+    function isContainerEl(el) {
+        return el.matches && el.matches(CONTAINER_SELECTORS);
+    }
+
     // ===== Transform state (per element) =====
-    // Stored as { tx, ty, sx, sy } applied as translate + scale
+    // Images: { type: 'image', tx, ty, sx, sy }  — uses transform (no layout impact)
+    // Containers: { type: 'container', tx, ty, w, h }  — uses width/height directly
     function getEditState(el) {
         if (!el._editState) {
-            el._editState = { tx: 0, ty: 0, sx: 1, sy: 1 };
+            var type = isContainerEl(el) ? 'container' : 'image';
+            if (type === 'container') {
+                var rect = el.getBoundingClientRect();
+                var scale = getScale();
+                el._editState = {
+                    type: 'container',
+                    tx: 0, ty: 0,
+                    w: rect.width / scale,
+                    h: rect.height / scale
+                };
+            } else {
+                el._editState = { type: 'image', tx: 0, ty: 0, sx: 1, sy: 1 };
+            }
             el._originalTransform = el.style.transform || '';
+            el._originalWidth = el.style.width || '';
+            el._originalHeight = el.style.height || '';
+            el._originalMaxWidth = el.style.maxWidth || '';
+            el._originalMaxHeight = el.style.maxHeight || '';
         }
         return el._editState;
+    }
+
+    // Freeze child image sizes so container resize doesn't affect them
+    function freezeChildren(containerEl) {
+        containerEl.querySelectorAll('img, video').forEach(function(child) {
+            if (child._sizesFrozen) return;
+            var cRect = child.getBoundingClientRect();
+            var scale = getScale();
+            child._frozenBefore = {
+                width: child.style.width,
+                height: child.style.height,
+                maxWidth: child.style.maxWidth,
+                maxHeight: child.style.maxHeight
+            };
+            child.style.width = (cRect.width / scale) + 'px';
+            child.style.height = (cRect.height / scale) + 'px';
+            child.style.maxWidth = 'none';
+            child.style.maxHeight = 'none';
+            child._sizesFrozen = true;
+        });
     }
 
     function applyEditState(el, state) {
         el._editState = Object.assign({}, state);
         var base = el._originalTransform || '';
-        var edit = 'translate(' + state.tx + 'px, ' + state.ty + 'px) scale(' + state.sx + ', ' + state.sy + ')';
-        el.style.transform = (base + ' ' + edit).trim();
-        el.style.transformOrigin = 'top left';
+        if (state.type === 'container') {
+            el.style.width = state.w + 'px';
+            el.style.height = state.h + 'px';
+            el.style.maxWidth = 'none';
+            el.style.maxHeight = 'none';
+            // translate only, no scale (scale would cascade to children)
+            var t = 'translate(' + state.tx + 'px, ' + state.ty + 'px)';
+            el.style.transform = (base + ' ' + t).trim();
+        } else {
+            var edit = 'translate(' + state.tx + 'px, ' + state.ty + 'px) scale(' + state.sx + ', ' + state.sy + ')';
+            el.style.transform = (base + ' ' + edit).trim();
+            el.style.transformOrigin = 'top left';
+        }
     }
 
     function cloneState(s) {
-        return { tx: s.tx, ty: s.ty, sx: s.sx, sy: s.sy };
+        if (!s) return s;
+        if (s.type === 'container') {
+            return { type: 'container', tx: s.tx, ty: s.ty, w: s.w, h: s.h };
+        }
+        return { type: 'image', tx: s.tx, ty: s.ty, sx: s.sx, sy: s.sy };
     }
 
     // ===== Reveal scale factor =====
@@ -297,12 +353,22 @@
         resizeHandle = dir;
         dragStart.x = e.clientX;
         dragStart.y = e.clientY;
-        origState = cloneState(getEditState(selectedEl));
+        var state = getEditState(selectedEl);
+        origState = cloneState(state);
+        // For containers, freeze child images so they don't scale along
+        if (state.type === 'container') {
+            freezeChildren(selectedEl);
+        }
         // Capture original unscaled size (slide coords)
         var rect = selectedEl.getBoundingClientRect();
         var scale = getScale();
-        origState.origW = rect.width / scale / origState.sx;
-        origState.origH = rect.height / scale / origState.sy;
+        if (state.type === 'image') {
+            origState.origW = rect.width / scale / origState.sx;
+            origState.origH = rect.height / scale / origState.sy;
+        } else {
+            origState.origW = origState.w;
+            origState.origH = origState.h;
+        }
         document.body.style.cursor = dir + '-resize';
     }
 
@@ -346,8 +412,16 @@
             }
             var newW = Math.max(20, w + dw);
             var newH = Math.max(20, h + dh);
-            newState.sx = newW / w * origState.sx;
-            newState.sy = newH / h * origState.sy;
+
+            if (origState.type === 'container') {
+                // Container: set w/h directly
+                newState.w = newW;
+                newState.h = newH;
+            } else {
+                // Image: scale via transform
+                newState.sx = newW / w * origState.sx;
+                newState.sy = newH / h * origState.sy;
+            }
             // Adjust translate for w/n handles so opposite edge stays put
             if (resizeHandle.indexOf('w') !== -1) {
                 newState.tx = origState.tx + (w - newW);
@@ -366,12 +440,19 @@
             document.body.style.cursor = '';
             if (selectedEl && origState) {
                 var after = cloneState(getEditState(selectedEl));
-                if (after.tx !== origState.tx || after.ty !== origState.ty ||
-                    after.sx !== origState.sx || after.sy !== origState.sy) {
+                var changed = false;
+                if (after.type === 'container') {
+                    changed = (after.tx !== origState.tx || after.ty !== origState.ty ||
+                               after.w !== origState.w || after.h !== origState.h);
+                } else {
+                    changed = (after.tx !== origState.tx || after.ty !== origState.ty ||
+                               after.sx !== origState.sx || after.sy !== origState.sy);
+                }
+                if (changed) {
                     pushHistory({
                         type: 'transform',
                         editId: selectedEl.dataset.editId,
-                        before: { tx: origState.tx, ty: origState.ty, sx: origState.sx, sy: origState.sy },
+                        before: cloneState(origState),
                         after: after
                     });
                 }
@@ -762,8 +843,20 @@
         if (!confirm('Reset all changes?')) return;
         document.querySelectorAll('[data-edit-id]').forEach(function(el) {
             if (el._editState) {
-                el._editState = { tx: 0, ty: 0, sx: 1, sy: 1 };
+                el._editState = null;
                 el.style.transform = el._originalTransform || '';
+                el.style.width = el._originalWidth || '';
+                el.style.height = el._originalHeight || '';
+                el.style.maxWidth = el._originalMaxWidth || '';
+                el.style.maxHeight = el._originalMaxHeight || '';
+            }
+            if (el._frozenBefore) {
+                el.style.width = el._frozenBefore.width;
+                el.style.height = el._frozenBefore.height;
+                el.style.maxWidth = el._frozenBefore.maxWidth;
+                el.style.maxHeight = el._frozenBefore.maxHeight;
+                el._sizesFrozen = false;
+                el._frozenBefore = null;
             }
             if (el.dataset.originalText && el.getAttribute('contenteditable') === 'true') {
                 el.innerHTML = el.dataset.originalText;
@@ -814,7 +907,9 @@
         document.querySelectorAll('[data-edit-id]').forEach(function(el) {
             if (el._editState) {
                 var s = el._editState;
-                if (s.tx !== 0 || s.ty !== 0 || s.sx !== 1 || s.sy !== 1) {
+                if (s.type === 'container') {
+                    styleElements.push(el);
+                } else if (s.tx !== 0 || s.ty !== 0 || s.sx !== 1 || s.sy !== 1) {
                     styleElements.push(el);
                 }
             }
@@ -825,11 +920,19 @@
                 var sel = buildUniqueSelector(el);
                 var s = el._editState;
                 lines.push(sel + ' {');
-                var parts = [];
-                if (s.tx !== 0 || s.ty !== 0) parts.push('translate(' + s.tx.toFixed(1) + 'px, ' + s.ty.toFixed(1) + 'px)');
-                if (s.sx !== 1 || s.sy !== 1) parts.push('scale(' + s.sx.toFixed(3) + ', ' + s.sy.toFixed(3) + ')');
-                lines.push('    transform: ' + parts.join(' ') + ' !important;');
-                lines.push('    transform-origin: top left !important;');
+                if (s.type === 'container') {
+                    lines.push('    width: ' + Math.round(s.w) + 'px !important;');
+                    lines.push('    height: ' + Math.round(s.h) + 'px !important;');
+                    if (s.tx !== 0 || s.ty !== 0) {
+                        lines.push('    transform: translate(' + s.tx.toFixed(1) + 'px, ' + s.ty.toFixed(1) + 'px) !important;');
+                    }
+                } else {
+                    var parts = [];
+                    if (s.tx !== 0 || s.ty !== 0) parts.push('translate(' + s.tx.toFixed(1) + 'px, ' + s.ty.toFixed(1) + 'px)');
+                    if (s.sx !== 1 || s.sy !== 1) parts.push('scale(' + s.sx.toFixed(3) + ', ' + s.sy.toFixed(3) + ')');
+                    lines.push('    transform: ' + parts.join(' ') + ' !important;');
+                    lines.push('    transform-origin: top left !important;');
+                }
                 lines.push('}');
                 lines.push('');
             });
