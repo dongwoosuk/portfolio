@@ -321,10 +321,45 @@
         status.innerHTML = label + ' · ' + parts.join(' › ');
     }
 
+    // Compute content box (rect excluding padding)
+    function getContentBox(el) {
+        var rect = el.getBoundingClientRect();
+        var cs = window.getComputedStyle(el);
+        var pt = parseFloat(cs.paddingTop) || 0;
+        var pr = parseFloat(cs.paddingRight) || 0;
+        var pb = parseFloat(cs.paddingBottom) || 0;
+        var pl = parseFloat(cs.paddingLeft) || 0;
+        var bt = parseFloat(cs.borderTopWidth) || 0;
+        var br = parseFloat(cs.borderRightWidth) || 0;
+        var bb = parseFloat(cs.borderBottomWidth) || 0;
+        var bl = parseFloat(cs.borderLeftWidth) || 0;
+        return {
+            left: rect.left + pl + bl,
+            top: rect.top + pt + bt,
+            width: rect.width - pl - pr - bl - br,
+            height: rect.height - pt - pb - bt - bb,
+            right: rect.right - pr - br,
+            bottom: rect.bottom - pb - bb
+        };
+    }
+
     // Compute the actual visible content rect of an image/video, accounting for object-fit
     function getVisibleRect(el) {
-        var rect = el.getBoundingClientRect();
-        if (el.tagName !== 'IMG' && el.tagName !== 'VIDEO') return rect;
+        // For containers (divs), find the deepest visible img/video and use its visible bounds
+        if (el.tagName !== 'IMG' && el.tagName !== 'VIDEO') {
+            var innerImg = el.querySelector('img, video');
+            if (innerImg && el.contains(innerImg)) {
+                // Only use inner rect if it's the primary visible content
+                var innerRect = getVisibleRect(innerImg);
+                var elRect = getContentBox(el);
+                // If inner img occupies most of the container, use el's content box
+                // else use the larger of the two
+                return elRect;
+            }
+            return getContentBox(el);
+        }
+        // Image/video: use content box adjusted for object-fit
+        var rect = getContentBox(el);
         var naturalW = el.naturalWidth || el.videoWidth || 0;
         var naturalH = el.naturalHeight || el.videoHeight || 0;
         if (!naturalW || !naturalH) return rect;
@@ -342,8 +377,7 @@
                 x = rect.left + (rect.width - w) / 2;
             }
         } else if (objectFit === 'cover') {
-            // Cover: visible area = element (content overflows)
-            // Return element rect as-is
+            // With cover, visible content fills the element box (no adjustment)
         }
         return { left: x, top: y, width: w, height: h, right: x + w, bottom: y + h };
     }
