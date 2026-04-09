@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" crossorigin="anonymous">
     <link rel="stylesheet" href="css/custom.css">
     <script>
-        // Conditionally load edit mode CSS if ?edit=1
-        if (new URLSearchParams(window.location.search).get('edit') === '1') {
+        // Conditionally load edit mode CSS if ?edit is present
+        if (new URLSearchParams(window.location.search).has('edit')) {
             var l = document.createElement('link');
             l.rel = 'stylesheet';
             l.href = 'css/edit-mode.css';

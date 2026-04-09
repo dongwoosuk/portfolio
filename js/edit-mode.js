@@ -5,7 +5,7 @@
 
 (function() {
     var params = new URLSearchParams(window.location.search);
-    if (params.get('edit') !== '1') return;
+    if (!params.has('edit')) return;
 
     // ===== State =====
     var selectedEl = null;
