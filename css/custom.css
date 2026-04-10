@@ -134,6 +134,17 @@
     justify-content: center;
 }
 
+/* Frames crop content that extends beyond boundaries
+   (so normal mode matches edit mode clipping behavior).
+   .slide-text intentionally excluded to preserve tooltip overflow. */
+.slide-image,
+.auto-slide,
+.image-full,
+.image-grid-2 > *,
+.image-grid-3 > * {
+    overflow: hidden;
+}
+
 /* Image Placeholder */
 .placeholder {
     width: 100%;
