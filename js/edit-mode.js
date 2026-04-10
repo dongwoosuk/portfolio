@@ -1148,10 +1148,16 @@
             });
         }
 
-        // Text changes
+        // Text changes — only include elements that have a text history entry
+        // (prevents false positives from edit-mode attributes on descendants)
+        var changedIds = {};
+        history.slice(0, historyIndex + 1).forEach(function(h) {
+            if (h.type === 'text') changedIds[h.editId] = true;
+        });
         var textChanges = [];
-        document.querySelectorAll('[data-edit-id][contenteditable="true"]').forEach(function(el) {
-            if (el.dataset.originalText && el.dataset.originalText !== el.innerHTML) {
+        Object.keys(changedIds).forEach(function(id) {
+            var el = document.querySelector('[data-edit-id="' + id + '"]');
+            if (el && el.dataset.originalText && el.dataset.originalText !== el.innerHTML) {
                 textChanges.push({ sel: buildUniqueSelector(el), before: el.dataset.originalText, after: el.innerHTML });
             }
         });
