@@ -20,6 +20,20 @@ var popupData = {
         img: 'assets/images/career/the-clara.jpg',
         caption: 'The Clara — Mixed-Use Residential, SVBJ Structures Award (Steinberg Hart)'
     },
+    '5x5render': {
+        img: 'assets/images/rir/01_5x5_building/Computational_Modeling_Presentation_ADG Firmwide Page 062_web.jpg',
+        caption: '5x5 Building — AI-Powered Concept Rendering'
+    },
+    calpoly: {
+        gallery: [
+            { img: 'assets/images/rir/02_calpoly_model_group/23133_000_high_web.jpg', caption: 'Cal Poly Modular Student Housing — Aerial View' },
+            { img: 'assets/images/rir/02_calpoly_model_group/23133_000_N17_high_web.jpg', caption: 'Cal Poly Modular Student Housing — Exterior View' }
+        ]
+    },
+    fritplot: {
+        img: 'assets/images/rir/04_frit_pattern/Frit Design Plot (2)_web.jpg',
+        caption: 'Frit Pattern — Full-Scale Design Plot'
+    },
     '188wsj': {
         gallery: [
             { img: 'assets/images/reference/188 St James Interview Deck_ Page 001.jpg', caption: '188 West Saint James — Cover' },

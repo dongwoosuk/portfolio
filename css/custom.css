@@ -599,6 +599,10 @@
     opacity: 1;
 }
 
+.auto-slide.instant .auto-slide-img {
+    transition: none;
+}
+
 /* 5-column case nav variant */
 .case-nav-5 .case-nav-item {
     width: 17%;
@@ -755,6 +759,17 @@
 }
 
 /* Hover reveal image swap */
+.hover-reveal,
+.hover-reveal:hover,
+.hover-reveal:focus,
+.hover-reveal:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
 .hover-reveal {
     display: inline-grid;
     cursor: pointer;
@@ -860,11 +875,166 @@
 .text-center { text-align: center; }
 .mb-half { margin-bottom: 0.5em; }
 
+/* Image popup trigger — hover gray + overlay link */
+.img-popup-wrap {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+.img-popup-wrap.popup-trigger,
+.img-popup-wrap.popup-trigger:hover {
+    border: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+    color: inherit !important;
+}
+.img-popup-wrap img,
+.img-popup-wrap video {
+    transition: filter 0.3s ease;
+}
+.img-popup-wrap:hover img,
+.img-popup-wrap:hover video {
+    filter: grayscale(100%) brightness(0.6);
+}
+.img-popup-wrap::after {
+    content: '\1F50D  View Project';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 5;
+}
+.img-popup-wrap:hover::after {
+    opacity: 1;
+}
+
+/* Manual click carousel */
+.manual-carousel {
+    position: relative;
+    overflow: visible;
+}
+.carousel-clip {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+}
+.manual-carousel .carousel-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    transform: translateX(100%);
+    visibility: hidden;
+}
+.manual-carousel .carousel-slide.active {
+    transform: translateX(0);
+    pointer-events: auto;
+    visibility: visible;
+}
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.carousel-arrow:hover {
+    opacity: 1 !important;
+    background: rgba(79, 195, 247, 0.7);
+}
+/* Hide arrows until hover for specific carousels */
+.manual-carousel.arrows-on-hover .carousel-arrow {
+    opacity: 0;
+}
+.manual-carousel.arrows-on-hover:hover .carousel-arrow {
+    opacity: 0.7;
+}
+.carousel-prev { left: -46px; }
+.carousel-next { right: -46px; }
+.carousel-counter {
+    position: absolute;
+    bottom: -22px;
+    right: 0;
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    z-index: 10;
+}
+
+/* Spotlight effect — hover dims everything except target */
+.fl-canvas:has(.spotlight-target:hover) > *:not(.spotlight-target) {
+    filter: grayscale(100%) brightness(0.3) !important;
+    transition: filter 0.3s ease;
+}
+.spotlight-target {
+    z-index: 5;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+.spotlight-target.img-popup-wrap:hover img,
+.spotlight-target.img-popup-wrap:hover video {
+    filter: none !important;
+}
+
 /* Popup button focus styles */
 .popup-prev:focus,
 .popup-next:focus,
 .popup-close:focus {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
+}
+
+/* ===== Figma-sourced absolute-positioned slides ===== */
+/* Used by slides whose layout was exported from Figma with pixel-exact positions */
+.reveal .slides section.figma-layout {
+    padding: 0 !important;
+    overflow: visible;
+}
+.reveal .slides section.figma-layout .fl-canvas {
+    position: relative;
+    width: 1200px;
+    height: 700px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+}
+.reveal .slides section.figma-layout .fl-canvas h2,
+.reveal .slides section.figma-layout .fl-canvas p,
+.reveal .slides section.figma-layout .fl-canvas ul,
+.reveal .slides section.figma-layout .fl-canvas li {
+    padding: 0;
+}
+/* Figma-layout: strip reveal.js default img/video styling so inline sizing wins */
+.reveal .slides section.figma-layout img,
+.reveal .slides section.figma-layout video {
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    background: none;
 }
 

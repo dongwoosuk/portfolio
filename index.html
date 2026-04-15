@@ -18,6 +18,28 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" crossorigin="anonymous">
     <link rel="stylesheet" href="css/custom.css">
     <script>
+        (function() {
+            var m = location.search.match(/[?&]slide=(\d+)-(\d+)/);
+            if (!m) return;
+            var h = parseInt(m[1]), v = parseInt(m[2]);
+            var style = document.createElement('style');
+            style.textContent =
+                '.reveal .slides { transform: none !important; left: 0 !important; top: 0 !important; width: 1200px !important; height: 700px !important; }' +
+                '.reveal .slides section.present { width: 1200px !important; height: 700px !important; box-sizing: border-box !important; display: block !important; }';
+            document.head.appendChild(style);
+            var tries = 0;
+            var iv = setInterval(function() {
+                tries++;
+                if (window.Reveal && Reveal.isReady && Reveal.isReady()) {
+                    clearInterval(iv);
+                    Reveal.slide(h, v);
+                } else if (tries > 50) {
+                    clearInterval(iv);
+                }
+            }, 100);
+        })();
+    </script>
+    <script>
         // Conditionally load edit mode CSS if ?edit is present
         if (new URLSearchParams(window.location.search).has('edit')) {
             var l = document.createElement('link');
@@ -157,7 +179,7 @@
                     <h2 class="text-center mb-half">Projects</h2>
                     <div class="case-nav">
                         <a class="case-nav-item" href="#/1/3">
-                            <img src="assets/images/gh_python/massing/Unit Mix-05.jpg" alt="Building Massing" loading="lazy">
+                            <img src="assets/images/gh_python/massing/Unit Mix-05_web.jpg" alt="Building Massing" loading="lazy">
                             <span>Building Massing Generator</span>
                         </a>
                         <a class="case-nav-item" href="#/1/4">
@@ -195,7 +217,7 @@
                             <p class="projects">Applied: La Playa (526 units) &middot; San Mateo Residential</p>
                         </div>
                         <div class="slide-image">
-                            <img src="assets/images/gh_python/massing/Unit Mix-05.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
+                            <img src="assets/images/gh_python/massing/Unit Mix-05_web.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
                         </div>
                     </div>
                 </section>
@@ -250,7 +272,7 @@
                             <p class="projects">Applied: <span class="popup-trigger" data-popup="188wsj">188 West Saint James</span></p>
                         </div>
                         <div class="slide-image">
-                            <img src="assets/images/gh_python/parking/0331_03.png" alt="Parking Stall Tracker — Rhino color-coded visualization" loading="lazy">
+                            <img src="assets/images/gh_python/parking/0331_03_web.jpg" alt="Parking Stall Tracker — Rhino color-coded visualization" loading="lazy">
                         </div>
                     </div>
                     <p class="next-section"><a class="jump-link" data-h="2">&rarr; Next: Rhino.Inside.Revit</a></p>
@@ -259,310 +281,463 @@
 
             <!-- SLIDE 3: RIR Workflow (Vertical Stack) -->
             <section>
-                <!-- 3-0: Cover -->
-                <section class="text-center">
-                    <h2>Rhino.Inside.Revit Workflow</h2>
-                    <p class="subtitle">Bridging Parametric Design and BIM Documentation</p>
-                    <div style="display:flex; justify-content:center; margin-top:1em;">
-                        <a class="hover-reveal" href="#/2/1">
-                            <img class="hover-reveal-off" src="assets/images/rir/00_rir/RIR Logo_01-feather.png" alt="Rhino.Inside.Revit" loading="lazy">
-                            <img class="hover-reveal-on" src="assets/images/rir/00_rir/RIR Logo_02-feather.png" alt="Rhino.Inside.Revit — Hover" loading="lazy">
+                <!-- 3-0: RIR Cover — absolute layout from Figma 27:2 (content shifted +132px for vertical center) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:142px; width:1100px; text-align:center; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Rhino.Inside.Revit</h2>
+                        <p style="position:absolute; left:30px; top:197px; width:1100px; text-align:center; font-size:15.6px; color:#4fc3f7; margin:0;">Bridging Parametric Design and BIM Documentation</p>
+                        <a class="hover-reveal" href="#/2/1" style="position:absolute; left:352px; top:261px; width:455px; height:247px; background:transparent;">
+                            <img class="hover-reveal-off" src="assets/images/rir/00_rir/RIR Logo_01-feather.png" alt="Rhino.Inside.Revit" loading="lazy" style="width:455px; height:247px; max-width:none; max-height:none; object-fit:contain; grid-area:1/1;">
+                            <img class="hover-reveal-on" src="assets/images/rir/00_rir/RIR Logo_02-feather.png" alt="Rhino.Inside.Revit — Hover" loading="lazy" style="width:455px; height:247px; max-width:none; max-height:none; object-fit:contain; grid-area:1/1;">
                         </a>
+                        <p class="nav-hint-center" style="position:absolute; left:30px; top:540px; width:1100px; font-size:13.2px; margin:0;">&uarr; Click the image to explore</p>
                     </div>
-                    <p class="nav-hint-center" style="margin-top:1em;">&uarr; Click the image to explore</p>
                 </section>
 
-                <!-- 3-1: Overview -->
-                <section>
-                    <h2>Rhino.Inside.Revit Workflow</h2>
-                    <p class="subtitle">Bridging Parametric Design and BIM Documentation</p>
-                    <div class="slide-layout">
-                        <div class="slide-text">
-                            <div class="metrics">
-                                <div class="metric">
-                                    <span class="metric-value">60-75%</span>
-                                    <span class="metric-label">Faster Transition</span>
+                <!-- 3-1: Overview — absolute layout from Figma 26:2 (content shifted +137px for vertical center) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:147px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Rhino.Inside.Revit Workflow</h2>
+                        <p style="position:absolute; left:30px; top:202px; font-size:15.6px; color:#4fc3f7; margin:0;">Bridging Parametric Design and BIM Documentation</p>
+                        <div style="position:absolute; left:30px; top:249px; width:120px; text-align:center; white-space:nowrap;">
+                            <div style="font-size:26.88px; color:#66bb6a; font-weight:700; line-height:1;">60-75%</div>
+                            <div style="font-size:8.4px; color:#aaa; margin-top:6px; text-transform:uppercase; letter-spacing:0.1em;">Faster Transition</div>
+                        </div>
+                        <div style="position:absolute; left:160px; top:249px; width:100px; text-align:center; white-space:nowrap;">
+                            <div style="font-size:26.88px; color:#66bb6a; font-weight:700; line-height:1;">4</div>
+                            <div style="font-size:8.4px; color:#aaa; margin-top:6px; text-transform:uppercase; letter-spacing:0.1em;">Case Studies</div>
+                        </div>
+                        <ul style="position:absolute; left:30px; top:312px; width:540px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.4;">
+                            <li style="margin:2px 0;">Rhino.Inside.Revit: Grasshopper runs natively inside Revit</li>
+                            <li style="margin:2px 0;">Real-time bidirectional sync between parametric design and BIM</li>
+                            <li style="margin:2px 0;">Full Revit API access from Grasshopper &mdash; no file exchange</li>
+                        </ul>
+                        <p class="nav-hint" style="position:absolute; left:30px; top:395px; font-size:11px; margin:0;">&darr; Scroll down for case studies</p>
+                        <div class="auto-slide" style="position:absolute; left:598px; top:262px; width:532px; height:291px;">
+                            <img class="auto-slide-img" src="assets/images/rir/0630_RIR Screenshot-01_web.jpg" alt="RIR — Perspective View" loading="lazy" style="width:100%; height:100%; object-fit:contain;">
+                            <img class="auto-slide-img" src="assets/images/rir/0630_RIR Screenshot-04_web.jpg" alt="RIR — Elevation View" loading="lazy" style="width:100%; height:100%; object-fit:contain;">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3-2: Case Study Thumbnails — absolute layout from Figma 22:2 (content shifted +214px for vertical center) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:224px; width:1100px; text-align:center; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Case Studies</h2>
+                        <a class="case-nav-item" href="#/2/3" style="position:absolute; left:51px; top:271px; width:245px; display:block;">
+                            <video src="assets/images/rir/01_5x5_building/Diagram.mp4" autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
+                            <span style="display:block; width:245px; text-align:center; font-size:13.2px; color:#aaa; margin-top:5px;">5x5 Building Elefront</span>
+                        </a>
+                        <a class="case-nav-item" href="#/2/10" style="position:absolute; left:322px; top:271px; width:245px; display:block;">
+                            <video src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.mp4" autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
+                            <span style="display:block; width:245px; text-align:center; font-size:13.2px; color:#aaa; margin-top:5px;">Cal Poly Modular</span>
+                        </a>
+                        <a class="case-nav-item" href="#/2/13" style="position:absolute; left:593px; top:271px; width:245px; display:block;">
+                            <video src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form.mp4" autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
+                            <span style="display:block; width:245px; text-align:center; font-size:13.2px; color:#aaa; margin-top:5px;">Adaptive Curtain Wall</span>
+                        </a>
+                        <a class="case-nav-item" href="#/2/18" style="position:absolute; left:864px; top:271px; width:245px; display:block;">
+                            <video src="assets/images/rir/04_frit_pattern/25-1111_Axon_web.mp4" autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
+                            <span style="display:block; width:245px; text-align:center; font-size:13.2px; color:#aaa; margin-top:5px;">Frit Pattern Design</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- 3-3: 5x5 Building — Case Study (absolute layout from Figma 33:2, content shifted +30px for vertical center) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:40px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Case Study: 5x5 Building</h2>
+                        <p style="position:absolute; left:30px; top:95px; font-size:15.6px; color:#4fc3f7; margin:0;">Full Building RIR Pipeline &mdash; Rhino to Revit</p>
+                        <ul style="position:absolute; left:30px; top:135px; width:420px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.4;">
+                            <li style="margin:2px 0;">GH Parametric Design to Seamless Revit Workflow</li>
+                            <li style="margin:2px 0;">GH Data Management for Revit BIM Data Conversion</li>
+                            <li style="margin:2px 0;">From Repetitive Modeling to Rapid Design Iteration</li>
+                        </ul>
+                        <div style="position:absolute; left:30px; top:79px; width:1111px; height:540px; display:flex; align-items:flex-end; gap:26px;">
+                            <div class="comp" id="rir-comp" style="position:relative; width:365px; height:388px; max-width:none; margin:0; background:#ffffff; flex-shrink:0;">
+                                <img class="comp-img comp-bg" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Rhino 3D View_web.jpg" alt="Rhino" loading="lazy" style="object-position:center bottom;">
+                                <img class="comp-img comp-reveal" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03_web.jpg" alt="Revit" loading="lazy" style="object-position:center bottom;">
+                                <div class="comp-handle"></div>
+                                <span class="comp-tag comp-tag-l">Rhino</span>
+                                <span class="comp-tag comp-tag-r">Revit</span>
+                            </div>
+                            <div style="position:relative; width:720px; height:540px; display:block; font-size:0; line-height:0; flex-shrink:0;">
+                                <img src="assets/images/rir/01_5x5_building/Computational_Modeling_Presentation_ADG Firmwide Page 047_web.jpg" alt="5x5 Building — Computational Modeling Page 047" loading="lazy" style="width:100%; height:100%; object-fit:contain; display:block; vertical-align:top;">
+                            </div>
+                        </div>
+                        <p class="nav-hint" style="position:absolute; left:30px; top:641px; width:365px; text-align:center; font-size:11px; margin:0;">Drag the handle to compare</p>
+                    </div>
+                </section>
+
+                <!-- 3-4: 5x5 Building — Parametric Design Iterations (absolute layout from Figma 34:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:10px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">5x5 Building: Parametric Design Modeling</h2>
+                        <p style="position:absolute; left:30px; top:65px; font-size:15.6px; color:#4fc3f7; margin:0;">Conceptual Massing Studies &mdash; Parametric Design Iterations</p>
+                        <ul style="position:absolute; left:30px; top:100px; width:1140px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.4;">
+                            <li style="margin:2px 0;">Parameter-driven grid-based module box generation</li>
+                            <li style="margin:2px 0;">Floor-level-based extrusion</li>
+                            <li style="margin:2px 0;">Massing formation via module rotation</li>
+                        </ul>
+                        <video src="assets/images/rir/01_5x5_building/5x5 Animation.mp4" autoplay loop muted playsinline style="position:absolute; left:151px; top:180px; width:898px; height:505px; object-fit:cover;"></video>
+                    </div>
+                </section>
+
+                <!-- 3-5: 5x5 Building — Data Management (new slide, absolute layout from Figma 60:76) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:10px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">5x5 Building: Data Management</h2>
+                        <p style="position:absolute; left:30px; top:65px; font-size:15.6px; color:#4fc3f7; margin:0;">GH Data to BIM Management</p>
+                        <ul style="position:absolute; left:30px; top:100px; width:1140px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.4;">
+                            <li style="margin:2px 0;">Beyond geometry: every module carries structured data (unit ID, type, parameters)</li>
+                            <li style="margin:2px 0;">Hidden back-end data drives both design and documentation</li>
+                            <li style="margin:2px 0;">Color coding + unit number tags visualize the underlying data structure</li>
+                        </ul>
+                        <img src="assets/images/rir/01_5x5_building/25-0613_5x5 Building Elefront_Rhino 3D View_2 Point Perspective_resize_web.jpg" alt="Design Option" loading="lazy" style="position:absolute; left:30px; top:195px; width:273px; height:438px; object-fit:cover;">
+                        <img src="assets/images/rir/01_5x5_building/25-0613_5x5 Building Elefront_Rhino 3D View_2 Point Perspective_Coloring and Numbering_web.jpg" alt="GH Data Management" loading="lazy" style="position:absolute; left:361px; top:195px; width:268px; height:438px; object-fit:cover;">
+                        <img src="assets/images/rir/01_5x5_building/25-0613_5x5 Building Elefront_Rhino 3D View_2 Point Perspective_ Numbering_Zoom_web.jpg" alt="Numbering Zoom" loading="lazy" style="position:absolute; left:687px; top:195px; width:314px; height:438px; object-fit:cover;">
+                        <p style="position:absolute; left:30px; top:651px; width:273px; text-align:center; font-size:14.4px; color:#aaa; margin:0;">Design Option</p>
+                        <p style="position:absolute; left:483px; top:651px; width:350px; text-align:center; font-size:14.4px; color:#aaa; margin:0;">GH Data Management</p>
+                    </div>
+                </section>
+
+                <!-- 3-6: 5x5 Building — Component Breakdown (absolute layout from Figma 35:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:10px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">5x5 Building: Component Breakdown</h2>
+                        <p style="position:absolute; left:30px; top:65px; font-size:15.6px; color:#4fc3f7; margin:0;">Lossless GH &rarr; Revit Conversion via Rhino.Inside.Revit</p>
+                        <ul style="position:absolute; left:30px; top:95px; width:1140px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.4;">
+                            <li style="margin:2px 0;">Clean, well-organized Grasshopper geometry data pipeline</li>
+                            <li style="margin:2px 0;">Sequential assembly: Floors &rarr; Cores &rarr; Structural Columns &rarr; Walls &rarr; Windows</li>
+                            <li style="margin:2px 0;">Zero data loss &mdash; parameters, types &amp; categories fully preserved in Revit</li>
+                        </ul>
+                        <video src="assets/images/rir/01_5x5_building/Diagram.mp4" autoplay loop muted playsinline style="position:absolute; left:227px; top:180px; width:841px; height:473px; object-fit:cover; background:#222;"></video>
+                    </div>
+                </section>
+
+                <!-- 3-7: 5x5 Building — Revit Phase Progression (absolute layout from Figma 36:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:10px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">5x5 Building: Revit Facade Development</h2>
+                        <p style="position:absolute; left:30px; top:65px; font-size:15.6px; color:#4fc3f7; margin:0;">Design Massing &rarr; Envelope &rarr; Panelization &rarr; Panel Patterns</p>
+                        <img src="assets/images/rir/01_5x5_building/Computational_Modeling_Presentation_ADG Firmwide Page 056_web.jpg" alt="Phase Progression Diagram" loading="lazy" style="position:absolute; left:30px; top:105px; width:1029px; height:548px; object-fit:cover; object-position:center;">
+                    </div>
+                </section>
+
+                <!-- 3-8: 5x5 Building — Documentation (absolute layout from Figma 37:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:10px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">5x5 Building: Documentation</h2>
+                        <p style="position:absolute; left:30px; top:65px; font-size:15.6px; color:#4fc3f7; margin:0;">BIM Documentation from Conceptual Design</p>
+                        <ul style="position:absolute; left:30px; top:100px; width:1140px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.4;">
+                            <li style="margin:2px 0;">Automated floor plan details: interior walls, doors, unit room numbers</li>
+                            <li style="margin:2px 0;">Concept-to-documentation pipeline without manual re-drafting</li>
+                            <li style="margin:2px 0;">Component breakdown (Core / Corridor / Interior Walls) &amp; elevation views</li>
+                        </ul>
+                        <img src="assets/images/rir/01_5x5_building/25-0625_Elevation_web2.jpg" alt="Elevation" loading="lazy" style="position:absolute; left:739px; top:43px; width:391px; height:633px; object-fit:cover;">
+                        <div class="auto-slide" style="position:absolute; left:30px; top:226px; width:225px; height:450px; min-height:0; max-height:none; overflow:hidden;">
+                            <img class="auto-slide-img" src="assets/images/rir/01_5x5_building/25-0616_5x5 Building Elfront_Core_web2.jpg" alt="Core Component" loading="lazy" style="width:225px; height:450px; max-height:none; max-width:none; object-fit:cover; box-shadow:none; transition:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/01_5x5_building/25-0616_5x5 Building Elfront_Corridor Walls_web2.jpg" alt="Corridor Walls Component" loading="lazy" style="width:225px; height:450px; max-height:none; max-width:none; object-fit:cover; box-shadow:none; transition:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/01_5x5_building/25-0616_5x5 Building Elfront_Interior Walls_web2.jpg" alt="Interior Walls Component" loading="lazy" style="width:225px; height:450px; max-height:none; max-width:none; object-fit:cover; box-shadow:none; transition:none;">
+                        </div>
+                        <div class="auto-slide" style="position:absolute; left:255px; top:226px; width:450px; height:450px; min-height:0; max-height:none; overflow:hidden; background:#ffffff;">
+                            <img class="auto-slide-img" src="assets/images/rir/01_5x5_building/25-0714_5x5 Building Elefront_L3_web2.jpg" alt="Level 3 Floor Plan" loading="lazy" style="width:450px; height:450px; max-height:none; max-width:none; object-fit:contain; box-shadow:none; transition:none; transform:scale(1.2); transform-origin:center center;">
+                            <img class="auto-slide-img" src="assets/images/rir/01_5x5_building/25-0714_5x5 Building Elefront_L6_web2.jpg" alt="Level 6 Floor Plan" loading="lazy" style="width:450px; height:450px; max-height:none; max-width:none; object-fit:contain; box-shadow:none; transition:none; transform:scale(1.2); transform-origin:center center;">
+                            <img class="auto-slide-img" src="assets/images/rir/01_5x5_building/25-0714_5x5 Building Elefront_L10_web2.jpg" alt="Level 10 Floor Plan" loading="lazy" style="width:450px; height:450px; max-height:none; max-width:none; object-fit:contain; box-shadow:none; transition:none; transform:scale(1.2); transform-origin:center center;">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3-9: 5x5 Building — Concept & Rendering -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:10px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">5x5 Building: Concept &amp; Rendering</h2>
+                        <p style="position:absolute; left:30px; top:65px; font-size:15.6px; color:#4fc3f7; margin:0;">AI-Powered Visualization via Nano Banana</p>
+                        <ul style="position:absolute; left:30px; top:100px; width:1140px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.4;">
+                            <li style="margin:2px 0;">Parametric massing output &rarr; AI rendering in minutes, not hours</li>
+                            <li style="margin:2px 0;">Rapid concept &amp; mood exploration without traditional render setup</li>
+                        </ul>
+                        <!-- Full original image as background -->
+                        <img src="assets/images/rir/01_5x5_building/Computational_Modeling_Presentation_ADG Firmwide Page 062_web.jpg" alt="5x5 Building — Axon concept and night rendering" loading="lazy" style="position:absolute; left:60px; top:150px; width:1080px; height:500px; object-fit:contain;">
+                        <!-- AI Rendering carousel overlaying the rendering portion (334×458) -->
+                        <div class="manual-carousel arrows-on-hover" style="position:absolute; left:575px; top:169px; width:334px; height:459px;">
+                            <div class="carousel-clip">
+                                <!-- Slide 1: transparent (original image shows through) -->
+                                <div class="carousel-slide" style="width:100%; height:100%;"></div>
+                                <div class="carousel-slide" style="width:100%; height:100%;">
+                                    <img src="assets/images/rir/ai_generated/1st AI Generated_ Firefly Upscaler 4x scale_web.jpg" alt="AI Rendering 1" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
                                 </div>
-                                <div class="metric">
-                                    <span class="metric-value">4</span>
-                                    <span class="metric-label">Case Studies</span>
+                                <div class="carousel-slide" style="width:100%; height:100%;">
+                                    <img src="assets/images/rir/ai_generated/3rd AI Generated_Firefly Upscaler 4x scale_web.jpg" alt="AI Rendering 3" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
+                                </div>
+                                <div class="carousel-slide" style="width:100%; height:100%;">
+                                    <img src="assets/images/rir/ai_generated/2nd AI Generated_Firefly Upscaler 4x scale_web.jpg" alt="AI Rendering 2" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
+                                </div>
+                                <div class="carousel-slide" style="width:100%; height:100%;">
+                                    <img src="assets/images/rir/ai_generated/hand drawing Firefly Upscaler 4x scale_handdrawing_web.jpg" alt="Hand Drawing" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
+                                </div>
+                                <div class="carousel-slide" style="width:100%; height:100%;">
+                                    <img src="assets/images/rir/ai_generated/ink drawing Firefly Upscaler 4x scale_web.jpg" alt="Ink Drawing" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
+                                </div>
+                                <div class="carousel-slide" style="width:100%; height:100%;">
+                                    <img src="assets/images/rir/ai_generated/Stranger Things_01Firefly Upscaler 4x scale__web.jpg" alt="Stranger Things 1" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
+                                </div>
+                                <div class="carousel-slide" style="width:100%; height:100%;">
+                                    <img src="assets/images/rir/ai_generated/Stranger Things_02_ Firefly Upscaler 4x scale__web.jpg" alt="Stranger Things 2" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
                                 </div>
                             </div>
-                            <ul>
-                                <li>Live connection: Grasshopper &harr; Revit</li>
-                                <li>Eliminates manual geometry rebuild</li>
-                                <li>Continued iteration without rework</li>
-                            </ul>
-                            <p class="nav-hint">&darr; Scroll down for case studies</p>
+                            <button class="carousel-arrow carousel-prev">&lsaquo;</button>
+                            <button class="carousel-arrow carousel-next">&rsaquo;</button>
                         </div>
-                        <div class="slide-image">
-                            <div class="auto-slide">
-                                <img class="auto-slide-img" src="assets/images/rir/0630_RIR Screenshot-01.png" alt="RIR — Perspective View" loading="lazy">
-                                <img class="auto-slide-img" src="assets/images/rir/0630_RIR Screenshot-04.png" alt="RIR — Elevation View" loading="lazy">
+                        <p class="nav-hint" style="position:absolute; left:575px; top:655px; width:334px; text-align:center; font-size:11px; margin:0;">&uarr; Click here to explore AI renderings</p>
+                    </div>
+                </section>
+
+                <!-- 3-10: Cal Poly Student Housing (2-10-0 in Figma, with precise Figma CROP transforms) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:74px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Case Study: Cal Poly Student Housing</h2>
+                        <p style="position:absolute; left:30px; top:129px; font-size:15.6px; color:#4fc3f7; margin:0;">Cal Poly &mdash; Largest Modular in U.S. (4,200 beds, $1.2B)</p>
+                        <ul style="position:absolute; left:30px; top:165px; width:500px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.4;">
+                            <li style="margin:2px 0;">Revit Model Group population via Rhino.Inside.Revit</li>
+                            <li style="margin:2px 0;">RIR workflow demonstration &mdash; not a project deliverable</li>
+                        </ul>
+                        <!-- Pages 014-022 slideshow: Figma CROP sx=sy=0.8334 (1.2x zoom), tx=0.084, ty=0.134 -->
+                        <div class="auto-slide" style="position:absolute; left:30px; top:230px; width:482px; height:362px; overflow:hidden; min-height:0; max-height:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/02_calpoly_model_group/Computational_Modeling_Presentation_ADG Firmwide Page 014_web.jpg" alt="Page 014" loading="lazy" style="position:absolute; left:-49px; top:-58px; width:578px; height:434px; max-width:none; max-height:none; object-fit:cover; display:block; transition:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/02_calpoly_model_group/Computational_Modeling_Presentation_ADG Firmwide Page 015_web.jpg" alt="Page 015" loading="lazy" style="position:absolute; left:-49px; top:-38px; width:578px; height:434px; max-width:none; max-height:none; object-fit:cover; display:block; transition:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/02_calpoly_model_group/Computational_Modeling_Presentation_ADG Firmwide Page 016_web.jpg" alt="Page 016" loading="lazy" style="position:absolute; left:-49px; top:-38px; width:578px; height:434px; max-width:none; max-height:none; object-fit:cover; display:block; transition:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/02_calpoly_model_group/Computational_Modeling_Presentation_ADG Firmwide Page 017_web.jpg" alt="Page 017" loading="lazy" style="position:absolute; left:-49px; top:-38px; width:578px; height:434px; max-width:none; max-height:none; object-fit:cover; display:block; transition:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/02_calpoly_model_group/Computational_Modeling_Presentation_ADG Firmwide Page 018_web.jpg" alt="Page 018" loading="lazy" style="position:absolute; left:-49px; top:-38px; width:578px; height:434px; max-width:none; max-height:none; object-fit:cover; display:block; transition:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/02_calpoly_model_group/Computational_Modeling_Presentation_ADG Firmwide Page 019_web.jpg" alt="Page 019" loading="lazy" style="position:absolute; left:-49px; top:-38px; width:578px; height:434px; max-width:none; max-height:none; object-fit:cover; display:block; transition:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/02_calpoly_model_group/Computational_Modeling_Presentation_ADG Firmwide Page 020_web.jpg" alt="Page 020" loading="lazy" style="position:absolute; left:-49px; top:-38px; width:578px; height:434px; max-width:none; max-height:none; object-fit:cover; display:block; transition:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/02_calpoly_model_group/Computational_Modeling_Presentation_ADG Firmwide Page 021_web.jpg" alt="Page 021" loading="lazy" style="position:absolute; left:-49px; top:-38px; width:578px; height:434px; max-width:none; max-height:none; object-fit:cover; display:block; transition:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/02_calpoly_model_group/Computational_Modeling_Presentation_ADG Firmwide Page 022_web.jpg" alt="Page 022" loading="lazy" style="position:absolute; left:-49px; top:-38px; width:578px; height:434px; max-width:none; max-height:none; object-fit:cover; display:block; transition:none; transform:scale(0.9); transform-origin:center center;">
+                        </div>
+                        <!-- Axon_Zoom: hover gray-out + popup link -->
+                        <div class="img-popup-wrap popup-trigger" data-popup="calpoly" style="position:absolute; left:512px; top:229px; width:618px; height:363px; overflow:hidden;">
+                            <img src="assets/images/rir/02_calpoly_model_group/25_0619_Revit Model Groups Population RIR_Axon_Zoom_web.jpg" alt="Axon Zoom View" loading="lazy" style="position:absolute; left:-82px; top:0; width:700px; height:363px; max-width:none; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <p class="nav-hint" style="position:absolute; left:512px; top:609px; width:618px; text-align:center; font-size:11px; margin:0;">&uarr; Click the image to explore</p>
+                    </div>
+                </section>
+
+
+                <!-- 3-12: Cal Poly Modular Housing (video + "12" diagram overlay, centered +49) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:39px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Cal Poly: Parametric Box Displacement</h2>
+                        <p style="position:absolute; left:30px; top:94px; font-size:15.6px; color:#4fc3f7; margin:0;">Grasshopper Script for Modular Unit Placement</p>
+                        <ul style="position:absolute; left:30px; top:130px; width:500px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.4;">
+                            <li style="margin:2px 0;">GH-driven box module placement on curved grid</li>
+                            <li style="margin:2px 0;">Parametric shift &amp; offset per unit</li>
+                        </ul>
+                        <div style="position:absolute; left:148px; top:175px; width:864px; height:486px;">
+                            <video src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+                            <img src="assets/images/rir/02_calpoly_model_group/12_web.png" alt="Process Diagram" loading="lazy" style="position:absolute; right:10px; bottom:19px; width:316px; height:108px; object-fit:contain;">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3-13: Cal Poly — Views (centered +52, manual click carousel) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:51px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Cal Poly: Documentation Views</h2>
+                        <p style="position:absolute; left:30px; top:99px; font-size:15.6px; color:#4fc3f7; margin:0;">Revit Documentation from Rhino.Inside.Revit Pipeline</p>
+                        <div class="manual-carousel" style="position:absolute; left:144px; top:154px; width:872px; height:474px;">
+                            <!-- Slide 1: Two images side by side -->
+                            <div class="carousel-slide" style="width:872px; height:474px;" data-caption="Revit Model Group &mdash; Live Connection between Rhino &amp; Revit">
+                                <img src="assets/images/rir/02_calpoly_model_group/25-0710_Model Group Population_04_web.jpg" alt="Model Group Population 04" loading="lazy" style="position:absolute; left:0; top:0; width:436px; height:474px; max-width:none; max-height:none; object-fit:cover; display:block;">
+                                <img src="assets/images/rir/02_calpoly_model_group/25-0710_Model Group Population_03_web.jpg" alt="Model Group Population 03" loading="lazy" style="position:absolute; left:436px; top:0; width:436px; height:474px; max-width:none; max-height:none; object-fit:cover; display:block;">
                             </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 3-nav: Case Study Thumbnails -->
-                <section>
-                    <h2 class="text-center mb-half">Case Studies</h2>
-                    <div class="case-nav">
-                        <a class="case-nav-item" href="#/2/3">
-                            <video src="assets/images/rir/01_5x5_building/Diagram.mp4" autoplay loop muted playsinline></video>
-                            <span>5x5 Building Elefront</span>
-                        </a>
-                        <a class="case-nav-item" href="#/2/8">
-                            <video src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.mp4" autoplay loop muted playsinline></video>
-                            <span>Cal Poly Modular</span>
-                        </a>
-                        <a class="case-nav-item" href="#/2/11">
-                            <video src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form.mp4" autoplay loop muted playsinline></video>
-                            <span>Adaptive Curtain Wall</span>
-                        </a>
-                        <a class="case-nav-item" href="#/2/15">
-                            <video src="assets/images/rir/04_frit_pattern/25-1111_Axon.mp4" autoplay loop muted playsinline></video>
-                            <span>Frit Pattern Design</span>
-                        </a>
-                    </div>
-                </section>
-
-                <!-- 3-1: 5x5 Building Elefront -->
-                <section>
-                    <h2>Case Study: 5x5 Building Elefront</h2>
-                    <p class="subtitle">Full Building RIR Pipeline — Rhino to Revit</p>
-                    <div class="slide-layout">
-                        <div class="slide-text">
-                            <ul>
-                                <li>Complete building from Rhino &rarr; Revit</li>
-                                <li>Floor slabs, walls, facade, columns, mullions</li>
-                                <li>Phased approach: structure &rarr; envelope &rarr; interiors</li>
-                                <li>Grasshopper script drives all Revit elements</li>
-                            </ul>
-                            <div class="magnify-wrap">
-                                <img class="text-below-img magnify-src" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Grasshopper Script.png" alt="Grasshopper Script" loading="lazy">
-                                <div class="magnify-glass"></div>
+                            <!-- Slide 2: Axon OPT02 -->
+                            <div class="carousel-slide" style="width:872px; height:474px; background:#ffffff;" data-caption="3D View">
+                                <img src="assets/images/rir/02_calpoly_model_group/25_0619_Revit Model Groups Population RIR_Axon_OPT02_web.jpg" alt="Axon OPT02 View" loading="lazy" style="width:872px; height:474px; max-width:none; max-height:none; object-fit:contain; display:block; transform:scale(1.2); transform-origin:center center;">
                             </div>
-                        </div>
-                        <div class="slide-image">
-                            <video class="video-square" src="assets/images/rir/01_5x5_building/Diagram.mp4" autoplay loop muted playsinline></video>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 3-1b: 5x5 Building — Before & After Comparison Slider -->
-                <section>
-                    <h2>5x5 Building: Rhino &rarr; Revit</h2>
-                    <p class="subtitle">Drag the handle to compare</p>
-                    <div class="comp" id="rir-comp">
-                        <!-- Background: Rhino (always full, left side) -->
-                        <img class="comp-img comp-bg" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Rhino 3D View.jpg" alt="Rhino" loading="lazy">
-                        <!-- Overlay: Revit (clipped, revealed from right as handle goes left) -->
-                        <img class="comp-img comp-reveal" src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Revit" loading="lazy">
-                        <div class="comp-handle"></div>
-                        <span class="comp-tag comp-tag-l">Rhino</span>
-                        <span class="comp-tag comp-tag-r">Revit</span>
-                    </div>
-                </section>
-
-                <!-- 3-1c: 5x5 Building — Component Breakdown -->
-                <section>
-                    <h2>5x5 Building: Component Breakdown</h2>
-                    <div class="image-grid-3">
-                        <div class="grid-item">
-                            <img src="assets/images/rir/01_5x5_building/25-0616_5x5 Building Elfront_Floor Slabs.png" alt="Floor Slabs" loading="lazy">
-                            <small>Floor Slabs</small>
-                        </div>
-                        <div class="grid-item">
-                            <img src="assets/images/rir/01_5x5_building/25-0616_5x5 Building Elfront_Facade.png" alt="Facade" loading="lazy">
-                            <small>Facade</small>
-                        </div>
-                        <div class="grid-item">
-                            <img src="assets/images/rir/01_5x5_building/25-0616_5x5 Building Elfront_Structural Columns.png" alt="Columns" loading="lazy">
-                            <small>Structural Columns</small>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 3-1d: 5x5 Building — Phase Progression -->
-                <section>
-                    <h2>5x5 Building: Revit Phase Progression</h2>
-                    <p class="subtitle">Structure &rarr; Envelope &rarr; Complete</p>
-                    <div class="image-grid-3">
-                        <div class="grid-item">
-                            <img src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 01.jpg" alt="Phase 1" loading="lazy">
-                            <small>Phase 1: Structure</small>
-                        </div>
-                        <div class="grid-item">
-                            <img src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 02.jpg" alt="Phase 2" loading="lazy">
-                            <small>Phase 2: Envelope</small>
-                        </div>
-                        <div class="grid-item">
-                            <img src="assets/images/rir/01_5x5_building/25-0502_5x5 Building Elefront_Revit 3D View_phase 03.jpg" alt="Phase 3" loading="lazy">
-                            <small>Phase 3: Complete</small>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 3-1e: 5x5 Building — Floor Plan + Elevation -->
-                <section>
-                    <h2>5x5 Building: Documentation</h2>
-                    <div class="image-grid-2">
-                        <img src="assets/images/rir/01_5x5_building/25-0713_Floor Plan.jpg" alt="Floor Plan" loading="lazy">
-                        <img src="assets/images/rir/01_5x5_building/25-0625_Elevation.PNG" alt="Elevation" loading="lazy">
-                    </div>
-                </section>
-
-                <!-- 3-2: Cal Poly Model Group -->
-                <section>
-                    <h2>Case Study: Cal Poly Modular Housing</h2>
-                    <p class="subtitle">Revit Model Group — Largest Modular in U.S. (4,200 beds, $1.2B)</p>
-                    <div class="image-full">
-                        <video src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.mp4" autoplay loop muted playsinline style="max-width:90%; max-height:480px;"></video>
-                    </div>
-                </section>
-
-                <!-- 3-2b: Cal Poly — Process Steps -->
-                <section>
-                    <h2>Cal Poly: RIR Process</h2>
-                    <p class="subtitle">Model Group Population Pipeline</p>
-                    <div class="image-grid-3">
-                        <div class="grid-item">
-                            <img src="assets/images/rir/02_calpoly_model_group/Process 01.png" alt="Process 1" loading="lazy">
-                            <small>Step 1</small>
-                        </div>
-                        <div class="grid-item">
-                            <img src="assets/images/rir/02_calpoly_model_group/Process 02.png" alt="Process 2" loading="lazy">
-                            <small>Step 2</small>
-                        </div>
-                        <div class="grid-item">
-                            <img src="assets/images/rir/02_calpoly_model_group/Process 03.png" alt="Process 3" loading="lazy">
-                            <small>Step 3</small>
-                        </div>
-                        <div class="grid-item">
-                            <img src="assets/images/rir/02_calpoly_model_group/Process 04.png" alt="Process 4" loading="lazy">
-                            <small>Step 4</small>
-                        </div>
-                        <div class="grid-item">
-                            <img src="assets/images/rir/02_calpoly_model_group/Process 05.png" alt="Process 5" loading="lazy">
-                            <small>Step 5</small>
-                        </div>
-                        <div class="grid-item">
-                            <img src="assets/images/rir/02_calpoly_model_group/Process 06.png" alt="Process 6" loading="lazy">
-                            <small>Step 6</small>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 3-2c: Cal Poly — Axon + Plan -->
-                <section>
-                    <h2>Cal Poly: Views</h2>
-                    <div class="image-grid-2">
-                        <img src="assets/images/rir/02_calpoly_model_group/25_0619_Revit Model Groups Population RIR_Axon_OPT02.jpg" alt="Axon View" loading="lazy">
-                        <img src="assets/images/rir/02_calpoly_model_group/25_0619_Revit Model Groups Population RIR_Plan.png" alt="Plan View" loading="lazy">
-                    </div>
-                </section>
-
-                <!-- 3-3: Adaptive Curtain Wall -->
-                <section>
-                    <h2>Case Study: Adaptive Curtain Wall</h2>
-                    <p class="subtitle">Parametric Facade Panel System — RIR to Revit</p>
-                    <div class="slide-layout" style="align-items:flex-end;">
-                        <div class="slide-text" style="display:flex; flex-direction:column; align-self:stretch; justify-content:space-between;">
-                            <ul>
-                                <li>Adaptive panel components in Revit</li>
-                                <li>Parametric control from Grasshopper</li>
-                                <li>Panel type variation (A/B)</li>
-                                <li>Sun hour analysis integration</li>
-                            </ul>
-                            <div class="auto-slide" style="margin-top:0.8em; width:453px; height:313px; max-width:none; max-height:none; min-height:0;">
-                                <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/25-0922_Adaptive Panle Component.png" alt="Adaptive Panel Component" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; box-shadow:0 4px 20px rgba(0,0,0,0.3);">
-                                <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/25-0922_Adaptive Panle Component_01.png" alt="Adaptive Panel Component Detail" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+                            <!-- Slide 3: Plan -->
+                            <div class="carousel-slide" style="width:872px; height:474px; background:#ffffff;" data-caption="Floor Plan">
+                                <img src="assets/images/rir/02_calpoly_model_group/25_0619_Revit Model Groups Population RIR_Axon_OPT02_Plan_web.jpg" alt="Plan View" loading="lazy" style="width:872px; height:474px; max-width:none; max-height:none; object-fit:contain; display:block; transform:scale(1.2); transform-origin:center center;">
                             </div>
+                            <button class="carousel-arrow carousel-prev">&lsaquo;</button>
+                            <button class="carousel-arrow carousel-next">&rsaquo;</button>
                         </div>
-                        <div class="slide-image" style="width:361px; height:413px; max-width:none; max-height:none;">
-                            <img src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 027_cropped.jpg" alt="Adaptive Panel Pattern" loading="lazy">
-                        </div>
+                        <span class="carousel-caption" data-carousel="1" style="position:absolute; left:144px; top:634px; width:872px; text-align:center; font-size:11px; color:rgba(255,255,255,0.55);"></span>
+                        <span class="carousel-counter" data-carousel="1" style="position:absolute; left:994px; top:634px;"></span>
                     </div>
                 </section>
 
-                <!-- 3-3ab: Adaptive Curtain Wall — Panel Parametric Control -->
-                <section>
-                    <h2>Case Study: Adaptive Curtain Wall</h2>
-                    <p class="subtitle">Parametric Panel Control — Grasshopper to Revit</p>
-                    <div class="image-grid-2" style="align-items:center;">
-                        <div class="slide-image" style="width:532px; height:399px; max-width:none; max-height:none; transform:translate(2.5px,17.2px);">
-                            <img src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 041.jpg" alt="Adaptive Panel — Parametric Control Diagram" loading="lazy">
+                <!-- 2/13: Slide 2-13 — Adaptive Curtain Wall (Figma 6:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:47px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Case Study: Adaptive Curtain Wall</h2>
+                        <p style="position:absolute; left:30px; top:101px; font-size:15.6px; color:#4fc3f7; margin:0;">Parametric Facade Panel System &mdash; RIR to Revit</p>
+                        <ul style="position:absolute; left:46px; top:141px; width:500px; font-size:12.6px; color:#fff; margin:0; padding-left:0; list-style-position:inside; list-style:disc; line-height:1.4;">
+                            <li style="margin:2px 0;">Revit adaptive component panels</li>
+                            <li style="margin:2px 0;">Grasshopper parametric control via Rhino.Inside.Revit</li>
+                            <li style="margin:2px 0;">Sun-analysis-driven panel type variation</li>
+                        </ul>
+                        <!-- Component Detail (auto-slide): Figma 480x348 centered at (270, 371.9) +77 shift -->
+                        <div class="auto-slide" style="position:absolute; left:30px; top:214px; width:480px; height:413px; overflow:hidden; min-height:0; max-height:none;">
+                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/25-0922_Adaptive Panle Component_01.png" alt="Adaptive Panel Component Detail" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:fill; display:block;">
+                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/25-0922_Adaptive Panle Component.png" alt="Adaptive Panel Component" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:fill; display:block; transform:scale(1.05,1);">
+                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 027_re-cropped.jpg" alt="Adaptive Panel Pattern — Re-cropped" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
                         </div>
-                        <div class="slide-image" style="width:468px; height:469px; max-width:none; max-height:none; transform:translate(-4.9px,-16.8px);">
-                            <video src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form.mp4" autoplay loop muted playsinline style="transform:translate(-28.3px,-15.3px) scale(1.180,1.180); transform-origin:top left;"></video>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 3-3b: Adaptive Curtain Wall — Sun Analysis + Animation -->
-                <section>
-                    <h2>Case Study: Adaptive Curtain Wall</h2>
-                    <p class="subtitle">Color-coded Visualization of Panels — Distance data from each panel to the reference point</p>
-                    <div class="image-grid-2" style="align-items:center;">
-                        <div class="auto-slide" style="width:560px; height:420px; max-width:none; max-height:none; min-height:0;">
-                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 030.jpg" alt="Sun Hour Analysis — Page 30" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; transform:translate(0.3px,0); transform-origin:top left;">
-                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 031.jpg" alt="Sun Hour Analysis — Page 31" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; transform:translate(0.3px,0); transform-origin:top left;">
-                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 032.jpg" alt="Sun Hour Analysis — Page 32" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; transform:translate(0.3px,0); transform-origin:top left;">
-                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 033.jpg" alt="Sun Hour Analysis — Page 33" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; transform:translate(0.3px,0); transform-origin:top left;">
-                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 034.jpg" alt="Sun Hour Analysis — Page 34" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; transform:translate(0.3px,0); transform-origin:top left;">
-                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 035.jpg" alt="Sun Hour Analysis — Page 35" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; transform:translate(0.3px,0); transform-origin:top left;">
-                        </div>
-                        <div class="slide-image" style="width:560px; height:268px; max-width:none; max-height:none; transform:translate(-22.0px,11.5px);">
-                            <video src="assets/images/rir/03_adaptive_curtain_wall/Curve Wall Design Distance RIR.mp4" autoplay loop muted playsinline style="transform:translate(0,10.1px) scale(1.056,1.056); transform-origin:top left;"></video>
+                        <!-- Panel Form video -->
+                        <div style="position:absolute; left:510px; top:213px; width:620px; height:414px; overflow:hidden;">
+                            <video src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.1) translate(10px,20px);"></video>
                         </div>
                     </div>
                 </section>
 
-                <!-- 3-3bc: Adaptive Curtain Wall — Panel Animation -->
-                <section>
-                    <h2>Case Study: Adaptive Curtain Wall</h2>
-                    <p class="subtitle">Panel Form Animation</p>
-                    <div class="image-full">
-                        <video src="assets/images/rir/03_adaptive_curtain_wall/Untitled-12.mp4" autoplay loop muted playsinline></video>
+                <!-- 2/14: Slide 2-14 — Adaptive Curtain Wall Attraction / Sun Analysis (Figma 42:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:126px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Adaptive Curtain Wall: Parametric Panel Control</h2>
+                        <p style="position:absolute; left:30px; top:180px; font-size:15.6px; color:#4fc3f7; margin:0;">Color-coded Panel Visualization &mdash; Distance-Driven Pattern</p>
+                        <ul style="position:absolute; left:46px; top:204px; width:1060px; font-size:11.4px; color:#fff; margin:0; padding-left:0; list-style-position:inside; list-style:disc; line-height:1.35;">
+                            <li style="margin:1px 0;">Panel geometry parametrically driven by attractor distance</li>
+                            <li style="margin:1px 0;">Color-coded panel visualization driven by distance data</li>
+                        </ul>
+                        <!-- Sun Hour auto-slide: Figma 42:13 — w=477, h=325, center (268.5, 354.5) → left=30, top=192 -->
+                        <div class="auto-slide" style="position:absolute; left:30px; top:256px; width:477px; height:321px; overflow:hidden; min-height:0; max-height:none; background:#ffffff;">
+                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 030_web.jpg" alt="Sun Hour Analysis — Page 30" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; display:block; transform:scale(1.2);">
+                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 031_web.jpg" alt="Sun Hour Analysis — Page 31" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; display:block; transform:scale(1.2);">
+                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 032_web.jpg" alt="Sun Hour Analysis — Page 32" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; display:block; transform:scale(1.2);">
+                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 033_web.jpg" alt="Sun Hour Analysis — Page 33" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; display:block; transform:scale(1.2);">
+                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 034_web.jpg" alt="Sun Hour Analysis — Page 34" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; display:block; transform:scale(1.2);">
+                            <img class="auto-slide-img" src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 035_web.jpg" alt="Sun Hour Analysis — Page 35" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:contain; display:block; transform:scale(1.2);">
+                        </div>
+                        <!-- Video: Figma 42:11 — w=623, h=325, center (818.5, 354.5) → left=507, top=192 -->
+                        <div style="position:absolute; left:507px; top:256px; width:623px; height:321px; overflow:hidden; background:#ffffff;">
+                            <video src="assets/images/rir/03_adaptive_curtain_wall/Curve Wall Design Distance RIR.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block; transform-origin:left center; transform:scale(1.05) translateY(20px);"></video>
+                        </div>
                     </div>
                 </section>
 
-                <!-- 3-3c: Adaptive Curtain Wall — Elevation + Plan -->
-                <section>
-                    <h2>Case Study: Adaptive Curtain Wall</h2>
-                    <p class="subtitle">Revit Documentation — Elevation &amp; Plan</p>
-                    <div class="image-full">
-                        <img src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 043.jpg" alt="Adaptive Curtain Wall — Elevation and Plan" loading="lazy">
+                <!-- 2/15: Slide 2-15 — Adaptive Curtain Wall Sun Hour Analysis / Parametric Control (Figma 43:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:87px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Adaptive Curtain Wall: Sun Hour Analysis</h2>
+                        <p style="position:absolute; left:30px; top:141px; font-size:15.6px; color:#4fc3f7; margin:0;">Sun Hour Analysis &rarr; Revit Family Parameters</p>
+                        <ul style="position:absolute; left:46px; top:165px; width:1060px; font-size:11.4px; color:#fff; margin:0; padding-left:0; list-style-position:inside; list-style:disc; line-height:1.35;">
+                            <li style="margin:1px 0;">Per-panel sun exposure data from reference attractor</li>
+                            <li style="margin:1px 0;">Panel form driven by sun exposure across facade</li>
+                            <li style="margin:1px 0;">Data reflected in Revit family parameters via Rhino.Inside.Revit</li>
+                        </ul>
+                        <!-- Parametric Control Diagram: Figma 41:11 — w=523, h=392, center (311.5, 341.08) → left=50, top=145 -->
+                        <div style="position:absolute; left:30px; top:234px; width:523px; height:392px; overflow:hidden;">
+                            <img src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 041_web.jpg" alt="Adaptive Panel — Parametric Control Diagram" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:contain; display:block;">
+                        </div>
+                        <!-- Video: Figma 43:10 — w=577, h=392, center (861.5, 341.08) → left=573, top=145 -->
+                        <div style="position:absolute; left:552px; top:234px; width:577px; height:392px; overflow:hidden;">
+                            <video src="assets/images/rir/03_adaptive_curtain_wall/Untitled-12.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+                        </div>
                     </div>
                 </section>
 
-                <!-- 3-4: Frit Pattern Design -->
-                <section>
-                    <h2>Case Study: Frit Pattern Design</h2>
-                    <p class="subtitle">Grasshopper-Based Facade Pattern Generation</p>
-                    <div class="image-grid-2">
-                        <video src="assets/images/rir/04_frit_pattern/25-1111_Axon.mp4" autoplay loop muted playsinline></video>
-                        <video src="assets/images/rir/04_frit_pattern/Untitled-10.mp4" autoplay loop muted playsinline></video>
+                <!-- 2/16: Slide 2-16 — Adaptive Curtain Wall Axon, Plan & Elevation (Figma 44:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:87px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Adaptive Curtain Wall: Revit Documentation</h2>
+                        <p style="position:absolute; left:30px; top:141px; font-size:15.6px; color:#4fc3f7; margin:0;">Automated Axon, Plan &amp; Elevation from Parametric Model</p>
+                        <!-- Axon: Figma 162:4 — w=439, h=496, center (249.5, 376) → scaled to h=432, w=382, left=30, top=185 -->
+                        <div style="position:absolute; left:30px; top:180px; width:397px; height:432px; overflow:hidden; background:#ffffff;">
+                            <img src="assets/images/rir/03_adaptive_curtain_wall/25-0714_Adaptive Curtain Wall Design_Axon.jpg" alt="Adaptive Curtain Wall — Axon" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block; transform:scale(1.2) translate(-25px,35px);">
+                        </div>
+                        <!-- Elevation + Plan: Figma 44:10 — w=661, h=496, center (819.5, 358.08) → scaled to h=432, w=576, left=442, top=185 -->
+                        <div style="position:absolute; left:427px; top:180px; width:688px; height:432px; overflow:hidden; background:#ffffff;">
+                            <img src="assets/images/rir/03_adaptive_curtain_wall/Computational_Modeling_Presentation_ADG Firmwide Page 043_web.jpg" alt="Adaptive Curtain Wall — Elevation and Plan" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:contain; display:block; transform:scale(1.05);">
+                        </div>
                     </div>
                 </section>
 
-                <!-- 3-4b: Frit Pattern — Elevation + Details -->
-                <section>
-                    <h2>Frit Pattern: Elevation &amp; Details</h2>
-                    <div class="image-grid-2">
-                        <img src="assets/images/rir/04_frit_pattern/25-1113_BP Frit Dot Patterns-Elevation.jpg" alt="Frit Elevation" loading="lazy">
-                        <img src="assets/images/rir/04_frit_pattern/25-1112_Frit 2D Details.png" alt="Frit 2D Details" loading="lazy">
+                <!-- 2/17: Slide — Frit Pattern Design (cover w/ building render + fitted sample) (Figma 45:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:82px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Case Study: Frit Pattern Design</h2>
+                        <p style="position:absolute; left:30px; top:136px; font-size:15.6px; color:#4fc3f7; margin:0;">Parametric Facade Pattern &mdash; Concept to Fabrication</p>
+                        <ul style="position:absolute; left:46px; top:162px; width:1060px; font-size:11.4px; color:#fff; margin:0; padding-left:0; list-style-position:inside; list-style:disc; line-height:1.35;">
+                            <li style="margin:1px 0;">Final design review items during the CD Phase</li>
+                            <li style="margin:1px 0;">Grasshopper-driven pattern generation</li>
+                            <li style="margin:1px 0;">Revit documentation for fabrication</li>
+                        </ul>
+                        <!-- Building render: Figma 175:2 — w=578, h=325 (scaled to fit) -->
+                        <div style="position:absolute; left:30px; top:241px; width:669px; height:376px; overflow:hidden; background:#ffffff;">
+                            <img src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 063_web.jpg" alt="Frit Pattern — Building Render" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <!-- Fitted Sample: Figma 175:3 — w=341, h=325 (scaled to fit) -->
+                        <div style="position:absolute; left:711px; top:241px; width:395px; height:376px; overflow:hidden; background:#ffffff;">
+                            <img src="assets/images/rir/04_frit_pattern/Fitted Sample Pic_web.jpg" alt="Frit Pattern — Fitted Sample" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
+                        </div>
                     </div>
                 </section>
 
-                <!-- 3-4c: Frit Pattern — Pattern Concept -->
-                <section>
-                    <h2>Frit Pattern: Design Concept</h2>
-                    <div class="image-full">
-                        <img src="assets/images/rir/04_frit_pattern/25-0908_BP Frit Dot Patterns-APRES with Morse Code.jpg" alt="Morse Code Pattern" loading="lazy">
+                <!-- 2/18: Slide — Frit Pattern Concept References (Amercode + Page 066 + Gem Test) (Figma 177:4) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:64px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Frit Pattern: Concept References</h2>
+                        <p style="position:absolute; left:30px; top:118px; font-size:15.6px; color:#4fc3f7; margin:0;">Morse-Code-Embedded Pattern Studies</p>
+                        <!-- Amercode: Figma 177:13 — w=210, h=358 -->
+                        <div style="position:absolute; left:231px; top:157px; width:210px; height:358px; overflow:hidden; background:#ffffff;">
+                            <img src="assets/images/rir/04_frit_pattern/Amercode_web.jpg" alt="Amercode — Morse Code Reference" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <!-- Pattern Generation Steps (auto-slide Pages 066-075): Figma 177:14 — w=477, h=358 -->
+                        <div class="auto-slide instant" style="position:absolute; left:451px; top:157px; width:477px; height:358px; overflow:hidden; min-height:0; max-height:none; background:#ffffff;">
+                            <img class="auto-slide-img" src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 066_web.jpg" alt="Frit Pattern — APRÈS Morse Code" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 067_web.jpg" alt="Frit Pattern — Step 01 Horizontal Grids" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 068_web.jpg" alt="Frit Pattern — Step 02" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 069_web.jpg" alt="Frit Pattern — Step 03" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 070_web.jpg" alt="Frit Pattern — Step 04" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 071_web.jpg" alt="Frit Pattern — Step 05" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 072_web.jpg" alt="Frit Pattern — Step 06" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 073_web.jpg" alt="Frit Pattern — Step 07" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 074_web.jpg" alt="Frit Pattern — Step 08" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 075_web.jpg" alt="Frit Pattern — Step 09" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <!-- Gem Test: Figma 177:16 — w=747, h=120, bottom strip -->
+                        <div style="position:absolute; left:231px; top:525px; width:697px; height:112px; overflow:hidden; background:#ffffff;">
+                            <img src="assets/images/rir/04_frit_pattern/Gem Test_web.jpg" alt="Frit Pattern — Gem Test" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
+                        </div>
                     </div>
-                    <p class="next-section"><a class="jump-link" data-h="3">&rarr; Next: Open-Source Development</a></p>
+                </section>
+
+                <!-- 2/19: Slide — Frit Pattern Parametric Generation (dual videos + morse strip) (Figma 180:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:58px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Frit Pattern: Parametric Generation</h2>
+                        <p style="position:absolute; left:30px; top:112px; font-size:15.6px; color:#4fc3f7; margin:0;">Grasshopper-Based Pattern Logic on Facade Geometry</p>
+                        <!-- Left Video (Axon): Figma 180:15 — w=540, h=337 -->
+                        <div style="position:absolute; left:30px; top:151px; width:540px; height:337px; overflow:hidden; background:#000000;">
+                            <video src="assets/images/rir/04_frit_pattern/25-1111_Axon_web.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+                        </div>
+                        <!-- Right Video (Pattern gen): Figma 180:16 — w=540, h=491 -->
+                        <div style="position:absolute; left:590px; top:151px; width:540px; height:491px; overflow:hidden; background:#000000;">
+                            <video src="assets/images/rir/04_frit_pattern/Untitled-10.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2/20: Slide — Frit Pattern Revit Documentation (Figma 46:2) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:90px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Frit Pattern: Revit Documentation</h2>
+                        <p style="position:absolute; left:30px; top:144px; font-size:15.6px; color:#4fc3f7; margin:0;">Elevation &amp; Details for Fabrication</p>
+                        <ul style="position:absolute; left:46px; top:170px; width:1060px; font-size:11.4px; color:#fff; margin:0; padding-left:0; list-style-position:inside; list-style:disc; line-height:1.35;">
+                            <li style="margin:1px 0;">Automated elevation output</li>
+                            <li style="margin:1px 0;">Filtering panel types to apply the pattern via RIR</li>
+                            <li style="margin:1px 0;">Shop-drawing-ready from parametric model</li>
+                        </ul>
+                        <!-- Page 077 (Elevation): Figma 183:22 — w=550, h=343 -->
+                        <div style="position:absolute; left:30px; top:242px; width:550px; height:343px; overflow:hidden; background:#ffffff;">
+                            <img src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 077_web.jpg" alt="Frit Elevation — Page 077" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <!-- Page 078 (Details): Figma 183:21 — w=550, h=343 -->
+                        <div class="spotlight-target img-popup-wrap popup-trigger" data-popup="fritplot" style="position:absolute; left:580px; top:242px; width:550px; height:343px; overflow:hidden; background:#ffffff; cursor:pointer;">
+                            <img src="assets/images/rir/04_frit_pattern/Computational_Modeling_Presentation_ADG Firmwide Page 078_web.jpg" alt="Frit Details — Page 078 (click to view full plot)" loading="lazy" style="width:100%; height:100%; max-width:none; max-height:none; object-fit:cover; display:block; transform:scale(1.2);">
+                        </div>
+                        <p class="nav-hint" style="position:absolute; left:580px; top:595px; width:550px; text-align:center; font-size:11px; margin:0;">&uarr; Click the image to explore</p>
+                        <p class="next-section" style="position:absolute; right:30px; bottom:20px; margin:0;"><a class="jump-link" data-h="3">&rarr; Next: Open-Source Development</a></p>
+                    </div>
                 </section>
             </section>
 
@@ -632,7 +807,7 @@
                             <p class="repo-link"><a href="https://github.com/dongwoosuk/Reticle" target="_blank">GitHub</a> &middot; <a href="https://www.food4rhino.com/en/app/reticle" target="_blank">Food4Rhino</a></p>
                         </div>
                         <div class="slide-image">
-                            <img src="assets/images/opensource/reticle/Reticle Food 4 Rhino & Package Manage & Grasshopper Full Screen.png" alt="Reticle — Food4Rhino, Yak Package Manager, Grasshopper" loading="lazy">
+                            <img src="assets/images/opensource/reticle/Reticle Food 4 Rhino & Package Manage & Grasshopper Full Screen_web.jpg" alt="Reticle — Food4Rhino, Yak Package Manager, Grasshopper" loading="lazy">
                         </div>
                     </div>
                 </section>
@@ -688,7 +863,7 @@
                     <div class="two-col">
                         <div class="col">
                             <h3>Problem: Default Components</h3>
-                            <img src="assets/images/opensource/reticle/GH Default Surface Division Component.png" alt="Default GH Surface Division" loading="lazy" style="max-height:280px; margin-bottom:0.5em;">
+                            <img src="assets/images/opensource/reticle/GH Default Surface Division Component_web.jpg" alt="Default GH Surface Division" loading="lazy" style="max-height:280px; margin-bottom:0.5em;">
                             <h3>Divide Surface / Isotrim</h3>
                             <ul>
                                 <li>Count-based (U/V count) &mdash; <strong>no distance control</strong></li>
@@ -703,7 +878,7 @@
                         </div>
                         <div class="col">
                             <h3>Solution: Divide Surface Centered</h3>
-                            <img src="assets/images/opensource/reticle/Divided Surface Centered Component.png" alt="Reticle Divide Surface Centered" loading="lazy" style="max-height:280px; margin-bottom:0.5em;">
+                            <img src="assets/images/opensource/reticle/Divided Surface Centered Component_web.jpg" alt="Reticle Divide Surface Centered" loading="lazy" style="max-height:280px; margin-bottom:0.5em;">
                             <ul>
                                 <li>UV <strong>center-based</strong> division</li>
                                 <li><strong>Symmetric remainders</strong> on all edges</li>
