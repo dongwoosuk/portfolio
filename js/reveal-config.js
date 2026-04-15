@@ -2,7 +2,7 @@
 Reveal.initialize({
     hash: true,
     transition: 'slide',
-    slideNumber: true,
+    slideNumber: 'h.v',
     controls: true,
     progress: true,
     width: 1200,

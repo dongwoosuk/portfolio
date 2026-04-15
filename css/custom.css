@@ -1202,4 +1202,8 @@ html, body {
     .orientation-overlay { display: flex; }
     body { overflow: hidden; }
 }
+/* Hide Reveal slide number on mobile (avoids NaN flicker on small screens) */
+@media (max-width: 768px) {
+    .reveal .slide-number { display: none !important; }
+}
 
