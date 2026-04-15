@@ -7,11 +7,26 @@ Reveal.initialize({
     progress: true,
     width: 1200,
     height: 700,
-    margin: 0.02,
-    minScale: 0.2,
+    margin: 0,
+    minScale: 0.1,
     maxScale: 1.5,
+    center: true,
     respondToVisibleSize: true,
 }).then(function() {
+    // Mobile: re-layout on viewport changes (URL bar show/hide, orientation)
+    var relayout = function() { if (Reveal.layout) Reveal.layout(); };
+    window.addEventListener('resize', relayout);
+    window.addEventListener('orientationchange', function() {
+        setTimeout(relayout, 300);
+    });
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', relayout);
+    }
+    // Delayed initial layout — waits for URL bar auto-hide on mobile
+    window.addEventListener('load', function() {
+        setTimeout(relayout, 300);
+        setTimeout(relayout, 800);
+    });
     // Jump links
     document.querySelectorAll('.jump-link').forEach(function(link) {
         link.style.cursor = 'pointer';
