@@ -61,13 +61,18 @@
     </div>
     <script>
     (function(){
-        // Swipe hint: show once per visitor on touch devices
+        // Swipe hint: show once per visitor on touch devices, only after landscape orientation
         var hint = document.getElementById('swipeHint');
-        if (hint) {
+        if (!hint) { /* skip */ } else {
             var isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
             var seen = false;
             try { seen = localStorage.getItem('swipeHintSeen') === '1'; } catch(e) {}
-            if (isTouch && !seen) {
+            var portraitMQ = window.matchMedia('(orientation: portrait)');
+            var shown = false;
+            function tryShow() {
+                if (shown || !isTouch || seen) return;
+                if (portraitMQ.matches) return; // wait for landscape
+                shown = true;
                 hint.classList.add('show');
                 var dismiss = function(){
                     hint.classList.remove('show');
@@ -75,10 +80,17 @@
                     document.removeEventListener('touchstart', dismiss, true);
                     document.removeEventListener('click', dismiss, true);
                 };
-                document.addEventListener('touchstart', dismiss, true);
-                document.addEventListener('click', dismiss, true);
-                setTimeout(dismiss, 4000);
+                // Delay dismiss listener attachment so the tap that triggered landscape doesn't auto-dismiss
+                setTimeout(function(){
+                    document.addEventListener('touchstart', dismiss, true);
+                    document.addEventListener('click', dismiss, true);
+                }, 1200);
+                setTimeout(dismiss, 5000);
             }
+            tryShow();
+            if (portraitMQ.addEventListener) portraitMQ.addEventListener('change', tryShow);
+            else if (portraitMQ.addListener) portraitMQ.addListener(tryShow);
+            window.addEventListener('orientationchange', function(){ setTimeout(tryShow, 400); });
         }
         var btn = document.querySelector('.orient-btn');
         if (!btn) return;
