@@ -1104,6 +1104,96 @@ html, body {
 .orient-btn:active {
     background: #3db0e0;
 }
+
+/* A: First-visit swipe hint */
+.swipe-hint {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2147483646;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.swipe-hint.show {
+    display: flex;
+    pointer-events: auto;
+    opacity: 1;
+}
+.swipe-hint-inner {
+    text-align: center;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+.swipe-hint-inner svg {
+    width: 72px;
+    height: 72px;
+    animation: swipe-finger 1.6s ease-in-out infinite;
+}
+.swipe-hint-inner p {
+    margin: 14px 0 8px;
+    font-size: 16px;
+    color: rgba(255,255,255,0.9);
+}
+.swipe-hint-arrows {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    font-size: 28px;
+    color: #4fc3f7;
+    animation: swipe-arrows 1.6s ease-in-out infinite;
+}
+@keyframes swipe-finger {
+    0%, 100% { transform: translateX(-12px); }
+    50% { transform: translateX(12px); }
+}
+@keyframes swipe-arrows {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* C: Edge swipe indicators (touch devices only) */
+.swipe-edge {
+    display: none;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2147483645;
+    color: rgba(79,195,247,0.5);
+    font-size: 32px;
+    font-weight: 300;
+    pointer-events: none;
+    animation: edge-pulse 2.2s ease-in-out infinite;
+    text-shadow: 0 0 12px rgba(79,195,247,0.4);
+}
+.swipe-edge-left { left: 6px; }
+.swipe-edge-right { right: 6px; }
+@keyframes edge-pulse {
+    0%, 100% { opacity: 0.3; transform: translateY(-50%) translateX(0); }
+    50% { opacity: 0.85; }
+}
+.swipe-edge-left {
+    animation-name: edge-pulse-left;
+}
+.swipe-edge-right {
+    animation-name: edge-pulse-right;
+}
+@keyframes edge-pulse-left {
+    0%, 100% { opacity: 0.3; transform: translateY(-50%) translateX(4px); }
+    50% { opacity: 0.85; transform: translateY(-50%) translateX(-2px); }
+}
+@keyframes edge-pulse-right {
+    0%, 100% { opacity: 0.3; transform: translateY(-50%) translateX(-4px); }
+    50% { opacity: 0.85; transform: translateY(-50%) translateX(2px); }
+}
+@media (hover: none) and (pointer: coarse) {
+    .swipe-edge { display: block; }
+}
 @keyframes rotate-hint {
     0%, 45% { transform: rotate(0deg); }
     55%, 100% { transform: rotate(-90deg); }

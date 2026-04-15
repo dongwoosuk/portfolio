@@ -61,6 +61,25 @@
     </div>
     <script>
     (function(){
+        // Swipe hint: show once per visitor on touch devices
+        var hint = document.getElementById('swipeHint');
+        if (hint) {
+            var isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+            var seen = false;
+            try { seen = localStorage.getItem('swipeHintSeen') === '1'; } catch(e) {}
+            if (isTouch && !seen) {
+                hint.classList.add('show');
+                var dismiss = function(){
+                    hint.classList.remove('show');
+                    try { localStorage.setItem('swipeHintSeen', '1'); } catch(e) {}
+                    document.removeEventListener('touchstart', dismiss, true);
+                    document.removeEventListener('click', dismiss, true);
+                };
+                document.addEventListener('touchstart', dismiss, true);
+                document.addEventListener('click', dismiss, true);
+                setTimeout(dismiss, 4000);
+            }
+        }
         var btn = document.querySelector('.orient-btn');
         if (!btn) return;
         btn.addEventListener('click', async function(){
@@ -80,6 +99,22 @@
         });
     })();
     </script>
+    <!-- A: First-visit swipe hint (touch devices only) -->
+    <div class="swipe-hint" id="swipeHint">
+        <div class="swipe-hint-inner">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 22 L22 36 L18 32 M18 32 L26 32 M22 32 L22 50 Q22 54 26 54 L40 54 Q44 54 44 50 L44 38" />
+                <circle cx="22" cy="14" r="4"/>
+            </svg>
+            <p>Swipe to navigate</p>
+            <div class="swipe-hint-arrows">
+                <span>&larr;</span><span>&rarr;</span>
+            </div>
+        </div>
+    </div>
+    <!-- C: Edge indicators (touch devices only, persistent) -->
+    <div class="swipe-edge swipe-edge-left">&lsaquo;</div>
+    <div class="swipe-edge swipe-edge-right">&rsaquo;</div>
     <div class="reveal">
         <div class="slides">
 
