@@ -44,12 +44,26 @@ Reveal.initialize({
     // Jump links
     document.querySelectorAll('.jump-link').forEach(function(link) {
         link.style.cursor = 'pointer';
-        link.addEventListener('click', function(e) {
+        link.style.touchAction = 'manipulation';
+        var doJump = function(e) {
             e.preventDefault();
             e.stopPropagation();
-            var h = parseInt(this.getAttribute('data-h'));
+            var h = parseInt(link.getAttribute('data-h'));
             Reveal.slide(h, 0);
+        };
+        var sx = 0, sy = 0, touched = false;
+        link.addEventListener('touchstart', function(e) {
+            var t = e.touches[0]; sx = t.clientX; sy = t.clientY; touched = true;
+        }, {passive: true});
+        link.addEventListener('touchend', function(e) {
+            if (!touched) return;
+            var t = e.changedTouches[0];
+            if (Math.abs(t.clientX - sx) < 10 && Math.abs(t.clientY - sy) < 10) {
+                doJump(e);
+            }
+            touched = false;
         });
+        link.addEventListener('click', doJump);
     });
 
     // On cover pages (v=0), left/right arrows navigate between section covers
