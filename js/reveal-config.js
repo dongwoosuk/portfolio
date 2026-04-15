@@ -27,6 +27,20 @@ Reveal.initialize({
         setTimeout(relayout, 300);
         setTimeout(relayout, 800);
     });
+
+    // Desktop: mouse wheel slide navigation (throttled, ignored in overview)
+    var wheelLocked = false;
+    window.addEventListener('wheel', function(e) {
+        if (Reveal.isOverview()) return;
+        var overlay = document.getElementById('popupOverlay');
+        if (overlay && overlay.classList.contains('active')) return;
+        if (Math.abs(e.deltaY) < 10) return;
+        if (wheelLocked) return;
+        wheelLocked = true;
+        if (e.deltaY > 0) Reveal.next();
+        else Reveal.prev();
+        setTimeout(function(){ wheelLocked = false; }, 700);
+    }, { passive: true });
     // Jump links
     document.querySelectorAll('.jump-link').forEach(function(link) {
         link.style.cursor = 'pointer';
