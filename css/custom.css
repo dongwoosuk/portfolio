@@ -8,6 +8,14 @@ html, body {
     height: 100dvh;
     overflow: hidden;
 }
+/* Lock Reveal to actual viewport so controls sit at true bottom */
+.reveal {
+    position: fixed !important;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+}
 
 :root {
     --accent: #4FC3F7;
