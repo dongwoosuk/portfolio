@@ -1038,3 +1038,44 @@
     background: none;
 }
 
+/* Mobile portrait — rotate-to-landscape overlay */
+.orientation-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    background: #0a0a0f;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+.orientation-overlay svg {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 24px;
+    animation: rotate-hint 2.4s ease-in-out infinite;
+}
+.orientation-overlay p {
+    font-size: 15px;
+    max-width: 280px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0 20px;
+    color: rgba(255,255,255,0.85);
+}
+.orientation-overlay p strong {
+    color: #4fc3f7;
+    font-weight: 600;
+}
+@keyframes rotate-hint {
+    0%, 45% { transform: rotate(0deg); }
+    55%, 100% { transform: rotate(-90deg); }
+}
+@media (max-width: 768px) and (orientation: portrait) {
+    .orientation-overlay { display: flex; }
+    body { overflow: hidden; }
+}
+
