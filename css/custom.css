@@ -2,11 +2,8 @@
 
 /* Mobile viewport fix — dynamic viewport height (excludes URL bar/nav bar) */
 html, body {
-    height: 100%;
     margin: 0;
     padding: 0;
-}
-html, body, .reveal {
     height: 100vh;
     height: 100dvh;
 }
