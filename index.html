@@ -56,7 +56,30 @@
             <line x1="12" y1="18" x2="12.01" y2="18"/>
         </svg>
         <p>For the best experience,<br>please rotate your device to <strong>landscape</strong>.</p>
+        <button class="orient-btn" type="button">Enter Landscape Mode</button>
+        <p class="orient-fallback" style="display:none;font-size:12px;color:rgba(255,255,255,0.5);margin-top:16px;">Auto-rotate unavailable — please rotate manually.</p>
     </div>
+    <script>
+    (function(){
+        var btn = document.querySelector('.orient-btn');
+        if (!btn) return;
+        btn.addEventListener('click', async function(){
+            var el = document.documentElement;
+            try {
+                if (el.requestFullscreen) await el.requestFullscreen();
+                else if (el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
+                if (screen.orientation && screen.orientation.lock) {
+                    await screen.orientation.lock('landscape');
+                } else {
+                    throw new Error('no-orientation-lock');
+                }
+            } catch (e) {
+                document.querySelector('.orient-fallback').style.display = 'block';
+                btn.style.display = 'none';
+            }
+        });
+    })();
+    </script>
     <div class="reveal">
         <div class="slides">
 

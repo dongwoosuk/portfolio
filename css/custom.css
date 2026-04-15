@@ -1081,6 +1081,23 @@ html, body, .reveal {
     color: #4fc3f7;
     font-weight: 600;
 }
+.orient-btn {
+    margin-top: 28px;
+    padding: 12px 24px;
+    background: #4fc3f7;
+    color: #0a0a0f;
+    border: none;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+.orient-btn:active {
+    background: #3db0e0;
+}
 @keyframes rotate-hint {
     0%, 45% { transform: rotate(0deg); }
     55%, 100% { transform: rotate(-90deg); }
