@@ -1191,9 +1191,6 @@ html, body {
     0%, 100% { opacity: 0.3; transform: translateY(-50%) translateX(-4px); }
     50% { opacity: 0.85; transform: translateY(-50%) translateX(2px); }
 }
-@media (hover: none) and (pointer: coarse) {
-    .swipe-edge { display: block; }
-}
 @keyframes rotate-hint {
     0%, 45% { transform: rotate(0deg); }
     55%, 100% { transform: rotate(-90deg); }
