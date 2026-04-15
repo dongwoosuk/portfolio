@@ -1,5 +1,16 @@
 /* Custom styles for Dongwoo Suk Portfolio */
 
+/* Mobile viewport fix — dynamic viewport height (excludes URL bar/nav bar) */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+html, body, .reveal {
+    height: 100vh;
+    height: 100dvh;
+}
+
 :root {
     --accent: #4FC3F7;
     --accent-green: #66BB6A;
