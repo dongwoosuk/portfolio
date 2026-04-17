@@ -288,6 +288,7 @@ if (window.Reveal) {
             clamp();
             applyTransform();
             e.preventDefault();
+            e.stopPropagation();
         }, {passive: false});
         frame.addEventListener('touchend', function() { dragging = false; });
     });

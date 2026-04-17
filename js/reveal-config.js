@@ -12,6 +12,8 @@ Reveal.initialize({
     maxScale: 1.5,
     center: true,
     respondToVisibleSize: true,
+    touch: true,
+    touchDistance: 100,
 }).then(function() {
     // Mobile: re-layout on viewport changes (URL bar show/hide, orientation)
     var relayout = function() { if (Reveal.layout) Reveal.layout(); };
