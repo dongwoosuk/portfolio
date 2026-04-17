@@ -15,6 +15,9 @@ html, body {
     width: 100dvw;
     height: 100vh;
     height: 100dvh;
+    /* Block iOS edge-swipe back navigation; vertical pan still allowed */
+    touch-action: pan-y;
+    overscroll-behavior: none;
 }
 
 :root {

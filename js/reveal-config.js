@@ -59,9 +59,16 @@ Reveal.initialize({
     // - vertical swipes → always Reveal.prev/next
     (function() {
         var revealEl = document.querySelector('.reveal');
-        var SWIPE_MIN = 60, SWIPE_RATIO = 1.3;
-        var sx = 0, sy = 0, tracking = false;
+        var SWIPE_MIN = 60, SWIPE_RATIO = 1.3, COOLDOWN_MS = 500;
+        var sx = 0, sy = 0, tracking = false, locked = false;
+        function nav(h, v) {
+            if (locked) return;
+            locked = true;
+            Reveal.slide(h, v, 0);
+            setTimeout(function(){ locked = false; }, COOLDOWN_MS);
+        }
         revealEl.addEventListener('touchstart', function(e) {
+            if (locked) { tracking = false; return; }
             if (e.touches.length !== 1) { tracking = false; return; }
             var overlay = document.getElementById('popupOverlay');
             if (overlay && overlay.classList.contains('active')) { tracking = false; return; }
@@ -86,15 +93,18 @@ Reveal.initialize({
                 var isLastInStack = state.v === siblings.length - 1;
                 var canNavHorizontal = state.v === 0 || isLastInStack;
                 if (!canNavHorizontal) return; // mid-stack: block
-                if (dx < 0) { // swipe left → next section
-                    if (state.h < totalH - 1) Reveal.slide(state.h + 1, 0);
-                } else { // swipe right → prev section
-                    if (state.h > 0) Reveal.slide(state.h - 1, 0);
+                if (dx < 0) { // swipe left → next section cover
+                    if (state.h < totalH - 1) nav(state.h + 1, 0);
+                } else { // swipe right → prev section cover
+                    if (state.h > 0) nav(state.h - 1, 0);
                 }
             } else if (ay > ax * SWIPE_RATIO) {
                 // vertical swipe → stack up/down
+                if (locked) return;
+                locked = true;
                 if (dy < 0) Reveal.next();
                 else Reveal.prev();
+                setTimeout(function(){ locked = false; }, COOLDOWN_MS);
             }
         }, { passive: true });
     })();
