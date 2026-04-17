@@ -15,43 +15,29 @@ Reveal.initialize({
     touch: true,
     touchDistance: 200,
 }).then(function() {
-    // Wait for viewport to stabilize (rAF loop), then full Reveal re-sync + force re-navigate.
-    // Orientation events fire before viewport size settles — fixed delays miss the real completion.
-    var stableRelayoutPending = false;
-    function stableRelayout() {
-        if (stableRelayoutPending) return;
-        stableRelayoutPending = true;
-        var lastW = 0, lastH = 0, stableFrames = 0, maxTries = 60;
-        function tick() {
-            var w = window.innerWidth, h = window.innerHeight;
-            if (w === lastW && h === lastH) {
-                stableFrames++;
-            } else {
-                stableFrames = 0;
-                lastW = w; lastH = h;
-            }
-            maxTries--;
-            if (stableFrames >= 3 || maxTries <= 0) {
-                window.scrollTo(0, 0);
-                if (Reveal.sync) Reveal.sync();
-                else if (Reveal.layout) Reveal.layout();
-                var idx = Reveal.getIndices();
-                Reveal.slide(idx.h, idx.v, 0);
-                stableRelayoutPending = false;
-            } else {
-                requestAnimationFrame(tick);
-            }
-        }
-        requestAnimationFrame(tick);
-    }
-    window.addEventListener('resize', stableRelayout);
-    window.addEventListener('orientationchange', stableRelayout);
+    // Mobile: aggressive re-layout on viewport changes (orientation, URL bar, fullscreen)
+    var relayout = function() {
+        if (!Reveal.layout) return;
+        // Force repaint before relayout — fixes stale viewport after orientation change
+        var el = document.querySelector('.reveal');
+        if (el) { el.style.display = 'none'; el.offsetHeight; el.style.display = ''; }
+        Reveal.layout();
+    };
+    var multiRelayout = function() {
+        [100, 300, 600, 1200, 2000].forEach(function(ms) {
+            setTimeout(relayout, ms);
+        });
+    };
+    window.addEventListener('resize', multiRelayout);
+    window.addEventListener('orientationchange', multiRelayout);
     if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', stableRelayout);
+        window.visualViewport.addEventListener('resize', multiRelayout);
     }
-    window.addEventListener('load', stableRelayout);
-    document.addEventListener('fullscreenchange', stableRelayout);
-    document.addEventListener('webkitfullscreenchange', stableRelayout);
+    // Delayed initial layout — waits for URL bar auto-hide on mobile
+    window.addEventListener('load', multiRelayout);
+    // Also relayout when orientation overlay dismisses (fullscreen entry)
+    document.addEventListener('fullscreenchange', multiRelayout);
+    document.addEventListener('webkitfullscreenchange', multiRelayout);
 
     // Desktop: mouse wheel slide navigation (throttled, ignored in overview)
     var wheelLocked = false;
