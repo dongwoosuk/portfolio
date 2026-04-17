@@ -59,14 +59,14 @@ html, body {
 
 /* Title Slide */
 .title-name {
-    font-size: 2.4em;
+    font-size: 1.2em;
     font-weight: 700;
-    margin-bottom: 0.1em;
+    margin-bottom: 0.15em;
     text-align: center;
 }
 
 .title-role {
-    font-size: 1em;
+    font-size: 0.65em;
     color: var(--accent);
     margin-bottom: 0.2em;
     text-align: center;
@@ -81,12 +81,13 @@ html, body {
 
 .title-links {
     text-align: center;
+    font-size: 0.55em;
+    margin-top: 0.5em;
 }
 
 .title-links a {
     color: var(--accent);
     text-decoration: none;
-    font-size: 0.8em;
 }
 
 .title-links a:hover {
@@ -94,9 +95,9 @@ html, body {
 }
 
 .title-tagline {
-    font-size: 0.7em;
+    font-size: 0.55em;
     color: var(--text-muted);
-    margin-top: 1.5em;
+    margin-top: 1em;
     letter-spacing: 0.05em;
     text-align: center;
 }
@@ -313,6 +314,15 @@ html, body {
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(5px); }
+}
+
+/* Bouncing loop — for images with inline transform override */
+.bounce-loop {
+    animation: bounce-y 1.2s ease-in-out infinite;
+}
+@keyframes bounce-y {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
 }
 
 /* ===== Image Comparison (clip-path) ===== */
@@ -620,6 +630,28 @@ html, body {
     transition: none;
 }
 
+/* Right-to-left slide variant (incoming from right, outgoing to left) */
+.auto-slide.rtl-slide .auto-slide-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    opacity: 1;
+    transform: translateX(100%);
+    transition: transform 0.6s ease;
+    box-shadow: none;
+}
+.auto-slide.rtl-slide .auto-slide-img.active {
+    transform: translateX(0);
+}
+.auto-slide.rtl-slide .auto-slide-img.prev {
+    transform: translateX(-100%);
+}
+
 /* 5-column case nav variant */
 .case-nav-5 .case-nav-item {
     width: 17%;
@@ -670,9 +702,9 @@ html, body {
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.9);
     color: #fff;
-    padding: 6px 10px;
+    padding: 5px 10px;
     border-radius: 4px;
-    font-size: 0.75em;
+    font-size: 12px;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
@@ -716,6 +748,23 @@ html, body {
     cursor: pointer;
 }
 
+.popup-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.popup-iframe,
+.popup-video {
+    width: 80vw;
+    max-width: 1280px;
+    aspect-ratio: 16/9;
+    max-height: 70vh;
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    border: 0;
+    background: #000;
+}
+
 .popup-content p {
     color: #ccc;
     font-size: 0.85em;
@@ -741,7 +790,7 @@ html, body {
 
 .popup-prev,
 .popup-next {
-    position: absolute;
+    position: fixed;
     top: 50%;
     transform: translateY(-50%);
     width: 40px;
@@ -764,8 +813,8 @@ html, body {
     background: rgba(79, 195, 247, 0.6);
 }
 
-.popup-prev { left: -50px; }
-.popup-next { right: -50px; }
+.popup-prev { left: 20px; }
+.popup-next { right: 20px; }
 
 #popupCounter {
     display: block;
@@ -1103,6 +1152,22 @@ html, body {
 }
 .orient-btn:active {
     background: #3db0e0;
+}
+
+/* Click-to-zoom + pan inside frame */
+.zoom-pan img {
+    transition: transform 0.3s ease;
+    transform-origin: 0 0;
+    will-change: transform;
+}
+.zoom-pan.zoomed {
+    cursor: grab !important;
+}
+.zoom-pan.zoomed.dragging {
+    cursor: grabbing !important;
+}
+.zoom-pan.zoomed img {
+    transition: none;
 }
 
 /* A: First-visit swipe hint */

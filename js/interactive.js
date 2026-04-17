@@ -108,33 +108,190 @@ document.querySelectorAll('.magnify-wrap').forEach(function(wrap) {
     });
 });
 
-// Auto-slide image carousel
+// Auto-slide image carousel (.rtl-slide variant tags prev for slide-out animation)
 document.querySelectorAll('.auto-slide').forEach(function(slide) {
     var imgs = slide.querySelectorAll('.auto-slide-img');
     if (imgs.length === 0) return;
     var state = { current: 0 };
+    var isRtl = slide.classList.contains('rtl-slide');
+    var timerId = null;
     imgs[0].classList.add('active');
-    slide._resetAutoSlide = function() {
-        imgs[state.current].classList.remove('active');
-        state.current = 0;
-        imgs[0].classList.add('active');
-    };
-    setInterval(function() {
-        imgs[state.current].classList.remove('active');
+
+    function advance() {
+        var prevIdx = state.current;
         state.current = (state.current + 1) % imgs.length;
+        imgs[prevIdx].classList.remove('active');
+        if (isRtl) {
+            imgs[prevIdx].classList.add('prev');
+            setTimeout(function() {
+                imgs[prevIdx].style.transition = 'none';
+                imgs[prevIdx].classList.remove('prev');
+                imgs[prevIdx].offsetHeight;
+                imgs[prevIdx].style.transition = '';
+            }, 620);
+        }
         imgs[state.current].classList.add('active');
-    }, 4000);
+    }
+    function startTimer() {
+        if (timerId) clearInterval(timerId);
+        var interval = parseInt(slide.getAttribute('data-interval')) || 3000;
+        timerId = setInterval(advance, interval);
+    }
+    slide._resetAutoSlide = function() {
+        imgs.forEach(function(img){
+            img.classList.remove('active','prev');
+            img.style.transition = 'none';
+        });
+        state.current = 0;
+        imgs[0].offsetHeight;
+        imgs[0].classList.add('active');
+        setTimeout(function(){ imgs.forEach(function(img){ img.style.transition = ''; }); }, 20);
+        startTimer();
+    };
+    startTimer();
 });
 
 // Reset auto-slide to first image when its section becomes active
 if (window.Reveal) {
+    function resetCurrentSlideAutoSlides() {
+        var cur = Reveal.getCurrentSlide && Reveal.getCurrentSlide();
+        if (!cur) return;
+        cur.querySelectorAll('.auto-slide').forEach(function(s) {
+            if (typeof s._resetAutoSlide === 'function') s._resetAutoSlide();
+        });
+    }
     Reveal.on('slidechanged', function(e) {
         if (!e.currentSlide) return;
         e.currentSlide.querySelectorAll('.auto-slide').forEach(function(s) {
             if (typeof s._resetAutoSlide === 'function') s._resetAutoSlide();
         });
     });
+    Reveal.on('ready', resetCurrentSlideAutoSlides);
 }
+
+// Zoom-pan frames: click toggles zoom (synced across group), pan is per-frame
+(function(){
+    var scale = 2;
+    var groupMembers = {};
+    document.querySelectorAll('.zoom-pan').forEach(function(frame) {
+        var g = frame.getAttribute('data-zoom-group');
+        if (g) {
+            if (!groupMembers[g]) groupMembers[g] = [];
+            groupMembers[g].push(frame);
+        }
+    });
+
+    document.querySelectorAll('.zoom-pan').forEach(function(frame) {
+        var imgs = frame.querySelectorAll('img');
+        var tx = 0, ty = 0;
+        var dragging = false, moved = false;
+        var sx = 0, sy = 0, startTx = 0, startTy = 0;
+
+        function applyTransform() {
+            var s = frame.classList.contains('zoomed') ? scale : 1;
+            imgs.forEach(function(img) {
+                img.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+            });
+        }
+        function clamp() {
+            var fw = frame.clientWidth, fh = frame.clientHeight;
+            var minX = fw - fw * scale, minY = fh - fh * scale;
+            tx = Math.max(minX, Math.min(0, tx));
+            ty = Math.max(minY, Math.min(0, ty));
+        }
+        function zoomIn(cx, cy) {
+            var fw = frame.clientWidth, fh = frame.clientHeight;
+            var anchor = frame.getAttribute('data-zoom-anchor');
+            var px, py;
+            var named = {
+                center: [0.5, 0.5], top: [0.5, 0], bottom: [0.5, 1],
+                left: [0, 0.5], right: [1, 0.5]
+            };
+            if (anchor && named[anchor]) {
+                px = fw * named[anchor][0]; py = fh * named[anchor][1];
+            } else if (anchor && /^[\d.]+\s+[\d.]+$/.test(anchor)) {
+                var parts = anchor.split(/\s+/).map(parseFloat);
+                px = fw * parts[0]; py = fh * parts[1];
+            } else {
+                var rect = frame.getBoundingClientRect();
+                px = cx - rect.left; py = cy - rect.top;
+            }
+            tx = px - px * scale;
+            ty = py - py * scale;
+            clamp();
+            frame.classList.add('zoomed');
+            applyTransform();
+        }
+        function zoomOut() {
+            tx = 0; ty = 0;
+            frame.classList.remove('zoomed');
+            applyTransform();
+        }
+        frame.__zoomIn = zoomIn;
+        frame.__zoomOut = zoomOut;
+
+        function toggleGroup(e) {
+            var groupName = frame.getAttribute('data-zoom-group');
+            var peers = groupName ? groupMembers[groupName] : [frame];
+            var isZoomed = frame.classList.contains('zoomed');
+            if (isZoomed) {
+                peers.forEach(function(p) { if (p.__zoomOut) p.__zoomOut(); });
+            } else {
+                peers.forEach(function(p) {
+                    if (p === frame) { p.__zoomIn(e.clientX, e.clientY); }
+                    else {
+                        // Zoom peer at its own center
+                        var r = p.getBoundingClientRect();
+                        p.__zoomIn(r.left + r.width/2, r.top + r.height/2);
+                    }
+                });
+            }
+        }
+
+        frame.addEventListener('click', function(e) {
+            if (moved) { moved = false; return; }
+            toggleGroup(e);
+            e.stopPropagation();
+        });
+        frame.addEventListener('mousedown', function(e) {
+            if (!frame.classList.contains('zoomed')) return;
+            dragging = true; moved = false;
+            sx = e.clientX; sy = e.clientY;
+            startTx = tx; startTy = ty;
+            frame.classList.add('dragging');
+            e.preventDefault();
+        });
+        document.addEventListener('mousemove', function(e) {
+            if (!dragging) return;
+            var dx = e.clientX - sx, dy = e.clientY - sy;
+            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+            tx = startTx + dx; ty = startTy + dy;
+            clamp();
+            applyTransform();
+        });
+        document.addEventListener('mouseup', function() {
+            if (dragging) { dragging = false; frame.classList.remove('dragging'); }
+        });
+        frame.addEventListener('touchstart', function(e) {
+            if (!frame.classList.contains('zoomed')) return;
+            var t = e.touches[0];
+            dragging = true; moved = false;
+            sx = t.clientX; sy = t.clientY;
+            startTx = tx; startTy = ty;
+        }, {passive: true});
+        frame.addEventListener('touchmove', function(e) {
+            if (!dragging) return;
+            var t = e.touches[0];
+            var dx = t.clientX - sx, dy = t.clientY - sy;
+            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+            tx = startTx + dx; ty = startTy + dy;
+            clamp();
+            applyTransform();
+            e.preventDefault();
+        }, {passive: false});
+        frame.addEventListener('touchend', function() { dragging = false; });
+    });
+})();
 
 // Manual click carousel with slide animation
 document.querySelectorAll('.manual-carousel').forEach(function(carousel, idx) {

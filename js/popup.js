@@ -1,24 +1,48 @@
 // Popup data + gallery logic
 var popupData = {
     pavilion: {
-        img: 'assets/images/career/the-exchange.jpg',
-        caption: 'The Exchange — Miller Prize Winning Pavilion, Exhibit Columbus (Oyler Wu Collaborative)'
+        gallery: [
+            { img: 'assets/images/career/2-Oyler_Wu_Collaborative-_The_Exchange.jpg', caption: 'The Exchange - Exhibit Columbus' },
+            { img: 'assets/images/career/10-Oyler_Wu_Collaborative-_The_Exchange.jpg', caption: 'The Exchange - Exhibit Columbus' },
+            { img: 'assets/images/career/14-Oyler_Wu_Collaborative-_The_Exchange.jpg', caption: 'The Exchange - Exhibit Columbus' },
+            { vimeo: '258852233', caption: 'The Exchange - Exhibit Columbus' }
+        ]
     },
     exhibition: {
-        img: 'assets/images/career/quicksilver.jpg',
-        caption: 'Quicksilver Installation — JUT Art Museum, Taipei (Oyler Wu Collaborative)'
+        gallery: [
+            { img: 'assets/images/career/19-Oyler_Wu_Collaborative-_Quicksilver.jpg', caption: 'Quicksilver - Exhibition at JUT Art Museum in Taipei' },
+            { img: 'assets/images/career/8-Oyler_Wu_Collaborative-_Quicksilver.jpg', caption: 'Quicksilver - Exhibition at JUT Art Museum in Taipei' },
+            { img: 'assets/images/career/1b-Oyler_Wu_Collaborative-_Quicksilver.jpg', caption: 'Quicksilver - Exhibition at JUT Art Museum in Taipei' },
+            { img: 'assets/images/career/4b-Oyler_Wu_Collaborative-_Quicksilver.jpg', caption: 'Quicksilver - Exhibition at JUT Art Museum in Taipei' }
+        ]
     },
     exchange: {
-        img: 'assets/images/career/the-exchange.jpg',
-        caption: 'The Exchange — Miller Prize + MCHAP Selected, Exhibit Columbus (Oyler Wu Collaborative)'
+        gallery: [
+            { img: 'assets/images/career/2-Oyler_Wu_Collaborative-_The_Exchange.jpg', caption: 'The Exchange - Exhibit Columbus' },
+            { img: 'assets/images/career/10-Oyler_Wu_Collaborative-_The_Exchange.jpg', caption: 'The Exchange - Exhibit Columbus' },
+            { img: 'assets/images/career/14-Oyler_Wu_Collaborative-_The_Exchange.jpg', caption: 'The Exchange - Exhibit Columbus' },
+            { vimeo: '258852233', caption: 'The Exchange - Exhibit Columbus' }
+        ]
     },
     ellore: {
-        img: 'assets/images/career/ellore.jpg',
-        caption: 'Ellore — Senior Living Community, Gold Nugget Grand Award (Steinberg Hart)'
+        gallery: [
+            { img: 'assets/images/career/web/18041_200_Ellore_N26_website.jpg', caption: 'Ellore - Senior Living Project' },
+            { img: 'assets/images/career/web/18041_200_Ellore_N24_website.jpg', caption: 'Ellore - Senior Living Project' },
+            { img: 'assets/images/career/web/18041_200_Ellore_N23_website.jpg', caption: 'Ellore - Senior Living Project' },
+            { img: 'assets/images/career/web/18041_200_Ellore_N13_website.jpg', caption: 'Ellore - Senior Living Project' },
+            { img: 'assets/images/career/web/18041_200_Ellore_N4_website.jpg', caption: 'Ellore - Senior Living Project' },
+            { img: 'assets/images/career/web/18041_200_Ellore_N6_website.jpg', caption: 'Ellore - Senior Living Project' }
+        ]
     },
     clara: {
-        img: 'assets/images/career/the-clara.jpg',
-        caption: 'The Clara — Mixed-Use Residential, SVBJ Structures Award (Steinberg Hart)'
+        gallery: [
+            { img: 'assets/images/career/web/18041_200_N46_website.jpg', caption: 'The Clara - Luxury Residential Apartment' },
+            { img: 'assets/images/career/web/18041_100_The_Clara_N8_website.jpg', caption: 'The Clara - Luxury Residential Apartment' },
+            { img: 'assets/images/career/web/18041_100_The_Clara_N11_website.jpg', caption: 'The Clara - Luxury Residential Apartment' },
+            { img: 'assets/images/career/web/18041_100_The_Clara_N14_website.jpg', caption: 'The Clara - Luxury Residential Apartment' },
+            { img: 'assets/images/career/web/18041_100_The_Clara_N16_website.jpg', caption: 'The Clara - Luxury Residential Apartment' },
+            { img: 'assets/images/career/web/18041_100_The_Clara_N20_website.jpg', caption: 'The Clara - Luxury Residential Apartment' }
+        ]
     },
     '5x5render': {
         img: 'assets/images/rir/01_5x5_building/Computational_Modeling_Presentation_ADG Firmwide Page 062_web.jpg',
@@ -49,6 +73,7 @@ var popupData = {
 
 document.addEventListener('DOMContentLoaded', function() {
     var overlay = document.getElementById('popupOverlay');
+    var popupMedia = document.getElementById('popupMedia');
     var popupImg = document.getElementById('popupImg');
     var popupCaption = document.getElementById('popupCaption');
     var popupCounter = document.getElementById('popupCounter');
@@ -57,11 +82,37 @@ document.addEventListener('DOMContentLoaded', function() {
     var galleryItems = null;
     var galleryIndex = 0;
 
+    function renderMedia(item) {
+        popupMedia.innerHTML = '';
+        if (item.vimeo) {
+            var ifr = document.createElement('iframe');
+            ifr.src = 'https://player.vimeo.com/video/' + item.vimeo + '?autoplay=1&loop=1&title=0&byline=0&portrait=0';
+            ifr.allow = 'autoplay; fullscreen; picture-in-picture';
+            ifr.setAttribute('allowfullscreen', '');
+            ifr.setAttribute('frameborder', '0');
+            ifr.className = 'popup-iframe';
+            popupMedia.appendChild(ifr);
+        } else if (item.video) {
+            var v = document.createElement('video');
+            v.src = item.video;
+            v.autoplay = true; v.loop = true; v.controls = true; v.playsInline = true;
+            v.className = 'popup-video';
+            popupMedia.appendChild(v);
+        } else {
+            var img = document.createElement('img');
+            img.id = 'popupImg';
+            img.src = item.img;
+            img.alt = item.caption || '';
+            popupMedia.appendChild(img);
+            popupImg = img;
+            img.addEventListener('click', function(e){ e.stopPropagation(); nextItem(); });
+        }
+    }
+
     function showGalleryItem(i) {
         galleryIndex = i;
-        popupImg.src = galleryItems[i].img;
-        popupImg.alt = galleryItems[i].caption;
-        popupCaption.textContent = galleryItems[i].caption;
+        renderMedia(galleryItems[i]);
+        popupCaption.textContent = galleryItems[i].caption || '';
         popupCounter.textContent = (i + 1) + ' / ' + galleryItems.length;
         popupPrev.style.display = galleryItems.length > 1 ? 'flex' : 'none';
         popupNext.style.display = galleryItems.length > 1 ? 'flex' : 'none';
@@ -116,11 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
             openPopup(el);
         });
-    });
-
-    popupImg.addEventListener('click', function(e) {
-        e.stopPropagation();
-        nextItem();
     });
 
     popupPrev.addEventListener('click', function(e) {

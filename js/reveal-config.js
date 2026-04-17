@@ -49,7 +49,9 @@ Reveal.initialize({
             e.preventDefault();
             e.stopPropagation();
             var h = parseInt(link.getAttribute('data-h'));
-            Reveal.slide(h, 0);
+            var vAttr = link.getAttribute('data-v');
+            var v = vAttr !== null ? parseInt(vAttr) : 0;
+            Reveal.slide(h, v);
         };
         var sx = 0, sy = 0, touched = false;
         link.addEventListener('touchstart', function(e) {
