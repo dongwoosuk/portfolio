@@ -16,9 +16,15 @@ Reveal.initialize({
     touchDistance: 200,
 }).then(function() {
     // Mobile: aggressive re-layout on viewport changes (orientation, URL bar, fullscreen)
-    var relayout = function() { if (Reveal.layout) Reveal.layout(); };
+    var relayout = function() {
+        if (!Reveal.layout) return;
+        // Force repaint before relayout — fixes stale viewport after orientation change
+        var el = document.querySelector('.reveal');
+        if (el) { el.style.display = 'none'; el.offsetHeight; el.style.display = ''; }
+        Reveal.layout();
+    };
     var multiRelayout = function() {
-        [100, 300, 500, 1000].forEach(function(ms) {
+        [100, 300, 600, 1200, 2000].forEach(function(ms) {
             setTimeout(relayout, ms);
         });
     };
