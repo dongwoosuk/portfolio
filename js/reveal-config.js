@@ -12,7 +12,7 @@ Reveal.initialize({
     maxScale: 1.5,
     center: true,
     respondToVisibleSize: true,
-    touch: true,
+    touch: false,
     touchDistance: 200,
 }).then(function() {
     // Mobile: aggressive re-layout on viewport changes (orientation, URL bar, fullscreen)
@@ -52,6 +52,52 @@ Reveal.initialize({
         else Reveal.prev();
         setTimeout(function(){ wheelLocked = false; }, 700);
     }, { passive: true });
+
+    // Custom swipe: stack-aware horizontal navigation.
+    // - v=0 (cover) or last slide in a stack → left/right swipe navigates between section covers
+    // - mid-stack (v>0 and not last) → horizontal swipes are ignored (only vertical works)
+    // - vertical swipes → always Reveal.prev/next
+    (function() {
+        var revealEl = document.querySelector('.reveal');
+        var SWIPE_MIN = 60, SWIPE_RATIO = 1.3;
+        var sx = 0, sy = 0, tracking = false;
+        revealEl.addEventListener('touchstart', function(e) {
+            if (e.touches.length !== 1) { tracking = false; return; }
+            var overlay = document.getElementById('popupOverlay');
+            if (overlay && overlay.classList.contains('active')) { tracking = false; return; }
+            if (e.target.closest('.zoom-pan.zoomed, .jump-link, .popup-trigger, .dot, .carousel-btn, .orient-btn, button, a')) {
+                tracking = false; return;
+            }
+            sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+        }, { passive: true });
+        revealEl.addEventListener('touchend', function(e) {
+            if (!tracking) return;
+            tracking = false;
+            var t = e.changedTouches[0];
+            var dx = t.clientX - sx, dy = t.clientY - sy;
+            var ax = Math.abs(dx), ay = Math.abs(dy);
+            if (ax < SWIPE_MIN && ay < SWIPE_MIN) return;
+            var state = Reveal.getIndices();
+            var totalH = Reveal.getHorizontalSlides().length;
+            if (ax > ay * SWIPE_RATIO) {
+                // horizontal swipe
+                var parent = Reveal.getCurrentSlide().parentElement;
+                var siblings = parent.querySelectorAll(':scope > section');
+                var isLastInStack = state.v === siblings.length - 1;
+                var canNavHorizontal = state.v === 0 || isLastInStack;
+                if (!canNavHorizontal) return; // mid-stack: block
+                if (dx < 0) { // swipe left → next section
+                    if (state.h < totalH - 1) Reveal.slide(state.h + 1, 0);
+                } else { // swipe right → prev section
+                    if (state.h > 0) Reveal.slide(state.h - 1, 0);
+                }
+            } else if (ay > ax * SWIPE_RATIO) {
+                // vertical swipe → stack up/down
+                if (dy < 0) Reveal.next();
+                else Reveal.prev();
+            }
+        }, { passive: true });
+    })();
     // Jump links
     document.querySelectorAll('.jump-link').forEach(function(link) {
         link.style.cursor = 'pointer';
