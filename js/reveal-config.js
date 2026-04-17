@@ -15,20 +15,23 @@ Reveal.initialize({
     touch: true,
     touchDistance: 200,
 }).then(function() {
-    // Mobile: re-layout on viewport changes (URL bar show/hide, orientation)
+    // Mobile: aggressive re-layout on viewport changes (orientation, URL bar, fullscreen)
     var relayout = function() { if (Reveal.layout) Reveal.layout(); };
-    window.addEventListener('resize', relayout);
-    window.addEventListener('orientationchange', function() {
-        setTimeout(relayout, 300);
-    });
+    var multiRelayout = function() {
+        [100, 300, 500, 1000].forEach(function(ms) {
+            setTimeout(relayout, ms);
+        });
+    };
+    window.addEventListener('resize', multiRelayout);
+    window.addEventListener('orientationchange', multiRelayout);
     if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', relayout);
+        window.visualViewport.addEventListener('resize', multiRelayout);
     }
     // Delayed initial layout — waits for URL bar auto-hide on mobile
-    window.addEventListener('load', function() {
-        setTimeout(relayout, 300);
-        setTimeout(relayout, 800);
-    });
+    window.addEventListener('load', multiRelayout);
+    // Also relayout when orientation overlay dismisses (fullscreen entry)
+    document.addEventListener('fullscreenchange', multiRelayout);
+    document.addEventListener('webkitfullscreenchange', multiRelayout);
 
     // Desktop: mouse wheel slide navigation (throttled, ignored in overview)
     var wheelLocked = false;
