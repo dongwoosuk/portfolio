@@ -63,8 +63,8 @@ var popupData = {
         caption: 'Archiol Competition — Elevated Communities, 1st Place (2026)'
     },
     archstorming: {
-        img: 'assets/images/competitions/archstorming-senegal-school.jpg',
-        caption: 'Archstorming — Senegal School, Semi-Finalist (2026)'
+        img: 'assets/images/competitions/archstorming-senegal-secondary-school.jpg',
+        caption: 'Archstorming — Senegal Secondary School, Semi-Finalist (2026)'
     },
     iida: {
         img: 'assets/images/competitions/iida-ny-student-2015.jpg',
