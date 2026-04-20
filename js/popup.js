@@ -60,15 +60,15 @@ var popupData = {
     },
     archiol: {
         img: 'assets/images/competitions/archiol-elevated-communities.jpg',
-        caption: 'Archiol Competition — Elevated Communities, 1st Place (2026)'
+        caption: 'Archiol Competition 2025 — Elevated Communities, 1st Place'
     },
     archstorming: {
         img: 'assets/images/competitions/archstorming-senegal-secondary-school.jpg',
-        caption: 'Archstorming — Senegal Secondary School, Semi-Finalist (2026)'
+        caption: 'Archstorming 2026 — Senegal Secondary School, Semi-Finalist'
     },
     iida: {
         img: 'assets/images/competitions/iida-ny-student-2015.jpg',
-        caption: 'IIDA NY Student Design Competition — Top 5 Finalist (2015)'
+        caption: 'IIDA NY Student Award 2015 — Top 5 Finalist'
     },
     '188wsj': {
         gallery: [
