@@ -58,6 +58,18 @@ var popupData = {
         img: 'assets/images/rir/04_frit_pattern/Frit Design Plot (2)_web.jpg',
         caption: 'Frit Pattern — Full-Scale Design Plot'
     },
+    archiol: {
+        img: 'assets/images/competitions/archiol-elevated-communities.jpg',
+        caption: 'Archiol Competition — Elevated Communities, 1st Place (2026)'
+    },
+    archstorming: {
+        img: 'assets/images/competitions/archstorming-senegal-school.jpg',
+        caption: 'Archstorming — Senegal School, Semi-Finalist (2026)'
+    },
+    iida: {
+        img: 'assets/images/competitions/iida-ny-student-2015.jpg',
+        caption: 'IIDA NY Student Design Competition — Top 5 Finalist (2015)'
+    },
     '188wsj': {
         gallery: [
             { img: 'assets/images/reference/188 St James Interview Deck_ Page 001.jpg', caption: '188 West Saint James — Cover' },
