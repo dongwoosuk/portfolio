@@ -195,7 +195,7 @@
                             </ul>
                             <h3>Individual Awards (3)</h3>
                             <ul>
-                                <li><strong>IIDA NY Student Award 2015</strong> &mdash; <span class="popup-trigger" data-popup="iida">Top 5 Finalist</span></li>
+                                <li><strong>IIDA NY Student Design Awards 2015</strong> &mdash; <span class="popup-trigger" data-popup="iida">Winner</span></li>
                                 <li><strong>Archiol Competition 2025</strong> &mdash; <span class="popup-trigger" data-popup="archiol">Elevated Communities</span>, 1st Place</li>
                                 <li><strong>Archstorming 2026</strong> &mdash; <span class="popup-trigger" data-popup="archstorming">Senegal Secondary School</span>, Semi-Finalist</li>
                             </ul>
@@ -265,10 +265,10 @@
                             <span>Building Massing Generator</span>
                         </a>
                         <a class="case-nav-item" href="#/1/5">
-                            <div class="placeholder" style="height:180px;min-height:180px;"><span>Screenshot</span></div>
+                            <img src="assets/images/gh_python/facade%20panelization/Perspecitve_02_thumb.jpg" alt="Facade Panelization" loading="lazy">
                             <span>Facade Panelization</span>
                         </a>
-                        <a class="case-nav-item" href="#/1/6">
+                        <a class="case-nav-item" href="#/1/9">
                             <img src="assets/images/gh_python/parking/0402_11_Cropped.png" alt="Parking Stall Tracker" loading="lazy">
                             <span>Parking Stall Tracker</span>
                         </a>
@@ -325,33 +325,112 @@
                 <!-- 2-4: Facade Panelization -->
                 <section>
                     <h2>Facade Panelization Tool</h2>
-                    <p class="subtitle">Automated Panel Placement &amp; Vector Analysis on Curved Facades</p>
+                    <p class="subtitle">GH-Driven Panel Generation for Complex Facades</p>
                     <div class="slide-layout">
                         <div class="slide-text">
                             <div class="metrics">
                                 <div class="metric">
-                                    <span class="metric-value">159</span>
-                                    <span class="metric-label">Components</span>
+                                    <span class="metric-value">3</span>
+                                    <span class="metric-label">Division Presets</span>
                                 </div>
                                 <div class="metric">
-                                    <span class="metric-value">UV</span>
-                                    <span class="metric-label">Grid Control</span>
+                                    <span class="metric-value">3</span>
+                                    <span class="metric-label">Panel Types</span>
                                 </div>
                             </div>
                             <ul>
-                                <li><strong>Face Classification:</strong> Auto-separate Top/Bottom/Sides from building Brep</li>
-                                <li><strong>UV Grid Division:</strong> Parametric panel density (U &amp; V sliders)</li>
-                                <li><strong>Twisted Box + Box Morph:</strong> Panel geometry morphed onto curved surfaces</li>
-                                <li><strong>Vector Analysis:</strong> 7 display layers for panel normal &amp; direction visualization</li>
-                                <li><strong>Edge/Interior Split:</strong> Data tree filtering for boundary vs. interior panels</li>
+                                <li><strong>Panelization Preset System</strong> &mdash; Equal, Graph, and Pattern division adapts to any facade geometry</li>
+                                <li><strong>Typical &amp; Corner Panel Classification</strong> &mdash; bounding box with Miter Cut for clean corner panels</li>
+                                <li><strong>Panel Swap Support</strong> &mdash; Rhino Block, Revit Family, or Morph-generated geometry</li>
+                                <li><strong>UV Grid Control</strong> &mdash; parametric panel density independent of facade size</li>
                             </ul>
                             <p class="projects">Applied: ADG Pilot Project</p>
                         </div>
                         <div class="slide-image">
-                            <div class="placeholder">
-                                <span>Screenshot / GIF</span>
-                                <small>assets/images/gh_python/facade/</small>
-                            </div>
+                            <img src="assets/images/gh_python/facade%20panelization/Perspecitve_02.png" alt="Facade Panelization Tool — Perspective view" loading="lazy">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1-4-0: Facade Panelization Tool (alt) — absolute layout from Figma 244:44 -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:73px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Facade Panelization Tool</h2>
+                        <p style="position:absolute; left:30px; top:118px; font-size:15.6px; color:#4fc3f7; margin:0;">Real-time Facade Panelization</p>
+                        <video autoplay loop muted playsinline style="position:absolute; left:205px; top:179px; width:749px; height:468px; object-fit:cover;">
+                            <source src="assets/images/gh_python/facade%20panelization/facade%20paneling_demo_30s_trim.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </section>
+
+                <!-- 1-4-1: Facade Panelization Tool (alt) — absolute layout from Figma 210:67 -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:33px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Facade Panelization Tool</h2>
+                        <p style="position:absolute; left:30px; top:88px; font-size:15.6px; color:#4fc3f7; margin:0;">Panelization Design Options Preset</p>
+                        <ul style="position:absolute; left:50px; top:113px; width:1100px; font-size:11.4px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
+                            <li style="margin:2px 0;"><strong>Panelization Design Options Preset</strong> &mdash; panel grid alignment adapts regardless of facade size</li>
+                            <li style="margin:2px 0;"><strong>Typical</strong> and <strong>Corner</strong> panel classification &mdash; Corner panels apply <strong>Miter Cut</strong> at face intersections</li>
+                        </ul>
+                        <div class="auto-slide instant" data-interval="3750" style="position:absolute; left:562px; top:183px; width:540px; height:24px; overflow:hidden; min-height:0; max-height:none; z-index:2; pointer-events:none;">
+                            <span class="auto-slide-img" style="position:relative; display:block; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:right; line-height:24px; padding-right:8px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Typical Panel</span>
+                            <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:right; line-height:24px; padding-right:8px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Corner Panel</span>
+                        </div>
+                        <div class="auto-slide instant" data-interval="2500" style="position:absolute; left:30px; top:175px; width:555px; height:347px; overflow:hidden; min-height:0; max-height:none;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/facade_01.png" alt="Facade Panelization — 01" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/facade_02.png" alt="Facade Panelization — 02" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/facade_03.png" alt="Facade Panelization — 03" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <div class="auto-slide instant" data-interval="2500" style="position:absolute; left:30px; top:494px; width:555px; height:28px; overflow:hidden; min-height:0; max-height:none; z-index:2; pointer-events:none;">
+                            <span class="auto-slide-img" style="position:relative; display:block; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Equal Division</span>
+                            <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Graph Division</span>
+                            <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Pattern Division</span>
+                        </div>
+                        <div class="auto-slide instant" data-interval="3750" style="position:absolute; left:582px; top:175px; width:548px; height:347px; overflow:hidden; min-height:0; max-height:none;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/typical_zoom.png" alt="Facade Panelization — Typical zoom" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/corner_zoom.png" alt="Facade Panelization — Corner zoom" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <div style="position:absolute; left:30px; top:522px; width:1100px; height:166px; background:rgba(255,255,255,0.1);">
+                            <img src="assets/images/gh_python/facade%20panelization/26-0405_ADG%20Pilot%20Project_Facade%20Paneling_GH%20Canvas.png" alt="Facade Panelization — Grasshopper canvas" loading="lazy" style="position:absolute; left:5.5px; top:12px; width:1089px; height:142px; object-fit:cover;">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1-4-2: Facade Panelization Tool (alt) — absolute layout from Figma 210:103 (content shifted +48 header / +18 images for vertical center w/ tight bullets-images gap) -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:58px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Facade Panelization Tool</h2>
+                        <p style="position:absolute; left:30px; top:113px; font-size:15.6px; color:#4fc3f7; margin:0;">Panel Swap Options Preset</p>
+                        <ul style="position:absolute; left:50px; top:158px; width:1100px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
+                            <li style="margin:2px 0;"><strong>Rhino Block / Custom Modeling or Revit Curtain Panel Family</strong> &mdash; native geometry or Revit-exported geometry placed directly as block</li>
+                            <li style="margin:2px 0;"><strong>Morph Component / Rhino.Common API</strong> &mdash; procedurally generated via script</li>
+                            <li style="margin:2px 0;"><strong>Corner Miter Cut Morph</strong> &mdash; minimizes deformation at panel intersections for clean corner geometry</li>
+                        </ul>
+                        <div class="auto-slide instant" data-interval="2500" style="position:absolute; left:30px; top:243px; width:629px; height:399px; overflow:hidden; min-height:0; max-height:none;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/Panel%20Opt_01.png" alt="Facade Panelization — Panel Option 01" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/Panel%20Opt_02.png" alt="Facade Panelization — Panel Option 02" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/Panel%20Opt_03.png" alt="Facade Panelization — Panel Option 03" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/corner%20plan%20cut_01.png" alt="Facade Panelization — Corner Plan Cut 01" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/corner%20plan%20cut_02.png" alt="Facade Panelization — Corner Plan Cut 02" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/corner%20plan%20cut_03.png" alt="Facade Panelization — Corner Plan Cut 03" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <div class="auto-slide instant" data-interval="2500" style="position:absolute; left:30px; top:613px; width:629px; height:28px; overflow:hidden; min-height:0; max-height:none; z-index:2; pointer-events:none;">
+                            <span class="auto-slide-img" style="position:relative; display:block; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Option A</span>
+                            <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Option B</span>
+                            <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Option C</span>
+                            <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; height:28px;"></span>
+                            <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; height:28px;"></span>
+                            <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; height:28px;"></span>
+                        </div>
+                        <div class="auto-slide instant" data-interval="2500" style="position:absolute; left:691px; top:243px; width:439px; height:399px; overflow:hidden; min-height:0; max-height:none;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/Panel%2001.png" alt="Facade Panelization — Panel 01" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/Panel%2002.png" alt="Facade Panelization — Panel 02" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/facade%20panelization/Panel%2003.png" alt="Facade Panelization — Panel 03" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <div class="auto-slide instant" data-interval="2500" style="position:absolute; left:691px; top:613px; width:439px; height:28px; overflow:hidden; min-height:0; max-height:none; z-index:2; pointer-events:none;">
+                            <span class="auto-slide-img" style="position:relative; display:block; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Metal Transom Window</span>
+                            <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Tilt Glass Panel</span>
+                            <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Prefab Window Panel</span>
                         </div>
                     </div>
                 </section>
@@ -671,10 +750,10 @@
                 <section class="figma-layout">
                     <div class="fl-canvas">
                         <h2 style="position:absolute; left:30px; top:39px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Cal Poly: Parametric Box Displacement</h2>
-                        <p style="position:absolute; left:30px; top:94px; font-size:15.6px; color:#4fc3f7; margin:0;">Grasshopper Script for Modular Unit Placement</p>
+                        <p style="position:absolute; left:30px; top:94px; font-size:15.6px; color:#4fc3f7; margin:0;">Curve-Driven Modular Unit Displacement</p>
                         <ul style="position:absolute; left:30px; top:130px; width:500px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.4;">
-                            <li style="margin:2px 0;">GH-driven box module placement on curved grid</li>
-                            <li style="margin:2px 0;">Parametric shift &amp; offset per unit</li>
+                            <li style="margin:2px 0;">GH-driven box module displacement along reference curve</li>
+                            <li style="margin:2px 0;">Real-time response to control-point manipulation</li>
                         </ul>
                         <div style="position:absolute; left:148px; top:175px; width:864px; height:486px;">
                             <video src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
@@ -1074,27 +1153,40 @@
                     </div>
                 </section>
 
-                <!-- 4-3: Rhino Grasshopper MCP -->
-                <section>
-                    <h2>Rhino Grasshopper MCP</h2>
-                    <p class="subtitle">AI-Powered Design Assistant with ML Auto-Layout</p>
-                    <div class="slide-layout">
-                        <div class="slide-text">
-                            <ul>
-                                <li><strong>ML Auto-Layout:</strong> DBSCAN, K-means clustering</li>
-                                <li><strong>Pattern Learning:</strong> Adapts to user preferences</li>
-                                <li><strong>Real-time Bridge:</strong> TCP Socket to Rhino</li>
-                                <li><strong>Performance Prediction:</strong> Optimization suggestions</li>
-                                <li><strong>Wire Crossing Minimization:</strong> Graph algorithms</li>
-                            </ul>
-                            <p class="repo-link"><a href="https://github.com/dongwoosuk/rhino-grasshopper-mcp" target="_blank">github.com/dongwoosuk/rhino-grasshopper-mcp</a></p>
-                        </div>
-                        <div class="slide-image">
-                            <div class="placeholder">
-                                <span>Screenshot / GIF</span>
-                                <small>assets/images/opensource/</small>
-                            </div>
-                        </div>
+                <!-- 4-3: Rhino Grasshopper MCP — absolute layout from Figma 55:2 -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:117px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Rhino Grasshopper MCP</h2>
+                        <p style="position:absolute; left:30px; top:172px; font-size:15.6px; color:#4fc3f7; margin:0;">AI-Powered Design Assistant with ML Auto-Layout</p>
+                        <ul style="position:absolute; left:50px; top:215px; width:500px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
+                            <li style="margin:2px 0;"><strong>ML Auto-Layout</strong> &mdash; DBSCAN, K-means clustering</li>
+                            <li style="margin:2px 0;"><strong>Pattern Learning</strong> &mdash; Adapts to user preferences</li>
+                            <li style="margin:2px 0;"><strong>Real-time Bridge</strong> &mdash; TCP Socket to Rhino</li>
+                            <li style="margin:2px 0;"><strong>Performance Prediction</strong> &mdash; Optimization suggestions</li>
+                            <li style="margin:2px 0;"><strong>Wire Crossing Minimization</strong> &mdash; Graph algorithms</li>
+                        </ul>
+                        <p style="position:absolute; left:30px; top:328px; font-size:10.92px; margin:0;">
+                            <a href="https://github.com/dongwoosuk/rhino-grasshopper-mcp" target="_blank" style="color:rgba(79,195,247,0.5); text-decoration:none;">github.com/dongwoosuk/rhino-grasshopper-mcp</a>
+                        </p>
+                        <img src="assets/images/opensource/gh_mcp/Rhino%20MCP%20_02.png" alt="Rhino Grasshopper MCP — interface screenshot" loading="lazy" style="position:absolute; left:516px; top:212px; width:614px; height:391px; object-fit:cover;">
+                    </div>
+                </section>
+
+                <!-- 4-3b: Rhino MCP Live — Facade Kit 3D viewer -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:30px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Rhino MCP &mdash; Live: Parametric Facade Kit</h2>
+                        <p style="position:absolute; left:30px; top:72px; font-size:15.6px; color:#4fc3f7; margin:0;">Agent-generated erosive facade + kit-of-parts rationalization &middot; drag to orbit, click a panel to spotlight its mold</p>
+                        <iframe src="facade/facade_kit_3d.html" loading="lazy" style="position:absolute; left:30px; top:104px; width:1140px; height:582px; border:0; border-radius:8px; background:#0d1117;"></iframe>
+                    </div>
+                </section>
+
+                <!-- 4-3c: Rhino MCP Live — Kit Analysis Dashboard -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:30px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Facade Kit &mdash; Analysis Dashboard</h2>
+                        <p style="position:absolute; left:30px; top:72px; font-size:15.6px; color:#4fc3f7; margin:0;">784 panels &rarr; 231 molds, 91% from reused molds &middot; Pareto, reuse map, mold sharing across faces</p>
+                        <iframe src="facade/facade_kit_dashboard.html" loading="lazy" style="position:absolute; left:30px; top:104px; width:1140px; height:582px; border:0; border-radius:8px; background:#11151c;"></iframe>
                     </div>
                 </section>
 
