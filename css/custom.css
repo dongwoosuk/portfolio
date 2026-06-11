@@ -785,8 +785,9 @@ html, body {
     pointer-events: none;
 }
 .zoom-hint svg { display: block; }
-.fl-canvas img.img-zoom:hover ~ .zoom-hint,
-.fl-canvas .popup-gallery:hover ~ .zoom-hint,
+.fl-canvas img.img-zoom:hover + .zoom-hint,
+.fl-canvas video.video-zoom:hover + .zoom-hint,
+.fl-canvas .popup-gallery:hover + .zoom-hint,
 .zoom-hint:hover { opacity: 1; }
 .popup-iframe,
 .popup-video {

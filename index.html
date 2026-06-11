@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://dongwoosuk.github.io/portfolio/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/custom.css?v=perf3">
+    <link rel="stylesheet" href="css/custom.css?v=perf4">
     <script>
         (function() {
             var m = location.search.match(/[?&]slide=(\d+)-(\d+)/);
@@ -477,12 +477,12 @@
                                 </div>
                             </div>
                             <ul>
-                                <li><strong>Agent-Generated Erosive Facade</strong> &mdash; kit-of-parts panel system from a parametric envelope</li>
+                                <li><strong>Agent-Generated Parametric Facade</strong> &mdash; kit-of-parts panel system derived from the building envelope</li>
                                 <li><strong>Mold Rationalization</strong> &mdash; clusters 784 panels into 231 reusable molds to cut fabrication cost</li>
                                 <li><strong>Cross-Face Mold Sharing</strong> &mdash; reuse map and Pareto trade-off across all building faces</li>
                                 <li><strong>Interactive Review</strong> &mdash; live 3D kit viewer + analysis dashboard</li>
                             </ul>
-                            <p class="projects">Applied: Cal Poly Building C</p>
+                            <p class="projects">Applied: <span class="popup-trigger" data-popup="calpoly">Cal Poly Building C</span></p>
                         </div>
                         <div class="slide-image">
                             <div class="auto-slide instant popup-gallery" data-interval="4000">
@@ -498,27 +498,41 @@
                     <div class="fl-canvas">
                         <h2 style="position:absolute; left:30px; top:63px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Panel Rationalization</h2>
                         <p style="position:absolute; left:30px; top:108px; font-size:15.6px; color:#4fc3f7; margin:0;">Cal Poly Building C &mdash; Kit Assembly Animation</p>
-                        <video data-autoplay loop muted playsinline style="position:absolute; left:205px; top:169px; width:749px; height:468px; object-fit:cover;">
+                        <ul style="position:absolute; left:50px; top:158px; width:1100px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
+                            <li style="margin:2px 0;"><strong>Mold Rationalization</strong> &mdash; clusters 784 panels into 231 reusable molds (91% from reused molds) to cut fabrication cost</li>
+                            <li style="margin:2px 0;"><strong>Kit-of-Parts Catalog</strong> &mdash; 70 reused mold types + 53 one-off types, shared across building faces</li>
+                            <li style="margin:2px 0;"><strong>Agent-Generated Workflow</strong> &mdash; Rhino MCP builds the parametric facade kit; Pareto trade-off and reuse map for review</li>
+                        </ul>
+                        <video class="video-zoom" data-autoplay loop muted playsinline aria-label="Panel Rationalization — Kit Assembly Animation" style="position:absolute; left:30px; top:243px; width:530px; height:288px; object-fit:cover;">
                             <source data-src="assets/images/gh_python/panel%20rationalization/26-0604_CalPoly%20BLDG%20C%20Kit%20Animation_trim_15s_trim.mp4" type="video/mp4">
                         </video>
+                        <div class="zoom-hint" style="position:absolute; left:30px; top:537px; width:530px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                            <span>Click to zoom</span>
+                        </div>
+                        <img class="img-zoom" data-zoom="4" src="assets/images/gh_python/panel%20rationalization/ViewCapture20260604_164837.png" alt="Panel Rationalization — mold catalog (70 reused + 53 one-off types)" loading="lazy" style="position:absolute; left:590px; top:243px; width:540px; height:288px; object-fit:contain;">
+                        <div class="zoom-hint" style="position:absolute; left:590px; top:537px; width:540px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                            <span>Click to zoom</span>
+                        </div>
                     </div>
                 </section>
 
                 <!-- Panel Rationalization (live kit 3D viewer) — same content as Open-Source #/3/9 -->
                 <section class="figma-layout">
                     <div class="fl-canvas">
-                        <h2 style="position:absolute; left:30px; top:30px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Panel Rationalization</h2>
-                        <p style="position:absolute; left:30px; top:72px; font-size:15.6px; color:#4fc3f7; margin:0;">Agent-generated erosive facade + kit-of-parts rationalization &middot; drag to orbit, click a panel to spotlight its mold</p>
-                        <iframe data-src="facade/facade_kit_3d.html" loading="lazy" style="position:absolute; left:80px; top:120px; width:1040px; height:530px; border:0; border-radius:8px; background:#0d1117;"></iframe>
+                        <h2 style="position:absolute; left:30px; top:63px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Panel Rationalization</h2>
+                        <p style="position:absolute; left:30px; top:108px; font-size:15.6px; color:#4fc3f7; margin:0;">Live 3D Kit Viewer &mdash; drag to orbit, click any panel to spotlight its mold</p>
+                        <iframe data-src="facade/facade_kit_3d.html" loading="lazy" style="position:absolute; left:80px; top:150px; width:1040px; height:530px; border:0; border-radius:8px; background:#0d1117;"></iframe>
                     </div>
                 </section>
 
                 <!-- Panel Rationalization — Analysis Dashboard — same content as Open-Source #/3/10 -->
                 <section class="figma-layout">
                     <div class="fl-canvas">
-                        <h2 style="position:absolute; left:30px; top:30px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Panel Rationalization &mdash; Analysis Dashboard</h2>
-                        <p style="position:absolute; left:30px; top:72px; font-size:15.6px; color:#4fc3f7; margin:0;">784 panels &rarr; 231 molds, 91% from reused molds &middot; Pareto, reuse map, mold sharing across faces</p>
-                        <iframe data-src="facade/facade_kit_dashboard.html" loading="lazy" style="position:absolute; left:80px; top:120px; width:1040px; height:530px; border:0; border-radius:8px; background:#11151c;"></iframe>
+                        <h2 style="position:absolute; left:30px; top:63px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Panel Rationalization &mdash; Analysis Dashboard</h2>
+                        <p style="position:absolute; left:30px; top:108px; font-size:15.6px; color:#4fc3f7; margin:0;">Mold Reuse Dashboard &mdash; 784 panels cast from 231 molds (91% reused)</p>
+                        <iframe data-src="facade/facade_kit_dashboard.html" loading="lazy" style="position:absolute; left:80px; top:150px; width:1040px; height:530px; border:0; border-radius:8px; background:#11151c;"></iframe>
                     </div>
                 </section>
 
@@ -561,14 +575,9 @@
                             <li style="margin:1px 0;">Data fields: stall ID &middot; client label &middot; level &middot; type &middot; sub-type &middot; dimension &middot; status</li>
                             <li style="margin:1px 0;">Mode toggle visualizes Type overview or Status (Available / Occupied) on Rhino plan</li>
                         </ul>
-                        <div class="zoom-pan" data-zoom-group="parking" data-zoom-anchor="0.5 0.15" style="position:absolute; left:727px; top:214px; width:254px; height:414px; overflow:hidden; cursor:zoom-in;">
-                            <img src="assets/images/gh_python/parking/0402_04.png" alt="Parking Stall Tracker — Excel data source" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;">
-                        </div>
-                        <p class="nav-hint" style="position:absolute; left:219px; top:642px; width:762px; text-align:center; font-size:11px; margin:0;">&uarr; Click to zoom &amp; pan</p>
-                        <div class="auto-slide zoom-pan" data-zoom-group="parking" data-zoom-anchor="0.35 0.5" style="position:absolute; left:219px; top:214px; width:508px; height:414px; overflow:hidden; min-height:0; max-height:none; background:#0a0a0f; cursor:zoom-in;">
-                            <img class="auto-slide-img" src="assets/images/gh_python/parking/0402_09_Cropped.png" alt="Parking Stall Tracker — Rhino Status view" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
-                            <img class="auto-slide-img" src="assets/images/gh_python/parking/0402_08_Cropped.png" alt="Parking Stall Tracker — Rhino Type view" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
-                        </div>
+                        <video data-autoplay loop muted playsinline style="position:absolute; left:200px; top:225px; width:800px; height:435px; object-fit:cover; background:#0a0a0f;">
+                            <source data-src="assets/images/gh_python/parking/26-0611_Parking%20Stall%20Tracker_Demo_30s_trim.mp4" type="video/mp4">
+                        </video>
                     </div>
                 </section>
 
@@ -583,7 +592,7 @@
                             <li style="margin:1px 0;">Designer-ready: no Grasshopper knowledge needed to operate</li>
                         </ul>
                         <img src="assets/images/gh_python/parking/0402_07.png" alt="Parking Stall Tracker — Rhino Package Manager" loading="lazy" style="position:absolute; left:43px; top:395px; width:325px; height:245px; object-fit:cover;">
-                        <img src="assets/images/gh_python/parking/0402_08.png" alt="Parking Stall Tracker — Rhino viewport with Grasshopper canvas" loading="lazy" style="position:absolute; left:382px; top:226px; width:748px; height:414px; object-fit:cover;">
+                        <video data-autoplay loop muted playsinline style="position:absolute; left:382px; top:226px; width:748px; height:414px; object-fit:cover; background:#0a0a0f;"><source data-src="assets/images/gh_python/parking/26-0611_Parking%20Stall%20Tracker_Demo_v2_30s_trim.mp4" type="video/mp4"></video>
                         <p class="next-section" style="position:absolute; left:30px; top:660px; width:1100px; text-align:right; margin:0;"><a class="jump-link" data-h="2" style="font-size:13.2px; color:#4fc3f7; opacity:0.6;">&rarr; Next: Rhino.Inside.Revit</a></p>
                     </div>
                 </section>
@@ -1372,9 +1381,9 @@
     <div class="slide-dots" id="slideDots"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js" crossorigin="anonymous"></script>
-    <script src="js/popup.js?v=perf3"></script>
-    <script src="js/interactive.js?v=perf3"></script>
-    <script src="js/reveal-config.js?v=perf3"></script>
+    <script src="js/popup.js?v=perf4"></script>
+    <script src="js/interactive.js?v=perf4"></script>
+    <script src="js/reveal-config.js?v=perf4"></script>
     <script src="js/edit-mode.js"></script>
 </body>
 </html>

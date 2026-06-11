@@ -350,6 +350,28 @@ document.addEventListener('DOMContentLoaded', function() {
         startAuto(autoMs || 0);
     }
 
+    function openVideo(src, caption) {
+        if (!src) return;
+        galleryItems = [{ video: src, caption: caption || '' }];
+        stopAuto(); galleryAutoMs = 0; resetZoomState();
+        showGalleryItem(0);
+        overlay.classList.add('active');
+    }
+
+    // Marked on-slide videos -> open large in the popup player.
+    document.querySelectorAll('video.video-zoom').forEach(function(vid) {
+        vid.style.cursor = 'zoom-in';
+        vid.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var src = vid.getAttribute('data-src') || vid.getAttribute('src');
+            if (!src) {
+                var so = vid.querySelector('source');
+                if (so) src = so.getAttribute('data-src') || so.getAttribute('src');
+            }
+            openVideo(src, vid.getAttribute('aria-label') || '');
+        });
+    });
+
     // Make standard slide images open a fullscreen, zoomable popup on click.
     // Direct children only — slideshows inside .slide-image are handled by .popup-gallery.
     document.querySelectorAll('.slide-image > img').forEach(function(img) {
