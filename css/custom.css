@@ -746,7 +746,6 @@ html, body {
     max-width: 100%;
     max-height: 70vh;
     object-fit: contain;
-    border-radius: 8px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
@@ -762,7 +761,6 @@ html, body {
     max-width: 1280px;
     aspect-ratio: 16/9;
     max-height: 70vh;
-    border-radius: 8px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
     border: 0;
     background: #000;

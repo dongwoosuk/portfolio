@@ -51,7 +51,9 @@ var popupData = {
     calpoly: {
         gallery: [
             { img: 'assets/images/rir/02_calpoly_model_group/23133_000_high_web.jpg', caption: 'Cal Poly Modular Student Housing — Aerial View' },
-            { img: 'assets/images/rir/02_calpoly_model_group/23133_000_N17_high_web.jpg', caption: 'Cal Poly Modular Student Housing — Exterior View' }
+            { img: 'assets/images/rir/02_calpoly_model_group/23133_000_N17_high_web.jpg', caption: 'Cal Poly Modular Student Housing — Exterior View' },
+            { img: 'assets/images/rir/02_calpoly_model_group/K3_03_Rendering_HeroBuilding.jpg', caption: 'Cal Poly Modular Student Housing — Hero Building' },
+            { img: 'assets/images/rir/02_calpoly_model_group/K3_04_Rendering_CentralPlaza.jpg', caption: 'Cal Poly Modular Student Housing — Central Plaza' }
         ]
     },
     fritplot: {
@@ -59,27 +61,30 @@ var popupData = {
         caption: 'Frit Pattern — Full-Scale Design Plot'
     },
     archiol: {
-        img: 'assets/images/competitions/archiol-elevated-communities.jpg',
-        caption: 'Archiol Competition 2025 — Elevated Communities, 1st Place'
+        gallery: [
+            { img: 'assets/images/competitions/rendering Final1.jpg', caption: 'Archiol Competition 2025 — Elevated Communities, 1st Place' },
+            { img: 'assets/images/competitions/bird eye view render2.jpg', caption: 'Archiol Competition 2025 — Elevated Communities, 1st Place' },
+            { img: 'assets/images/competitions/Elevated Communities_0201_UN_DOS Page 003 - CROPPED.jpg', caption: 'Archiol Competition 2025 — Elevated Communities, 1st Place' },
+            { img: 'assets/images/competitions/Gemini_Generated_Image_oyyo2hoyyo2hoyyo Firefly Upscaler 4x scale.png', caption: 'Archiol Competition 2025 — Elevated Communities, 1st Place' },
+            { img: 'assets/images/competitions/render_03 Topaz Gigapixel 4x scale_cropped.jpg', caption: 'Archiol Competition 2025 — Elevated Communities, 1st Place' }
+        ]
     },
     archstorming: {
-        img: 'assets/images/competitions/archstorming-senegal-secondary-school.jpg',
-        caption: 'Archstorming 2026 — Senegal Secondary School, Semi-Finalist'
+        gallery: [
+            { img: 'assets/images/competitions/SENEGAL SCHOOL_CROPPED_01.jpg', caption: 'Archstorming 2026 — Senegal Secondary School, Semi-Finalist' },
+            { img: 'assets/images/competitions/SENEGAL SCHOOL_CROPPED_02.jpg', caption: 'Archstorming 2026 — Senegal Secondary School, Semi-Finalist' }
+        ]
     },
     iida: {
-        img: 'assets/images/competitions/iida-ny-student-2015.jpg',
-        caption: 'IIDA NY Student Award 2015 — Top 5 Finalist'
+        gallery: [
+            { img: 'assets/images/competitions/GP1_04_Board_RenderingEntrance.jpg', caption: 'IIDA NY Student Design Awards 2015 — Winner' },
+            { img: 'assets/images/competitions/GP1_05_Board_ConceptSection.jpg', caption: 'IIDA NY Student Design Awards 2015 — Winner' },
+            { img: 'assets/images/competitions/GP1_06_Board_FloorPlan.jpg', caption: 'IIDA NY Student Design Awards 2015 — Winner' }
+        ]
     },
     '188wsj': {
-        gallery: [
-            { img: 'assets/images/reference/188 St James Interview Deck_ Page 001.jpg', caption: '188 West Saint James — Cover' },
-            { img: 'assets/images/reference/188 WSJ_V01-Lobby.jpg', caption: '188 West Saint James — Lobby' },
-            { img: 'assets/images/reference/188 WSJ_V02-Owners Lounge1.jpg', caption: '188 West Saint James — Owners Lounge 1' },
-            { img: 'assets/images/reference/188 WSJ_V02-Owners Lounge2.jpg', caption: '188 West Saint James — Owners Lounge 2' },
-            { img: 'assets/images/reference/188 WSJ_V04-Activity deck.jpg', caption: '188 West Saint James — Activity Deck' },
-            { img: 'assets/images/reference/188 WSJ_V05-Pool Deck.jpg', caption: '188 West Saint James — Pool Deck' },
-            { img: 'assets/images/reference/188 WSJ_V06-Pool Bar.jpg', caption: '188 West Saint James — Pool Bar' }
-        ]
+        img: 'assets/images/reference/188 St James Interview Deck_ Page 001.jpg',
+        caption: '188 West Saint James — Cover'
     }
 };
 
