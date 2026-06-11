@@ -755,6 +755,39 @@ html, body {
     align-items: center;
     justify-content: center;
 }
+
+/* Click-to-zoom + drag-to-pan on the popup image.
+   Zoom changes the rendered width/height (re-samples from the full-res source)
+   instead of transform:scale (which would just upscale the fitted bitmap and blur). */
+.popup-media img {
+    cursor: zoom-in;
+    transform-origin: center center;
+    transition: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    touch-action: none;
+}
+.popup-media img.zoomed { cursor: grab; }
+.popup-media img.zoomed:active { cursor: grabbing; }
+
+/* "Click to zoom" hint shown on hover, below a zoomable on-slide image */
+.zoom-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #4fc3f7;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+.zoom-hint svg { display: block; }
+.fl-canvas img.img-zoom:hover ~ .zoom-hint,
+.fl-canvas .popup-gallery:hover ~ .zoom-hint,
+.zoom-hint:hover { opacity: 1; }
 .popup-iframe,
 .popup-video {
     width: 80vw;
@@ -787,6 +820,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 11;
 }
 
 .popup-prev,

@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://dongwoosuk.github.io/portfolio/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/custom.css?v=perf3">
     <script>
         (function() {
             var m = location.search.match(/[?&]slide=(\d+)-(\d+)/);
@@ -237,7 +237,7 @@
                         <p class="subtitle" style="position:absolute; left:30px; top:247px; font-size:15.6px; margin:0; line-height:1.3;">Rhino 8 CPython Scripts for AEC Workflows</p>
                         <div class="metrics" style="position:absolute; left:30px; top:295px; font-size:16.8px; margin:0;">
                             <div class="metric">
-                                <span class="metric-value">3</span>
+                                <span class="metric-value">4</span>
                                 <span class="metric-label">Projects</span>
                             </div>
                         </div>
@@ -264,11 +264,15 @@
                             <img src="assets/images/gh_python/massing/Unit Mix-05_web.jpg" alt="Building Massing" loading="lazy">
                             <span>Building Massing Generator</span>
                         </a>
-                        <a class="case-nav-item" href="#/1/5">
+                        <a class="case-nav-item" href="#/1/6">
                             <img src="assets/images/gh_python/facade%20panelization/Perspecitve_02_thumb.jpg" alt="Facade Panelization" loading="lazy">
                             <span>Facade Panelization</span>
                         </a>
-                        <a class="case-nav-item" href="#/1/9">
+                        <a class="case-nav-item" href="#/1/10">
+                            <img src="assets/images/gh_python/panel%20rationalization/ViewCapture20260604_163702.png" alt="Panel Rationalization" loading="lazy">
+                            <span>Panel Rationalization</span>
+                        </a>
+                        <a class="case-nav-item" href="#/1/14">
                             <img src="assets/images/gh_python/parking/0402_11_Cropped.png" alt="Parking Stall Tracker" loading="lazy">
                             <span>Parking Stall Tracker</span>
                         </a>
@@ -296,11 +300,28 @@
                                 <li>Real constraints: unit count, size, type distribution</li>
                                 <li>Weeks of manual iteration &rarr; data-driven exploration</li>
                             </ul>
-                            <p class="projects">Applied: La Playa &middot; San Mateo Residential</p>
+                            <p class="projects">Applied: ADG Pilot Project</p>
                         </div>
                         <div class="slide-image">
-                            <img src="assets/images/gh_python/massing/Unit Mix-05_web.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
+                            <div class="auto-slide instant popup-gallery" data-interval="4000">
+                                <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-06_a.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
+                                <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-06_b.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
+                                <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-06_c.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
+                                <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-06_d.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
+                                <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-06_e.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
+                            </div>
                         </div>
+                    </div>
+                </section>
+
+                <!-- Building Massing Generator (video demo) — absolute layout -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:63px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Building Massing Generator</h2>
+                        <p style="position:absolute; left:30px; top:108px; font-size:15.6px; color:#4fc3f7; margin:0;">Parametric Automation + Evolutionary Optimization</p>
+                        <video data-autoplay loop muted playsinline style="position:absolute; left:205px; top:169px; width:749px; height:468px; object-fit:cover;">
+                            <source data-src="assets/images/gh_python/massing/massing%20generator_demo_30s_trim.mp4" type="video/mp4">
+                        </video>
                     </div>
                 </section>
 
@@ -309,9 +330,13 @@
                     <div class="fl-canvas">
                         <h2 style="position:absolute; left:30px; top:77px; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Building Massing Generator</h2>
                         <p style="position:absolute; left:30px; top:122px; font-size:15.6px; color:#4fc3f7; margin:0;">Parametric Automation + Evolutionary Optimization</p>
-                        <img src="assets/images/gh_python/massing/Sreenshot 05.png" alt="Grasshopper canvas — Building Massing Generator" loading="lazy"
+                        <img class="img-zoom" data-zoom="5.4" src="assets/images/gh_python/massing/Sreenshot 05.png" alt="Grasshopper canvas — Building Massing Generator" loading="lazy"
                              style="position:absolute; left:15px; top:211px; width:820px; height:412px; object-fit:cover;">
-                        <div class="auto-slide instant" data-interval="4000" style="position:absolute; left:856px; top:226px; width:254px; height:381px; overflow:hidden; min-height:0; max-height:none;">
+                        <div class="zoom-hint" style="position:absolute; left:15px; top:628px; width:820px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                            <span>Click to zoom</span>
+                        </div>
+                        <div class="auto-slide instant popup-gallery" data-interval="4000" style="position:absolute; left:856px; top:226px; width:254px; height:381px; overflow:hidden; min-height:0; max-height:none;">
                             <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-05.jpg" alt="Unit Mix — 05" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
                             <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix.jpg" alt="Unit Mix" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
                             <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-01.jpg" alt="Unit Mix — 01" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
@@ -355,10 +380,10 @@
                 <!-- 1-4-0: Facade Panelization Tool (alt) — absolute layout from Figma 244:44 -->
                 <section class="figma-layout">
                     <div class="fl-canvas">
-                        <h2 style="position:absolute; left:30px; top:73px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Facade Panelization Tool</h2>
-                        <p style="position:absolute; left:30px; top:118px; font-size:15.6px; color:#4fc3f7; margin:0;">Real-time Facade Panelization</p>
-                        <video autoplay loop muted playsinline style="position:absolute; left:205px; top:179px; width:749px; height:468px; object-fit:cover;">
-                            <source src="assets/images/gh_python/facade%20panelization/facade%20paneling_demo_30s_trim.mp4" type="video/mp4">
+                        <h2 style="position:absolute; left:30px; top:63px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Facade Panelization Tool</h2>
+                        <p style="position:absolute; left:30px; top:108px; font-size:15.6px; color:#4fc3f7; margin:0;">Real-time Facade Panelization</p>
+                        <video data-autoplay loop muted playsinline style="position:absolute; left:205px; top:169px; width:749px; height:468px; object-fit:cover;">
+                            <source data-src="assets/images/gh_python/facade%20panelization/facade%20paneling_demo_30s_trim.mp4" type="video/mp4">
                         </video>
                     </div>
                 </section>
@@ -432,6 +457,68 @@
                             <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Tilt Glass Panel</span>
                             <span class="auto-slide-img" style="position:absolute; top:0; left:0; width:100%; font-size:11.4px; color:#aaa; font-style:italic; text-align:center; line-height:28px; text-shadow:0 1px 3px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6);">Prefab Window Panel</span>
                         </div>
+                    </div>
+                </section>
+
+                <!-- Panel Rationalization intro (1/6-style layout: text + image) -->
+                <section>
+                    <h2>Panel Rationalization</h2>
+                    <p class="subtitle">Kit-of-Parts Mold Optimization for Facade Fabrication</p>
+                    <div class="slide-layout">
+                        <div class="slide-text">
+                            <div class="metrics">
+                                <div class="metric">
+                                    <span class="metric-value">231</span>
+                                    <span class="metric-label">Molds from 784 Panels</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-value">91%</span>
+                                    <span class="metric-label">From Reused Molds</span>
+                                </div>
+                            </div>
+                            <ul>
+                                <li><strong>Agent-Generated Erosive Facade</strong> &mdash; kit-of-parts panel system from a parametric envelope</li>
+                                <li><strong>Mold Rationalization</strong> &mdash; clusters 784 panels into 231 reusable molds to cut fabrication cost</li>
+                                <li><strong>Cross-Face Mold Sharing</strong> &mdash; reuse map and Pareto trade-off across all building faces</li>
+                                <li><strong>Interactive Review</strong> &mdash; live 3D kit viewer + analysis dashboard</li>
+                            </ul>
+                            <p class="projects">Applied: Cal Poly Building C</p>
+                        </div>
+                        <div class="slide-image">
+                            <div class="auto-slide instant popup-gallery" data-interval="4000">
+                                <img class="auto-slide-img" src="assets/images/gh_python/panel%20rationalization/ViewCapture20260604_163844.png" alt="Panel Rationalization — mold reuse map" loading="lazy">
+                                <img class="auto-slide-img" src="assets/images/gh_python/panel%20rationalization/ViewCapture20260604_163702.png" alt="Panel Rationalization — mold reuse map" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Panel Rationalization (kit animation video) — 1/7-style layout -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:63px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Panel Rationalization</h2>
+                        <p style="position:absolute; left:30px; top:108px; font-size:15.6px; color:#4fc3f7; margin:0;">Cal Poly Building C &mdash; Kit Assembly Animation</p>
+                        <video data-autoplay loop muted playsinline style="position:absolute; left:205px; top:169px; width:749px; height:468px; object-fit:cover;">
+                            <source data-src="assets/images/gh_python/panel%20rationalization/26-0604_CalPoly%20BLDG%20C%20Kit%20Animation_trim_15s_trim.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </section>
+
+                <!-- Panel Rationalization (live kit 3D viewer) — same content as Open-Source #/3/9 -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:30px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Panel Rationalization</h2>
+                        <p style="position:absolute; left:30px; top:72px; font-size:15.6px; color:#4fc3f7; margin:0;">Agent-generated erosive facade + kit-of-parts rationalization &middot; drag to orbit, click a panel to spotlight its mold</p>
+                        <iframe data-src="facade/facade_kit_3d.html" loading="lazy" style="position:absolute; left:80px; top:120px; width:1040px; height:530px; border:0; border-radius:8px; background:#0d1117;"></iframe>
+                    </div>
+                </section>
+
+                <!-- Panel Rationalization — Analysis Dashboard — same content as Open-Source #/3/10 -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:30px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Panel Rationalization &mdash; Analysis Dashboard</h2>
+                        <p style="position:absolute; left:30px; top:72px; font-size:15.6px; color:#4fc3f7; margin:0;">784 panels &rarr; 231 molds, 91% from reused molds &middot; Pareto, reuse map, mold sharing across faces</p>
+                        <iframe data-src="facade/facade_kit_dashboard.html" loading="lazy" style="position:absolute; left:80px; top:120px; width:1040px; height:530px; border:0; border-radius:8px; background:#11151c;"></iframe>
                     </div>
                 </section>
 
@@ -548,19 +635,19 @@
                     <div class="fl-canvas">
                         <h2 style="position:absolute; left:30px; top:224px; width:1100px; text-align:center; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Case Studies</h2>
                         <a class="case-nav-item" href="#/2/3" style="position:absolute; left:51px; top:271px; width:245px; display:block;">
-                            <video src="assets/images/rir/01_5x5_building/Diagram.mp4" autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
+                            <video data-src="assets/images/rir/01_5x5_building/Diagram_thumb.mp4" data-autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
                             <span style="display:block; width:245px; text-align:center; font-size:13.2px; color:#aaa; margin-top:5px;">5x5 Building</span>
                         </a>
                         <a class="case-nav-item" href="#/2/10" style="position:absolute; left:322px; top:271px; width:245px; display:block;">
-                            <video src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.mp4" autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
+                            <video data-src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group_thumb.mp4" data-autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
                             <span style="display:block; width:245px; text-align:center; font-size:13.2px; color:#aaa; margin-top:5px;">Cal Poly Modular</span>
                         </a>
                         <a class="case-nav-item" href="#/2/13" style="position:absolute; left:593px; top:271px; width:245px; display:block;">
-                            <video src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form.mp4" autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
+                            <video data-src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form_thumb.mp4" data-autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
                             <span style="display:block; width:245px; text-align:center; font-size:13.2px; color:#aaa; margin-top:5px;">Adaptive Curtain Wall</span>
                         </a>
                         <a class="case-nav-item" href="#/2/17" style="position:absolute; left:864px; top:271px; width:245px; display:block;">
-                            <video src="assets/images/rir/04_frit_pattern/25-1111_Axon_web.mp4" autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
+                            <video data-src="assets/images/rir/04_frit_pattern/25-1111_Axon_web_thumb.mp4" data-autoplay loop muted playsinline style="width:245px; height:183px; object-fit:cover; display:block;"></video>
                             <span style="display:block; width:245px; text-align:center; font-size:13.2px; color:#aaa; margin-top:5px;">Frit Pattern Design</span>
                         </a>
                     </div>
@@ -602,7 +689,7 @@
                             <li style="margin:2px 0;">Floor-level-based extrusion</li>
                             <li style="margin:2px 0;">Massing formation via module rotation</li>
                         </ul>
-                        <video src="assets/images/rir/01_5x5_building/5x5 Animation.mp4" autoplay loop muted playsinline style="position:absolute; left:227px; top:180px; width:841px; height:473px; object-fit:cover;"></video>
+                        <video data-src="assets/images/rir/01_5x5_building/5x5 Animation.mp4" data-autoplay loop muted playsinline style="position:absolute; left:227px; top:180px; width:841px; height:473px; object-fit:cover;"></video>
                     </div>
                 </section>
 
@@ -634,7 +721,7 @@
                             <li style="margin:2px 0;">Sequential assembly: Floors &rarr; Cores &rarr; Structural Columns &rarr; Walls &rarr; Windows</li>
                             <li style="margin:2px 0;">Zero data loss &mdash; parameters, types &amp; categories fully preserved in Revit</li>
                         </ul>
-                        <video src="assets/images/rir/01_5x5_building/Diagram.mp4" autoplay loop muted playsinline style="position:absolute; left:227px; top:180px; width:841px; height:473px; object-fit:cover; background:#222;"></video>
+                        <video data-src="assets/images/rir/01_5x5_building/Diagram.mp4" data-autoplay loop muted playsinline style="position:absolute; left:227px; top:180px; width:841px; height:473px; object-fit:cover; background:#222;"></video>
                     </div>
                 </section>
 
@@ -756,7 +843,7 @@
                             <li style="margin:2px 0;">Real-time response to control-point manipulation</li>
                         </ul>
                         <div style="position:absolute; left:148px; top:175px; width:864px; height:486px;">
-                            <video src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+                            <video data-src="assets/images/rir/02_calpoly_model_group/25-1112_Revit Model Group.mp4" data-autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
                             <img src="assets/images/rir/02_calpoly_model_group/12_web.png" alt="Process Diagram" loading="lazy" style="position:absolute; right:10px; bottom:19px; width:316px; height:108px; object-fit:contain;">
                         </div>
                     </div>
@@ -807,7 +894,7 @@
                         </div>
                         <!-- Panel Form video -->
                         <div style="position:absolute; left:510px; top:213px; width:620px; height:414px; overflow:hidden;">
-                            <video src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.1) translate(10px,20px);"></video>
+                            <video data-src="assets/images/rir/03_adaptive_curtain_wall/25-1113_Adaptive Panel Form.mp4" data-autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.1) translate(10px,20px);"></video>
                         </div>
                     </div>
                 </section>
@@ -832,7 +919,7 @@
                         </div>
                         <!-- Video: Figma 42:11 — w=623, h=325, center (818.5, 354.5) → left=507, top=192 -->
                         <div style="position:absolute; left:507px; top:256px; width:623px; height:321px; overflow:hidden; background:#ffffff;">
-                            <video src="assets/images/rir/03_adaptive_curtain_wall/Curve Wall Design Distance RIR.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block; transform-origin:left center; transform:scale(1.05) translateY(20px);"></video>
+                            <video data-src="assets/images/rir/03_adaptive_curtain_wall/Curve Wall Design Distance RIR.mp4" data-autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block; transform-origin:left center; transform:scale(1.05) translateY(20px);"></video>
                         </div>
                     </div>
                 </section>
@@ -853,7 +940,7 @@
                         </div>
                         <!-- Video: Figma 43:10 — w=577, h=392, center (861.5, 341.08) → left=573, top=145 -->
                         <div style="position:absolute; left:552px; top:234px; width:577px; height:392px; overflow:hidden;">
-                            <video src="assets/images/rir/03_adaptive_curtain_wall/Untitled-12.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+                            <video data-src="assets/images/rir/03_adaptive_curtain_wall/Untitled-12.mp4" data-autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
                         </div>
                     </div>
                 </section>
@@ -931,11 +1018,11 @@
                         <p style="position:absolute; left:30px; top:112px; font-size:15.6px; color:#4fc3f7; margin:0;">Grasshopper-Based Pattern Logic on Facade Geometry</p>
                         <!-- Left Video (Axon): Figma 180:15 — w=540, h=337 -->
                         <div style="position:absolute; left:30px; top:151px; width:540px; height:337px; overflow:hidden; background:#000000;">
-                            <video src="assets/images/rir/04_frit_pattern/25-1111_Axon_web.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+                            <video data-src="assets/images/rir/04_frit_pattern/25-1111_Axon_web.mp4" data-autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
                         </div>
                         <!-- Right Video (Pattern gen): Figma 180:16 — w=540, h=491 -->
                         <div style="position:absolute; left:590px; top:151px; width:540px; height:491px; overflow:hidden; background:#000000;">
-                            <video src="assets/images/rir/04_frit_pattern/Untitled-10.mp4" autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+                            <video data-src="assets/images/rir/04_frit_pattern/Untitled-10.mp4" data-autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
                         </div>
                     </div>
                 </section>
@@ -1105,7 +1192,7 @@
                     <h2>Divide Centered: Demo</h2>
                     <p class="subtitle">Center-based curve division in action</p>
                     <div class="image-full">
-                        <video src="assets/images/opensource/reticle/Reticle Demo Part1.mp4" autoplay loop muted playsinline></video>
+                        <video data-src="assets/images/opensource/reticle/Reticle Demo Part1.mp4" data-autoplay loop muted playsinline></video>
                     </div>
                 </section>
 
@@ -1149,7 +1236,7 @@
                     <h2>Divide Surface Centered: Demo</h2>
                     <p class="subtitle">Center-based surface division in action</p>
                     <div class="image-full">
-                        <video src="assets/images/opensource/reticle/Reticle Demo Part2.mp4" autoplay loop muted playsinline></video>
+                        <video data-src="assets/images/opensource/reticle/Reticle Demo Part2.mp4" data-autoplay loop muted playsinline></video>
                     </div>
                 </section>
 
@@ -1169,24 +1256,6 @@
                             <a href="https://github.com/dongwoosuk/rhino-grasshopper-mcp" target="_blank" style="color:rgba(79,195,247,0.5); text-decoration:none;">github.com/dongwoosuk/rhino-grasshopper-mcp</a>
                         </p>
                         <img src="assets/images/opensource/gh_mcp/Rhino%20MCP%20_02.png" alt="Rhino Grasshopper MCP — interface screenshot" loading="lazy" style="position:absolute; left:516px; top:212px; width:614px; height:391px; object-fit:cover;">
-                    </div>
-                </section>
-
-                <!-- 4-3b: Rhino MCP Live — Facade Kit 3D viewer -->
-                <section class="figma-layout">
-                    <div class="fl-canvas">
-                        <h2 style="position:absolute; left:30px; top:30px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Rhino MCP &mdash; Live: Parametric Facade Kit</h2>
-                        <p style="position:absolute; left:30px; top:72px; font-size:15.6px; color:#4fc3f7; margin:0;">Agent-generated erosive facade + kit-of-parts rationalization &middot; drag to orbit, click a panel to spotlight its mold</p>
-                        <iframe src="facade/facade_kit_3d.html" loading="lazy" style="position:absolute; left:80px; top:120px; width:1040px; height:530px; border:0; border-radius:8px; background:#0d1117;"></iframe>
-                    </div>
-                </section>
-
-                <!-- 4-3c: Rhino MCP Live — Kit Analysis Dashboard -->
-                <section class="figma-layout">
-                    <div class="fl-canvas">
-                        <h2 style="position:absolute; left:30px; top:30px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Facade Kit &mdash; Analysis Dashboard</h2>
-                        <p style="position:absolute; left:30px; top:72px; font-size:15.6px; color:#4fc3f7; margin:0;">784 panels &rarr; 231 molds, 91% from reused molds &middot; Pareto, reuse map, mold sharing across faces</p>
-                        <iframe src="facade/facade_kit_dashboard.html" loading="lazy" style="position:absolute; left:80px; top:120px; width:1040px; height:530px; border:0; border-radius:8px; background:#11151c;"></iframe>
                     </div>
                 </section>
 
@@ -1303,9 +1372,9 @@
     <div class="slide-dots" id="slideDots"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js" crossorigin="anonymous"></script>
-    <script src="js/popup.js"></script>
-    <script src="js/interactive.js"></script>
-    <script src="js/reveal-config.js"></script>
+    <script src="js/popup.js?v=perf3"></script>
+    <script src="js/interactive.js?v=perf3"></script>
+    <script src="js/reveal-config.js?v=perf3"></script>
     <script src="js/edit-mode.js"></script>
 </body>
 </html>

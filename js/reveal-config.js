@@ -15,6 +15,34 @@ Reveal.initialize({
     touch: false,
     touchDistance: 200,
 }).then(function() {
+    // Perf: overview mode (ESC) lays out ALL slides at once. Pause every video AND
+    // suspend any loaded iframe (heavy WebGL 3D viewer / dashboard keep their render
+    // loops running otherwise) while overview is open, then restore on close.
+    var _suspendedIframes = [];
+    Reveal.on('overviewshown', function() {
+        document.querySelectorAll('.reveal video').forEach(function(v) {
+            try { v.pause(); } catch (e) {}
+        });
+        _suspendedIframes = [];
+        document.querySelectorAll('.reveal iframe').forEach(function(f) {
+            var s = f.getAttribute('src');
+            if (s && s !== 'about:blank') {
+                _suspendedIframes.push([f, s]);
+                f.setAttribute('src', 'about:blank'); // stops the iframe's render loop
+            }
+        });
+    });
+    Reveal.on('overviewhidden', function() {
+        _suspendedIframes.forEach(function(pair) { pair[0].setAttribute('src', pair[1]); });
+        _suspendedIframes = [];
+        var cur = Reveal.getCurrentSlide();
+        if (!cur) return;
+        cur.querySelectorAll('video[data-autoplay]').forEach(function(v) {
+            var p = v.play();
+            if (p && p.catch) p.catch(function() {});
+        });
+    });
+
     // Mobile: aggressive re-layout on viewport changes (orientation, URL bar, fullscreen)
     var relayout = function() {
         if (!Reveal.layout) return;
