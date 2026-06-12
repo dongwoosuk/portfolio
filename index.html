@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://dongwoosuk.github.io/portfolio/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/custom.css?v=perf4">
+    <link rel="stylesheet" href="css/custom.css?v=perf9">
     <script>
         (function() {
             var m = location.search.match(/[?&]slide=(\d+)-(\d+)/);
@@ -264,15 +264,15 @@
                             <img src="assets/images/gh_python/massing/Unit Mix-05_web.jpg" alt="Building Massing" loading="lazy">
                             <span>Building Massing Generator</span>
                         </a>
-                        <a class="case-nav-item" href="#/1/6">
+                        <a class="case-nav-item" href="#/1/7">
                             <img src="assets/images/gh_python/facade%20panelization/Perspecitve_02_thumb.jpg" alt="Facade Panelization" loading="lazy">
                             <span>Facade Panelization</span>
                         </a>
-                        <a class="case-nav-item" href="#/1/10">
+                        <a class="case-nav-item" href="#/1/11">
                             <img src="assets/images/gh_python/panel%20rationalization/ViewCapture20260604_163702.png" alt="Panel Rationalization" loading="lazy">
                             <span>Panel Rationalization</span>
                         </a>
-                        <a class="case-nav-item" href="#/1/14">
+                        <a class="case-nav-item" href="#/1/15">
                             <img src="assets/images/gh_python/parking/0402_11_Cropped.png" alt="Parking Stall Tracker" loading="lazy">
                             <span>Parking Stall Tracker</span>
                         </a>
@@ -296,14 +296,14 @@
                                 </div>
                             </div>
                             <ul>
-                                <li>Wallacei evolutionary optimization</li>
-                                <li>Real constraints: unit count, size, type distribution</li>
-                                <li>Weeks of manual iteration &rarr; data-driven exploration</li>
+                                <li>Automated unit placement, mix &amp; yield across the footprint</li>
+                                <li>Real constraints: unit count, size, type distribution, setbacks</li>
+                                <li>Weeks of manual iteration &rarr; minutes of data-driven exploration</li>
                             </ul>
                             <p class="projects">Applied: ADG Pilot Project</p>
                         </div>
                         <div class="slide-image">
-                            <div class="auto-slide instant popup-gallery" data-interval="4000">
+                            <div class="auto-slide instant popup-gallery" data-interval="1000" style="transform:translateX(-30px);">
                                 <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-06_a.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
                                 <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-06_b.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
                                 <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-06_c.jpg" alt="Building Massing Generator — Unit Mix" loading="lazy">
@@ -318,7 +318,7 @@
                 <section class="figma-layout">
                     <div class="fl-canvas">
                         <h2 style="position:absolute; left:30px; top:63px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Building Massing Generator</h2>
-                        <p style="position:absolute; left:30px; top:108px; font-size:15.6px; color:#4fc3f7; margin:0;">Parametric Automation + Evolutionary Optimization</p>
+                        <p style="position:absolute; left:30px; top:108px; font-size:15.6px; color:#4fc3f7; margin:0;">Real-Time Massing Generation &mdash; Live Demo</p>
                         <video data-autoplay loop muted playsinline style="position:absolute; left:205px; top:169px; width:749px; height:468px; object-fit:cover;">
                             <source data-src="assets/images/gh_python/massing/massing%20generator_demo_30s_trim.mp4" type="video/mp4">
                         </video>
@@ -328,8 +328,13 @@
                 <!-- 1-3-1: Building Massing Generator (variant) — absolute layout from Figma 210:139 -->
                 <section class="figma-layout">
                     <div class="fl-canvas">
-                        <h2 style="position:absolute; left:30px; top:77px; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Building Massing Generator</h2>
-                        <p style="position:absolute; left:30px; top:122px; font-size:15.6px; color:#4fc3f7; margin:0;">Parametric Automation + Evolutionary Optimization</p>
+                        <h2 style="position:absolute; left:30px; top:55px; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Building Massing Generator</h2>
+                        <p style="position:absolute; left:30px; top:97px; font-size:15.6px; color:#4fc3f7; margin:0;">Grasshopper Definition &amp; Unit-Mix Studies</p>
+                        <ul style="position:absolute; left:50px; top:132px; width:1100px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
+                            <li style="margin:2px 0;"><strong>Phased GH Python Pipeline</strong> &mdash; Phase 1&ndash;7 components: site setup &rarr; massing &rarr; unit mix &rarr; placement</li>
+                            <li style="margin:2px 0;"><strong>Performance Calc &amp; Constraint Validation</strong> &mdash; each phase scored and checked against targets</li>
+                            <li style="margin:2px 0;"><strong>Summary Data Output</strong> &mdash; yield, unit-mix, and target-vs-placement reports per option</li>
+                        </ul>
                         <img class="img-zoom" data-zoom="5.4" src="assets/images/gh_python/massing/Sreenshot 05.png" alt="Grasshopper canvas — Building Massing Generator" loading="lazy"
                              style="position:absolute; left:15px; top:211px; width:820px; height:412px; object-fit:cover;">
                         <div class="zoom-hint" style="position:absolute; left:15px; top:628px; width:820px;">
@@ -343,6 +348,40 @@
                             <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-02.jpg" alt="Unit Mix — 02" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
                             <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-03.jpg" alt="Unit Mix — 03" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
                             <img class="auto-slide-img" src="assets/images/gh_python/massing/Unit Mix-04.jpg" alt="Unit Mix — 04" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <div class="zoom-hint" style="position:absolute; left:856px; top:628px; width:254px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                            <span>Click to zoom</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Building Massing Generator (Wallacei demo) — 1/11-style layout -->
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:63px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Building Massing Generator</h2>
+                        <p style="position:absolute; left:30px; top:108px; font-size:15.6px; color:#4fc3f7; margin:0;">Wallacei Evolutionary Optimization</p>
+                        <ul style="position:absolute; left:50px; top:158px; width:1100px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
+                            <li style="margin:2px 0;"><strong>Multi-Objective GA</strong> &mdash; Wallacei evolves thousands of massing options across generations</li>
+                            <li style="margin:2px 0;"><strong>Fitness Objectives</strong> &mdash; unit count, unit-type mix, and floor-area efficiency</li>
+                            <li style="margin:2px 0;"><strong>Pareto Front</strong> &mdash; surfaces trade-off-optimal options instead of a single fixed answer</li>
+                        </ul>
+                        <video class="video-zoom" data-autoplay loop muted playsinline aria-label="Building Massing Generator — Wallacei optimization demo" style="position:absolute; left:30px; top:243px; width:530px; height:288px; object-fit:cover;">
+                            <source data-src="assets/images/gh_python/massing/26-0611_Building%20Massing%20Generator_wlc_demo_30s_trim.mp4" type="video/mp4">
+                        </video>
+                        <div class="zoom-hint" style="position:absolute; left:30px; top:545px; width:530px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                            <span>Click to zoom</span>
+                        </div>
+                        <div class="auto-slide instant popup-gallery" data-interval="2000" style="position:absolute; left:590px; top:243px; width:540px; height:288px; overflow:hidden; min-height:0; max-height:none; background:#0a0e14;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/massing/Wallacei_07.png" alt="Wallacei optimization — generation results" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/massing/Wallacei_06.png" alt="Wallacei optimization — generation results" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/massing/Wallacei_05.png" alt="Wallacei optimization — generation results" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                            <img class="auto-slide-img" src="assets/images/gh_python/massing/Wallacei_04.png" alt="Wallacei optimization — generation results" loading="lazy" style="width:100%; height:100%; max-height:none; object-fit:cover; display:block;">
+                        </div>
+                        <div class="zoom-hint" style="position:absolute; left:590px; top:545px; width:540px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                            <span>Click to zoom</span>
                         </div>
                     </div>
                 </section>
@@ -1104,27 +1143,27 @@
                     <h2 class="text-center mb-half">Projects</h2>
                     <div class="case-nav case-nav-6">
                         <a class="case-nav-item" href="#/3/3">
-                            <img src="assets/images/opensource/reticle/Reticle Components.png" alt="Reticle" loading="lazy">
+                            <img src="assets/images/opensource/reticle/reticle_icon.png" alt="Reticle" loading="lazy" style="height:120px; width:120px; object-fit:contain; margin:0 auto; display:block;">
                             <span>Reticle GH Plugin</span>
                         </a>
-                        <a class="case-nav-item" href="#/3/4">
-                            <div class="placeholder" style="height:120px;min-height:120px;"><span>GH MCP</span></div>
+                        <a class="case-nav-item" href="#/3/8">
+                            <img src="assets/images/opensource/gh_mcp/rhino mcp logo.jpg" alt="Rhino GH MCP" loading="lazy" style="height:120px; width:120px; object-fit:contain; margin:0 auto; display:block;">
                             <span>Rhino GH MCP</span>
                         </a>
-                        <a class="case-nav-item" href="#/3/5">
+                        <a class="case-nav-item" href="#/3/9">
                             <div class="placeholder" style="height:120px;min-height:120px;"><span>DIP</span></div>
                             <span>Design Intelligence</span>
                         </a>
-                        <a class="case-nav-item" href="#/3/6">
+                        <a class="case-nav-item" href="#/3/10">
                             <div class="placeholder" style="height:120px;min-height:120px;"><span>AEC MCP</span></div>
                             <span>AEC Outlook MCP</span>
                         </a>
-                        <a class="case-nav-item" href="#/3/7">
+                        <a class="case-nav-item" href="#/3/11">
                             <div class="placeholder" style="height:120px;min-height:120px;"><span>GH Analyzer</span></div>
                             <span>GH Quality Analyzer</span>
                         </a>
-                        <a class="case-nav-item" href="#/3/8">
-                            <div class="placeholder" style="height:120px;min-height:120px;"><span>LEED</span></div>
+                        <a class="case-nav-item" href="#/3/12">
+                            <img src="assets/images/opensource/leed_app/leed_icon.png" alt="LEED Study App" loading="lazy" style="height:120px; width:120px; object-fit:contain; margin:0 auto; display:block;">
                             <span>LEED Study App</span>
                         </a>
                     </div>
@@ -1338,28 +1377,37 @@
                 </section>
 
                 <!-- 4-7: LEED Study App -->
-                <section>
-                    <h2>LEED AP Study Application</h2>
-                    <p class="subtitle">AI-Powered Exam Preparation Platform</p>
-                    <div class="slide-layout">
-                        <div class="slide-text">
-                            <ul>
-                                <li><strong>AI Quiz:</strong> Gemini API + RAG generation</li>
-                                <li><strong>Study Guide:</strong> Credit-by-credit with AI explanations</li>
-                                <li><strong>Flashcards:</strong> Spaced repetition system</li>
-                                <li><strong>Progress Tracking:</strong> Session-based analytics</li>
-                                <li><strong>Full-Stack:</strong> Next.js + PostgreSQL</li>
-                            </ul>
-                            <p class="repo-link"><a href="https://github.com/dongwoosuk/leed-study-app" target="_blank">github.com/dongwoosuk/leed-study-app</a></p>
-                        </div>
-                        <div class="slide-image">
-                            <div class="placeholder">
-                                <span>Screenshot / GIF</span>
-                                <small>assets/images/opensource/</small>
+                <section class="figma-layout">
+                    <div class="fl-canvas">
+                        <h2 style="position:absolute; left:30px; top:40px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">LEED AP Study Application</h2>
+                        <p style="position:absolute; left:30px; top:82px; font-size:15.6px; color:#4fc3f7; margin:0;">AI-Powered Exam Preparation Platform</p>
+                        <ul style="position:absolute; left:46px; top:112px; width:840px; font-size:11.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
+                            <li style="margin:1px 0;"><strong>AI Quiz</strong> &mdash; Gemini + RAG generation, instant correct/incorrect explanations</li>
+                            <li style="margin:1px 0;"><strong>AI Study Guide</strong> &mdash; credit-by-credit summaries across LEED categories</li>
+                            <li style="margin:1px 0;"><strong>Flashcards &amp; Progress</strong> &mdash; spaced repetition + session analytics</li>
+                            <li style="margin:1px 0;"><strong>Full-Stack PWA</strong> &mdash; Next.js + Supabase, responsive mobile + desktop</li>
+                        </ul>
+                        <!-- Desktop (left): wide frame, fit-to-width, same scroll+swipe as mobile -->
+                        <div class="popup-gallery" style="position:absolute; left:30px; top:200px; width:760px; height:430px; overflow:hidden; border-radius:8px; background:#0a0e14; border:1px solid #1c2230;">
+                            <div class="leed-track-d">
+                                <div class="leed-cell-d"><img src="assets/images/opensource/leed_app/leed_desktop_guide.png" alt="LEED App (desktop) — AI study guide" loading="eager"></div>
+                                <div class="leed-cell-d"><img src="assets/images/opensource/leed_app/leed_desktop_quiz_question.png" alt="LEED App (desktop) — Quiz question" loading="eager"></div>
+                                <div class="leed-cell-d"><img src="assets/images/opensource/leed_app/leed_desktop_quiz_explain1.png" alt="LEED App (desktop) — Answer explanation" loading="eager"></div>
                             </div>
                         </div>
+                        <p style="position:absolute; left:30px; top:636px; width:760px; text-align:center; font-size:11px; color:#888; margin:0;">Desktop</p>
+                        <!-- Mobile (right): phone frame, same scroll+swipe -->
+                        <div class="popup-gallery" style="position:absolute; left:835px; top:200px; width:215px; height:430px; overflow:hidden; border-radius:16px; background:#0a0e14; border:2px solid #1c2230;">
+                            <div class="leed-track">
+                                <div class="leed-cell"><img src="assets/images/opensource/leed_app/leed_mobile_guide.png" alt="LEED App (mobile) — AI study guide" loading="eager"></div>
+                                <div class="leed-cell"><img src="assets/images/opensource/leed_app/leed_mobile_quiz_question.png" alt="LEED App (mobile) — Quiz question" loading="eager"></div>
+                                <div class="leed-cell"><img src="assets/images/opensource/leed_app/leed_mobile_quiz_explain1.png" alt="LEED App (mobile) — Answer explanation" loading="eager"></div>
+                            </div>
+                        </div>
+                        <p style="position:absolute; left:835px; top:636px; width:215px; text-align:center; font-size:11px; color:#888; margin:0;">Mobile (PWA)</p>
+                        <p style="position:absolute; left:30px; top:664px; font-size:11px; margin:0;"><a href="https://leed-study-app.vercel.app" target="_blank" style="color:#4fc3f7;">leed-study-app.vercel.app</a></p>
+                        <p class="next-section" style="position:absolute; left:30px; top:662px; width:1110px; text-align:right; margin:0;"><a class="jump-link" data-h="0" style="font-size:13.2px; color:#4fc3f7; opacity:0.6;">&larr; Back to Title</a></p>
                     </div>
-                    <p class="next-section"><a class="jump-link" data-h="0">&larr; Back to Title</a></p>
                 </section>
             </section>
 
@@ -1381,9 +1429,9 @@
     <div class="slide-dots" id="slideDots"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js" crossorigin="anonymous"></script>
-    <script src="js/popup.js?v=perf4"></script>
-    <script src="js/interactive.js?v=perf4"></script>
-    <script src="js/reveal-config.js?v=perf4"></script>
+    <script src="js/popup.js?v=perf9"></script>
+    <script src="js/interactive.js?v=perf9"></script>
+    <script src="js/reveal-config.js?v=perf9"></script>
     <script src="js/edit-mode.js"></script>
 </body>
 </html>

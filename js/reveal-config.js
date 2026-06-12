@@ -15,6 +15,19 @@ Reveal.initialize({
     touch: false,
     touchDistance: 200,
 }).then(function() {
+    // Restart the LEED scroll/swipe CSS animations from the start whenever the slide
+    // becomes current (otherwise they keep looping in the background and you'd return
+    // mid-cycle).
+    function restartLeedAnim(slide) {
+        if (!slide) return;
+        var els = slide.querySelectorAll('.leed-track, .leed-track-d, .leed-cell img, .leed-cell-d img');
+        if (!els.length) return;
+        els.forEach(function(el) { el.style.animation = 'none'; });
+        void slide.offsetWidth; // reflow so the reset takes effect
+        els.forEach(function(el) { el.style.animation = ''; });
+    }
+    Reveal.on('slidechanged', function(e) { restartLeedAnim(e.currentSlide); });
+
     // Perf: overview mode (ESC) lays out ALL slides at once. Pause every video AND
     // suspend any loaded iframe (heavy WebGL 3D viewer / dashboard keep their render
     // loops running otherwise) while overview is open, then restore on close.

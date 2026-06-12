@@ -789,6 +789,73 @@ html, body {
 .fl-canvas video.video-zoom:hover + .zoom-hint,
 .fl-canvas .popup-gallery:hover + .zoom-hint,
 .zoom-hint:hover { opacity: 1; }
+
+/* Mobile phone frame: each screen scrolls vertically, then swipes to the next (loop).
+   Track = 3 cells side by side; outer frame (215px) shows one at a time. All 36s, synced. */
+.leed-track {
+    display: flex;
+    width: 645px;            /* 3 x 215 */
+    height: 430px;
+    will-change: transform;
+    animation: leedSwipe 36s ease-in-out infinite;
+}
+.leed-cell {
+    flex: 0 0 215px;
+    width: 215px;
+    height: 430px;
+    overflow: hidden;
+}
+.leed-cell img { width: 215px; display: block; will-change: transform; }
+.leed-cell:nth-child(1) img { animation: leedV1 36s linear infinite; }
+.leed-cell:nth-child(2) img { animation: leedV2 36s linear infinite; }
+.leed-cell:nth-child(3) img { animation: leedV3 36s linear infinite; }
+/* horizontal swipe between the 3 screens */
+@keyframes leedSwipe {
+    0%, 28%   { transform: translateX(0); }
+    33%, 61%  { transform: translateX(-215px); }
+    66%, 94%  { transform: translateX(-430px); }
+    100%      { transform: translateX(0); }
+}
+/* per-screen vertical scroll (scrolls while its screen is in view, resets while off-screen) */
+@keyframes leedV1 {
+    0%, 4%    { transform: translateY(0); }
+    24%, 40%  { transform: translateY(calc(-100% + 430px)); }
+    60%, 100% { transform: translateY(0); }
+}
+@keyframes leedV2 {
+    0%, 37%   { transform: translateY(0); }
+    57%, 66%  { transform: translateY(calc(-100% + 430px)); }
+    86%, 100% { transform: translateY(0); }
+}
+@keyframes leedV3 {
+    0%, 70%   { transform: translateY(0); }
+    90%, 96%  { transform: translateY(calc(-100% + 430px)); }
+    100%      { transform: translateY(0); }
+}
+/* Desktop wide frame: same scroll+swipe behaviour/timing as mobile, fit to width (760px) */
+.leed-track-d {
+    display: flex;
+    width: 2280px;           /* 3 x 865 */
+    height: 430px;
+    will-change: transform;
+    animation: leedSwipeD 36s ease-in-out infinite;
+}
+.leed-cell-d {
+    flex: 0 0 760px;
+    width: 760px;
+    height: 430px;
+    overflow: hidden;
+}
+.leed-cell-d img { width: 760px; display: block; will-change: transform; }
+.leed-cell-d:nth-child(1) img { animation: leedV1 36s linear infinite; }
+.leed-cell-d:nth-child(2) img { animation: leedV2 36s linear infinite; }
+.leed-cell-d:nth-child(3) img { animation: leedV3 36s linear infinite; }
+@keyframes leedSwipeD {
+    0%, 28%   { transform: translateX(0); }
+    33%, 61%  { transform: translateX(-760px); }
+    66%, 94%  { transform: translateX(-1520px); }
+    100%      { transform: translateX(0); }
+}
 .popup-iframe,
 .popup-video {
     width: 80vw;
