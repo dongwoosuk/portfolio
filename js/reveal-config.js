@@ -20,7 +20,7 @@ Reveal.initialize({
     // mid-cycle).
     function restartLeedAnim(slide) {
         if (!slide) return;
-        var els = slide.querySelectorAll('.leed-track, .leed-track-d, .leed-cell img, .leed-cell-d img');
+        var els = slide.querySelectorAll('.leed-track, .leed-track-d, .leed-cell img, .leed-cell-d img, .dip-track');
         if (!els.length) return;
         els.forEach(function(el) { el.style.animation = 'none'; });
         void slide.offsetWidth; // reflow so the reset takes effect

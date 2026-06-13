@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ece7f8"/><stop offset="1" stop-color="#ddd4f1"/></linearGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#45348a"/><stop offset="1" stop-color="#8f74da"/></linearGradient>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="104" fill="url(#bg)"/>
+  <!-- edges -->
+  <g stroke="#a695dd" stroke-width="6" opacity="0.75" fill="none" stroke-linecap="round">
+    <line x1="256" y1="108" x2="150" y2="212"/><line x1="256" y1="108" x2="362" y2="212"/>
+    <line x1="150" y1="212" x2="110" y2="330"/><line x1="150" y1="212" x2="196" y2="350"/>
+    <line x1="362" y1="212" x2="398" y2="330"/><line x1="362" y1="212" x2="300" y2="352"/>
+    <line x1="110" y1="330" x2="156" y2="432"/><line x1="398" y1="330" x2="356" y2="432"/>
+    <line x1="196" y1="350" x2="156" y2="432"/><line x1="300" y1="352" x2="356" y2="432"/>
+    <line x1="150" y1="212" x2="362" y2="212"/>
+  </g>
+  <!-- highlighted optimal branch -->
+  <g stroke="#7a5ad6" stroke-width="9" fill="none" stroke-linecap="round">
+    <line x1="256" y1="108" x2="256" y2="226"/><line x1="256" y1="226" x2="300" y2="352"/><line x1="300" y1="352" x2="256" y2="420"/>
+  </g>
+  <!-- nodes -->
+  <g fill="url(#ink)">
+    <circle cx="150" cy="212" r="16"/><circle cx="362" cy="212" r="16"/>
+    <circle cx="110" cy="330" r="13"/><circle cx="398" cy="330" r="13"/>
+    <circle cx="196" cy="350" r="13"/>
+    <circle cx="156" cy="432" r="11"/><circle cx="356" cy="432" r="11"/>
+  </g>
+  <!-- highlighted-path nodes -->
+  <g fill="#7a5ad6">
+    <circle cx="300" cy="352" r="15"/><circle cx="256" cy="420" r="13"/>
+  </g>
+  <circle cx="256" cy="108" r="24" fill="url(#ink)"/>
+  <circle cx="256" cy="226" r="18" fill="#7a5ad6"/>
+</svg>

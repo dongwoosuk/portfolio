@@ -856,6 +856,28 @@ html, body {
     66%, 94%  { transform: translateX(-1520px); }
     100%      { transform: translateX(0); }
 }
+
+/* DIP platform tour — wide landscape screenshots, horizontal swap only (images fit cell, no vertical scroll) */
+.dip-track {
+    display: flex;
+    width: 1800px;           /* 3 x 600 */
+    height: 342px;
+    will-change: transform;
+    animation: dipSwipe 30s ease-in-out infinite;
+}
+.dip-cell {
+    flex: 0 0 600px;
+    width: 600px;
+    height: 342px;
+    overflow: hidden;
+}
+.dip-cell img { width: 600px; display: block; }
+@keyframes dipSwipe {
+    0%, 30%   { transform: translateX(0); }
+    36%, 63%  { transform: translateX(-600px); }
+    69%, 96%  { transform: translateX(-1200px); }
+    100%      { transform: translateX(0); }
+}
 .popup-iframe,
 .popup-video {
     width: 80vw;
