@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://dongwoosuk.github.io/portfolio/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/custom.css?v=perf10">
+    <link rel="stylesheet" href="css/custom.css?v=perf50">
     <script>
         (function() {
             var m = location.search.match(/[?&]slide=(\d+)-(\d+)/);
@@ -1200,14 +1200,15 @@
                     </div>
                 </section>
 
-                <!-- 4-2b: Reticle — Curve: Problem vs Solution -->
+                <!-- 4-2b: Reticle — Curve: Problem -->
                 <section>
                     <h2>Divide Centered: Why?</h2>
-                    <p class="subtitle">Default GH Components vs Reticle</p>
+                    <p class="subtitle">Problem &mdash; Default GH Curve Division</p>
                     <div class="two-col">
                         <div class="col">
-                            <h3>Problem: Default Components</h3>
-                            <img src="assets/images/opensource/reticle/GH Default Curve Division Component.png" alt="Default GH Curve Division" loading="lazy" style="max-height:280px; margin-bottom:0.5em;">
+                            <img src="assets/images/opensource/reticle/GH Default Curve Division Component.png" alt="Default GH Curve Division" loading="lazy" style="max-height:300px; margin-bottom:0.5em;">
+                        </div>
+                        <div class="col">
                             <h3>Divide Curve</h3>
                             <ul>
                                 <li>Count-based &mdash; no dimensional control</li>
@@ -1221,37 +1222,40 @@
                                 <li>Similar results despite different calculation methods</li>
                             </ul>
                         </div>
+                    </div>
+                </section>
+
+                <!-- 4-2c: Reticle — Curve: Solution + Demo -->
+                <section>
+                    <h2>Divide Centered: Solution</h2>
+                    <p class="subtitle">Center-based curve division &mdash; component &amp; demo</p>
+                    <div class="two-col">
                         <div class="col">
                             <h3>Solution: Divide Centered</h3>
-                            <img src="assets/images/opensource/reticle/Divided Centered Component.png" alt="Reticle Divide Centered" loading="lazy" style="max-height:280px; margin-bottom:0.5em;">
+                            <img src="assets/images/opensource/reticle/Divided Centered Component.png" alt="Reticle Divide Centered" loading="lazy" style="max-height:200px; margin-bottom:0.5em;">
                             <ul>
-                                <li>Divides from <strong>center outward</strong></li>
-                                <li><strong>Symmetric remainders</strong> on both ends</li>
+                                <li>Divides from <strong>center outward</strong>, <strong>symmetric remainders</strong></li>
                                 <li>Exact distance-based spacing across any curve length</li>
                                 <li>Consistent segments across multiple curves</li>
                                 <li>Toggle for including/excluding endpoints</li>
                             </ul>
                         </div>
+                        <div class="col">
+                            <video class="video-zoom" data-src="assets/images/opensource/reticle/Reticle Demo Part1.mp4" data-autoplay loop muted playsinline style="width:100%; border-radius:4px;"></video>
+                            <p style="text-align:center; font-size:0.8em; color:var(--text-muted); margin:0.4em 0 0;">Center-based curve division in action</p>
+                        </div>
                     </div>
                 </section>
 
-                <!-- 4-2c: Reticle — Demo Part 1 (Curve) -->
-                <section>
-                    <h2>Divide Centered: Demo</h2>
-                    <p class="subtitle">Center-based curve division in action</p>
-                    <div class="image-full">
-                        <video data-src="assets/images/opensource/reticle/Reticle Demo Part1.mp4" data-autoplay loop muted playsinline></video>
-                    </div>
-                </section>
-
-                <!-- 4-2d: Reticle — Surface: Problem vs Solution -->
+                <!-- 4-2d: Reticle — Surface: Problem -->
                 <section>
                     <h2>Divide Surface Centered: Why?</h2>
-                    <p class="subtitle">Default GH Components vs Reticle</p>
+                    <p class="subtitle">Problem &mdash; Default GH Surface Division</p>
                     <div class="two-col">
                         <div class="col">
-                            <h3>Problem: Default Components</h3>
-                            <img src="assets/images/opensource/reticle/GH Default Surface Division Component_web.jpg" alt="Default GH Surface Division" loading="lazy" style="max-height:280px; margin-bottom:0.5em;">
+                            <img src="assets/images/opensource/reticle/GH Default Surface Division Component_web.jpg" alt="Default GH Surface Division" loading="lazy" style="max-height:300px; margin-bottom:0.5em;">
+                        </div>
+                        <div class="col">
                             <h3>Divide Surface / Isotrim</h3>
                             <ul>
                                 <li>Count-based (U/V count) &mdash; <strong>no distance control</strong></li>
@@ -1264,27 +1268,28 @@
                                 <li>Complex data tree management</li>
                             </ul>
                         </div>
+                    </div>
+                </section>
+
+                <!-- 4-2e: Reticle — Surface: Solution + Demo -->
+                <section>
+                    <h2>Divide Surface Centered: Solution</h2>
+                    <p class="subtitle">UV center-based division &mdash; component &amp; demo</p>
+                    <div class="two-col">
                         <div class="col">
                             <h3>Solution: Divide Surface Centered</h3>
-                            <img src="assets/images/opensource/reticle/Divided Surface Centered Component_web.jpg" alt="Reticle Divide Surface Centered" loading="lazy" style="max-height:280px; margin-bottom:0.5em;">
+                            <img src="assets/images/opensource/reticle/Divided Surface Centered Component_web.jpg" alt="Reticle Divide Surface Centered" loading="lazy" style="max-height:200px; margin-bottom:0.5em;">
                             <ul>
-                                <li>UV <strong>center-based</strong> division</li>
-                                <li><strong>Symmetric remainders</strong> on all edges</li>
-                                <li>Sub-Surfaces output (ready for paneling)</li>
-                                <li>U/V Remainder values as output</li>
+                                <li>UV <strong>center-based</strong> division, <strong>symmetric remainders</strong> on all edges</li>
+                                <li>Sub-Surfaces output (ready for paneling) + U/V remainder values</li>
                                 <li>Independent endpoint toggles (Eu, Ev)</li>
                                 <li>Single component replaces multi-step workflow</li>
                             </ul>
                         </div>
-                    </div>
-                </section>
-
-                <!-- 4-2e: Reticle — Demo Part 2 (Surface) -->
-                <section>
-                    <h2>Divide Surface Centered: Demo</h2>
-                    <p class="subtitle">Center-based surface division in action</p>
-                    <div class="image-full">
-                        <video data-src="assets/images/opensource/reticle/Reticle Demo Part2.mp4" data-autoplay loop muted playsinline></video>
+                        <div class="col">
+                            <video class="video-zoom" data-src="assets/images/opensource/reticle/Reticle Demo Part2.mp4" data-autoplay loop muted playsinline style="width:100%; border-radius:4px;"></video>
+                            <p style="text-align:center; font-size:0.8em; color:var(--text-muted); margin:0.4em 0 0;">Center-based surface division in action</p>
+                        </div>
                     </div>
                 </section>
 
@@ -1292,24 +1297,33 @@
                 <section class="figma-layout">
                     <div class="fl-canvas">
                         <h2 style="position:absolute; left:30px; top:117px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Rhino Grasshopper MCP</h2>
-                        <p style="position:absolute; left:30px; top:172px; font-size:15.6px; color:#4fc3f7; margin:0;">AI-Powered Design Assistant with ML Auto-Layout</p>
-                        <ul style="position:absolute; left:50px; top:215px; width:500px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
-                            <li style="margin:2px 0;"><strong>ML Auto-Layout</strong> &mdash; DBSCAN, K-means clustering</li>
-                            <li style="margin:2px 0;"><strong>Pattern Learning</strong> &mdash; Adapts to user preferences</li>
-                            <li style="margin:2px 0;"><strong>Real-time Bridge</strong> &mdash; TCP Socket to Rhino</li>
-                            <li style="margin:2px 0;"><strong>Performance Prediction</strong> &mdash; Optimization suggestions</li>
-                            <li style="margin:2px 0;"><strong>Wire Crossing Minimization</strong> &mdash; Graph algorithms</li>
+                        <p style="position:absolute; left:30px; top:172px; font-size:15.6px; color:#4fc3f7; margin:0;">AI Design Assistant &mdash; Conversational Modeling in Rhino 8 + Grasshopper</p>
+                        <div class="metrics" style="position:absolute; left:50px; top:202px; font-size:16.8px; margin:0;">
+                            <div class="metric"><span class="metric-value">39</span><span class="metric-label">Tools</span></div>
+                            <div class="metric"><span class="metric-value">150</span><span class="metric-label">Components</span></div>
+                        </div>
+                        <ul style="position:absolute; left:50px; top:268px; width:500px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
+                            <li style="margin:2px 0;"><strong>MCP Server</strong> &mdash; live TCP bridge to Rhino 8 / Grasshopper</li>
+                            <li style="margin:2px 0;"><strong>Conversational Massing</strong> &mdash; generate building options by chat</li>
+                            <li style="margin:2px 0;"><strong>Live Definition Building</strong> &mdash; reads canvas, wires GH components</li>
+                            <li style="margin:2px 0;"><strong>ML Auto-Layout</strong> &mdash; clustering &amp; wire-crossing minimization</li>
                         </ul>
-                        <p style="position:absolute; left:30px; top:328px; font-size:10.92px; margin:0;">
+                        <p style="position:absolute; left:30px; top:360px; font-size:10.92px; margin:0;">
                             <a href="https://github.com/dongwoosuk/rhino-grasshopper-mcp" target="_blank" style="color:rgba(79,195,247,0.5); text-decoration:none;">github.com/dongwoosuk/rhino-grasshopper-mcp</a>
                         </p>
-                        <img src="assets/images/opensource/gh_mcp/Rhino%20MCP%20_02.png" alt="Rhino Grasshopper MCP — interface screenshot" loading="lazy" style="position:absolute; left:516px; top:212px; width:614px; height:391px; object-fit:cover;">
+                        <!-- swap-scroll slideshow: MCP interface screenshots + tower massing output -->
+                        <div class="popup-gallery" style="position:absolute; left:510px; top:212px; width:600px; height:382px; overflow:hidden; border-radius:0; background:#0d1117; border:1px solid #2a3550;">
+                            <div class="mcp-track">
+                                <div class="mcp-cell"><img src="assets/images/opensource/gh_mcp/mcp_tour_4.png" alt="Rhino GH MCP — generated tower massing output" loading="eager"></div>
+                                <div class="mcp-cell"><video data-autoplay loop muted playsinline><source data-src="assets/images/opensource/gh_mcp/26-0603_CalPoly%20Concept%20Animation_demo12_ramp.mp4" type="video/mp4"></video></div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
                 <!-- Rhino GH MCP (2): conversational massing demo -->
                 <section class="figma-layout">
-                    <div class="fl-canvas">
+                    <div class="fl-canvas" style="transform:translateY(42px);">
                         <h2 style="position:absolute; left:30px; top:60px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Rhino Grasshopper MCP</h2>
                         <p style="position:absolute; left:30px; top:105px; font-size:15.6px; color:#4fc3f7; margin:0;">Conversational Massing &mdash; Generate by Chat</p>
                         <ul style="position:absolute; left:50px; top:152px; width:470px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
@@ -1317,15 +1331,18 @@
                             <li style="margin:2px 0;"><strong>Evolutionary Workflow</strong> &mdash; fresh / lock / next over a tower grid</li>
                             <li style="margin:2px 0;"><strong>No Manual Modeling</strong> &mdash; geometry built live via the agent</li>
                         </ul>
-                        <video data-autoplay loop muted playsinline style="position:absolute; left:540px; top:150px; width:600px; height:440px; object-fit:cover;">
+                        <video data-autoplay loop muted playsinline style="position:absolute; left:510px; top:230px; width:600px; height:326px; object-fit:contain;">
                             <source data-src="assets/images/opensource/gh_mcp/mcp_tower_massing_demo.mp4" type="video/mp4">
                         </video>
+                        <!-- bottom-left: the massing generation spec -->
+                        <img src="assets/images/opensource/gh_mcp/mcp_spec_towergrid.png" alt="Rhino GH MCP — massing generation parameters (grid, tower, slab, layers, labels)" loading="lazy" style="position:absolute; left:40px; top:370px; width:410px; height:112px; object-fit:contain; border:1px solid #2a3550;">
+                        <p style="position:absolute; left:40px; top:488px; width:410px; text-align:center; font-size:11px; color:#888; margin:0; font-style:italic;">Massing generation spec</p>
                     </div>
                 </section>
 
                 <!-- Rhino GH MCP (3): live bridge -->
                 <section class="figma-layout">
-                    <div class="fl-canvas">
+                    <div class="fl-canvas" style="transform:translateY(3px);">
                         <h2 style="position:absolute; left:30px; top:60px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Rhino Grasshopper MCP</h2>
                         <p style="position:absolute; left:30px; top:105px; font-size:15.6px; color:#4fc3f7; margin:0;">Live Bridge &mdash; Claude builds &amp; edits GH definitions</p>
                         <ul style="position:absolute; left:50px; top:152px; width:470px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
@@ -1333,13 +1350,19 @@
                             <li style="margin:2px 0;"><strong>Canvas-Aware</strong> &mdash; reads live GH canvas state, components &amp; wires</li>
                             <li style="margin:2px 0;"><strong>Builds &amp; Executes</strong> &mdash; wires components via GH SDK, runs Python in Rhino</li>
                         </ul>
-                        <img src="assets/images/opensource/gh_mcp/Rhino%20MCP%20_04.png" alt="Rhino GH MCP — Claude building a Grasshopper definition" loading="lazy" style="position:absolute; left:540px; top:150px; width:600px; height:440px; object-fit:cover;">
+                        <video data-autoplay loop muted playsinline style="position:absolute; left:510px; top:210px; width:600px; height:326px; object-fit:cover;">
+                            <source data-src="assets/images/opensource/gh_mcp/26-0611_rhino%20gh%20mcp%20random%204%20pt%20tower_30s_vspeed.mp4" type="video/mp4">
+                        </video>
+                        <p style="position:absolute; left:510px; top:540px; width:600px; text-align:center; font-size:11px; color:#888; margin:0; font-style:italic;">Rhino MCP vs GH MCP &mdash; generation comparison demo</p>
+                        <!-- bottom-left: the natural-language prompt sent to the live MCP -->
+                        <img src="assets/images/opensource/gh_mcp/mcp_prompt_facetedtower.png" alt="Rhino GH MCP — natural-language prompt for faceted tower generation" loading="lazy" style="position:absolute; left:40px; top:290px; width:392px; height:323px; object-fit:contain; border:1px solid #2a3550;">
+                        <p style="position:absolute; left:40px; top:620px; width:392px; text-align:center; font-size:11px; color:#888; margin:0; font-style:italic;">Prompt example for the demo</p>
                     </div>
                 </section>
 
                 <!-- Rhino GH MCP (4): ML auto-layout -->
                 <section class="figma-layout">
-                    <div class="fl-canvas">
+                    <div class="fl-canvas" style="transform:translateY(53px);">
                         <h2 style="position:absolute; left:30px; top:60px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Rhino Grasshopper MCP</h2>
                         <p style="position:absolute; left:30px; top:105px; font-size:15.6px; color:#4fc3f7; margin:0;">ML-Driven Component Auto-Layout</p>
                         <ul style="position:absolute; left:50px; top:152px; width:470px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
@@ -1347,49 +1370,60 @@
                             <li style="margin:2px 0;"><strong>Wire-Crossing Minimization</strong> &mdash; graph algorithms for clean canvases</li>
                             <li style="margin:2px 0;"><strong>Learns Preferences</strong> &mdash; adapts to your layout style over time</li>
                         </ul>
-                        <img src="assets/images/opensource/gh_mcp/Rhino%20MCP%20_05.png" alt="Rhino GH MCP — auto-laid-out Grasshopper definition" loading="lazy" style="position:absolute; left:540px; top:220px; width:600px; height:300px; object-fit:contain; background:#0d1117;">
+                        <!-- swap-scroll slideshow: Claude building (_04) -> auto-laid-out panorama (_05) -->
+                        <div class="popup-gallery" style="position:absolute; left:510px; top:207px; width:600px; height:327px; overflow:hidden; background:rgba(255,255,255,0.05);">
+                            <div class="mlc-track">
+                                <div class="mlc-cell"><img src="assets/images/opensource/gh_mcp/Rhino%20MCP%20_04.png" alt="Rhino GH MCP — Claude building a Grasshopper definition" loading="eager"></div>
+                                <div class="mlc-cell"><img src="assets/images/opensource/gh_mcp/Rhino%20MCP%20_05.png" alt="Rhino GH MCP — auto-laid-out Grasshopper definition" loading="eager"></div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
                 <!-- 4-4: Design Intelligence Platform -->
                 <!-- Design Intelligence Platform (1): overview -->
                 <section class="figma-layout">
-                    <div class="fl-canvas">
+                    <div class="fl-canvas" style="transform:translateY(52px);">
                         <h2 style="position:absolute; left:30px; top:60px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Design Intelligence Platform</h2>
                         <p style="position:absolute; left:30px; top:105px; font-size:15.6px; color:#4fc3f7; margin:0;">Cloud Design Data Platform &mdash; Grasshopper &harr; Supabase</p>
-                        <ul style="position:absolute; left:50px; top:152px; width:470px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
-                            <li style="margin:2px 0;"><strong>Three Modules</strong> &mdash; GH Store (tool sharing), Design Lab (option tracking), Project DB</li>
-                            <li style="margin:2px 0;"><strong>Cloud Data Infrastructure</strong> &mdash; Grasshopper &harr; Supabase (PostgreSQL), live save / restore</li>
-                            <li style="margin:2px 0;"><strong>Web Dashboard</strong> &mdash; Next.js + TypeScript, firm-wide access</li>
+                        <div class="metrics" style="position:absolute; left:50px; top:140px; font-size:16.8px; margin:0;">
+                            <div class="metric"><span class="metric-value">3</span><span class="metric-label">Modules</span></div>
+                            <div class="metric"><span class="metric-value">Supabase</span><span class="metric-label">PostgreSQL</span></div>
+                        </div>
+                        <ul style="position:absolute; left:50px; top:206px; width:445px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
+                            <li style="margin:2px 0;"><strong>Three Modules</strong> &mdash; GH Store, Design Lab, Project DB</li>
+                            <li style="margin:2px 0;"><strong>Cloud Sync</strong> &mdash; Grasshopper &harr; Supabase, live save / restore</li>
+                            <li style="margin:2px 0;"><strong>Web Dashboard</strong> &mdash; Next.js, firm-wide access</li>
                         </ul>
-                        <p style="position:absolute; left:30px; top:600px; font-size:11px; margin:0;"><a href="https://github.com/dongwoosuk/design-intelligence-platform" target="_blank" style="color:#4fc3f7;">github.com/dongwoosuk/design-intelligence-platform</a></p>
-                        <img class="img-zoom" src="assets/images/opensource/dip/dip_overview.png" alt="Intelligent Design Platform — overview &amp; architecture" loading="lazy" style="position:absolute; left:540px; top:120px; width:600px; height:455px; object-fit:cover; object-position:top; border:1px solid #2a3550;">
-                        <div class="zoom-hint" style="position:absolute; left:540px; top:582px; width:600px;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
-                            <span>Click to zoom</span>
+                        <p style="position:absolute; left:30px; top:360px; font-size:10.92px; margin:0;"><a href="https://github.com/dongwoosuk/design-intelligence-platform" target="_blank" style="color:rgba(79,195,247,0.5); text-decoration:none;">github.com/dongwoosuk/design-intelligence-platform</a></p>
+                        <!-- main page: slow scroll-down reveal of the dashboard (LEED-style) -->
+                        <div class="popup-gallery" style="position:absolute; left:510px; top:207px; width:600px; height:327px; overflow:hidden; border-radius:8px; background:#0d1117; border:1px solid #2a3550;">
+                            <img class="dip-scroll" src="assets/images/opensource/dip/dip_overview.png" alt="Design Intelligence Platform — overview &amp; architecture" loading="eager">
                         </div>
                     </div>
                 </section>
 
                 <!-- Design Intelligence Platform (2): optimization engine -->
                 <section class="figma-layout">
-                    <div class="fl-canvas">
+                    <div class="fl-canvas" style="transform:translateY(63px);">
                         <h2 style="position:absolute; left:30px; top:60px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">Design Intelligence Platform</h2>
-                        <p style="position:absolute; left:30px; top:105px; font-size:15.6px; color:#4fc3f7; margin:0;">AI Workflow Composition &mdash; Store &rarr; Builder &rarr; Canvas</p>
-                        <ul style="position:absolute; left:50px; top:152px; width:470px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
-                            <li style="margin:2px 0;"><strong>GH Store</strong> &mdash; versioned script warehouse; browse &amp; reuse firm-wide tools</li>
-                            <li style="margin:2px 0;"><strong>AI Builder</strong> &mdash; describe a goal in plain language; AI decomposes it into logical steps &amp; matches scripts</li>
-                            <li style="margin:2px 0;"><strong>Node Canvas</strong> &mdash; compose scripts as a connected graph with typed inputs / outputs</li>
+                        <p style="position:absolute; left:30px; top:105px; font-size:15.6px; color:#4fc3f7; margin:0;">AI Workflow Composition &mdash; Browse &rarr; Inspect &rarr; Build &rarr; Compose</p>
+                        <ul style="position:absolute; left:50px; top:152px; width:445px; font-size:12.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
+                            <li style="margin:2px 0;"><strong>GH Store</strong> &mdash; browse the versioned script warehouse</li>
+                            <li style="margin:2px 0;"><strong>Script Detail</strong> &mdash; params, I/O, compatible scripts &amp; version history</li>
+                            <li style="margin:2px 0;"><strong>AI Builder</strong> &mdash; describe a goal; AI decomposes it into steps</li>
+                            <li style="margin:2px 0;"><strong>Node Canvas</strong> &mdash; compose scripts as a connected graph</li>
                         </ul>
-                        <!-- Platform tour: swap-scroll slideshow (Store -> Builder -> Canvas), no extra pages -->
-                        <div class="popup-gallery" style="position:absolute; left:540px; top:150px; width:600px; height:342px; overflow:hidden; border-radius:8px; background:#0a0e14; border:1px solid #2a3550;">
-                            <div class="dip-track">
-                                <div class="dip-cell"><img src="assets/images/opensource/dip/tour_2_store.png" alt="DIP — GH Store script warehouse" loading="eager"></div>
-                                <div class="dip-cell"><img src="assets/images/opensource/dip/tour_3_builder.png" alt="DIP — AI Workflow Builder (goal decomposed into steps)" loading="eager"></div>
-                                <div class="dip-cell"><img src="assets/images/opensource/dip/tour_4_canvas.png" alt="DIP — Node Canvas (connected script graph)" loading="eager"></div>
+                        <!-- Platform tour: vertical-scroll + horizontal-swap (Store -> Script page -> Builder -> Canvas) -->
+                        <div class="popup-gallery" style="position:absolute; left:510px; top:152px; width:600px; height:342px; overflow:hidden; border-radius:8px; background:#0a0e14; border:1px solid #2a3550;">
+                            <div class="dipt-track">
+                                <div class="dipt-cell"><img src="assets/images/opensource/dip/tour_2_store.png" alt="DIP — GH Store script warehouse" loading="eager"></div>
+                                <div class="dipt-cell"><img src="assets/images/opensource/dip/tour_scriptpage.png" alt="DIP — script detail page (params, compatible scripts)" loading="eager"></div>
+                                <div class="dipt-cell"><img src="assets/images/opensource/dip/tour_3_builder.png" alt="DIP — AI Workflow Builder (goal decomposed into steps)" loading="eager"></div>
+                                <div class="dipt-cell"><img src="assets/images/opensource/dip/tour_4_canvas.png" alt="DIP — Node Canvas (connected script graph)" loading="eager"></div>
                             </div>
                         </div>
-                        <p style="position:absolute; left:540px; top:500px; width:600px; text-align:center; font-size:11px; color:#888; margin:0;">Store &middot; Builder &middot; Canvas</p>
+                        <p style="position:absolute; left:510px; top:500px; width:600px; text-align:center; font-size:11px; color:#888; margin:0;">Store &middot; Script &middot; Builder &middot; Canvas</p>
                     </div>
                 </section>
 
@@ -1399,6 +1433,10 @@
                     <p class="subtitle">AEC-Specialized Email Intelligence with Vision AI</p>
                     <div class="slide-layout">
                         <div class="slide-text">
+                            <div class="metrics">
+                                <div class="metric"><span class="metric-value">100%</span><span class="metric-label">Local</span></div>
+                                <div class="metric"><span class="metric-value">RAG</span><span class="metric-label">+ Vision AI</span></div>
+                            </div>
                             <ul>
                                 <li><strong>RAG Search:</strong> ChromaDB semantic search</li>
                                 <li><strong>Vision AI:</strong> Analyzes architectural drawings</li>
@@ -1422,6 +1460,10 @@
                     <p class="subtitle">Automated Code Quality for Computational Design</p>
                     <div class="slide-layout">
                         <div class="slide-text">
+                            <div class="metrics">
+                                <div class="metric"><span class="metric-value">18</span><span class="metric-label">Lint Rules</span></div>
+                                <div class="metric"><span class="metric-value">3</span><span class="metric-label">Severity Levels</span></div>
+                            </div>
                             <ul>
                                 <li><strong>18 Lint Rules:</strong> Comprehensive quality checks</li>
                                 <li><strong>Issue Detection:</strong> Disconnected wires, naming, complexity</li>
@@ -1431,10 +1473,7 @@
                             <p class="repo-link"><a href="https://github.com/dongwoosuk/grasshopper-quality-analyzer" target="_blank">github.com/dongwoosuk/grasshopper-quality-analyzer</a></p>
                         </div>
                         <div class="slide-image">
-                            <div class="placeholder">
-                                <span>Screenshot / GIF</span>
-                                <small>assets/images/opensource/</small>
-                            </div>
+                            <img src="assets/images/opensource/gh_analyzer/gha_canvas.png" alt="GH Quality Analyzer — component / parameter / wire audit exported from a live definition" loading="lazy" style="max-width:90%; transform:translateX(-30px);">
                         </div>
                     </div>
                 </section>
@@ -1444,6 +1483,10 @@
                     <div class="fl-canvas">
                         <h2 style="position:absolute; left:30px; top:40px; font-family:'Source Sans Pro',sans-serif; font-size:28.8px; color:#fff; margin:0; font-weight:700; line-height:1.2;">LEED AP Study Application</h2>
                         <p style="position:absolute; left:30px; top:82px; font-size:15.6px; color:#4fc3f7; margin:0;">AI-Powered Exam Preparation Platform</p>
+                        <div class="metrics" style="position:absolute; left:855px; top:48px; font-size:16.8px; margin:0;">
+                            <div class="metric"><span class="metric-value">474</span><span class="metric-label">Questions</span></div>
+                            <div class="metric"><span class="metric-value">9</span><span class="metric-label">Categories</span></div>
+                        </div>
                         <ul style="position:absolute; left:46px; top:112px; width:840px; font-size:11.6px; color:#fff; margin:0; padding-left:18px; list-style:disc; line-height:1.5;">
                             <li style="margin:1px 0;"><strong>AI Quiz</strong> &mdash; Gemini + RAG generation, instant correct/incorrect explanations</li>
                             <li style="margin:1px 0;"><strong>AI Study Guide</strong> &mdash; credit-by-credit summaries across LEED categories</li>
@@ -1492,9 +1535,9 @@
     <div class="slide-dots" id="slideDots"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js" crossorigin="anonymous"></script>
-    <script src="js/popup.js?v=perf10"></script>
-    <script src="js/interactive.js?v=perf10"></script>
-    <script src="js/reveal-config.js?v=perf10"></script>
+    <script src="js/popup.js?v=perf50"></script>
+    <script src="js/interactive.js?v=perf50"></script>
+    <script src="js/reveal-config.js?v=perf50"></script>
     <script src="js/edit-mode.js"></script>
 </body>
 </html>

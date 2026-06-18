@@ -861,21 +861,98 @@ html, body {
 .dip-track {
     display: flex;
     width: 1800px;           /* 3 x 600 */
-    height: 342px;
+    height: 327px;
     will-change: transform;
     animation: dipSwipe 30s ease-in-out infinite;
 }
 .dip-cell {
     flex: 0 0 600px;
     width: 600px;
-    height: 342px;
+    height: 327px;
     overflow: hidden;
 }
 .dip-cell img { width: 600px; display: block; }
+/* DIP overview — slow vertical scroll-down (reveals lower dashboard), LEED-style */
+.dip-scroll { width: 600px; display: block; will-change: transform; animation: dipScroll 12s ease-in-out infinite; }
+@keyframes dipScroll {
+    0%, 12%   { transform: translateY(0); }
+    44%, 60%  { transform: translateY(calc(-100% + 327px)); }
+    88%, 100% { transform: translateY(0); }
+}
+
+/* DIP platform tour 2 — tall pages: vertical scroll within each cell + horizontal swap (LEED-style), 4 cells 600x342 */
+.dipt-track {
+    display: flex;
+    width: 2400px;           /* 4 x 600 */
+    height: 342px;
+    will-change: transform;
+    animation: diptSwipe 36s ease-in-out infinite;
+}
+.dipt-cell { flex: 0 0 600px; width: 600px; height: 342px; overflow: hidden; }
+.dipt-cell img { width: 600px; display: block; will-change: transform; }
+.dipt-cell:nth-child(1) img { animation: diptV1 36s linear infinite; }
+.dipt-cell:nth-child(2) img { animation: diptV2 36s linear infinite; }
+.dipt-cell:nth-child(3) img { animation: diptV3 36s linear infinite; }
+.dipt-cell:nth-child(4) img { animation: diptV4 36s linear infinite; }
+@keyframes diptSwipe {
+    0%, 22%   { transform: translateX(0); }
+    25%, 47%  { transform: translateX(-600px); }
+    50%, 72%  { transform: translateX(-1200px); }
+    75%, 97%  { transform: translateX(-1800px); }
+    100%      { transform: translateX(0); }
+}
+@keyframes diptV1 { 0%, 3%   { transform: translateY(0); } 19%, 22% { transform: translateY(calc(-100% + 342px)); } 25%, 100% { transform: translateY(0); } }
+@keyframes diptV2 { 0%, 28%  { transform: translateY(0); } 44%, 47% { transform: translateY(calc(-100% + 342px)); } 50%, 100% { transform: translateY(0); } }
+@keyframes diptV3 { 0%, 53%  { transform: translateY(0); } 69%, 72% { transform: translateY(calc(-100% + 342px)); } 75%, 100% { transform: translateY(0); } }
+@keyframes diptV4 { 0%, 78%  { transform: translateY(0); } 94%, 97% { transform: translateY(calc(-100% + 342px)); } 100% { transform: translateY(0); } }
 @keyframes dipSwipe {
     0%, 30%   { transform: translateX(0); }
     36%, 63%  { transform: translateX(-600px); }
     69%, 96%  { transform: translateX(-1200px); }
+    100%      { transform: translateX(0); }
+}
+
+/* Rhino GH MCP tour — 4 uniform 1200x764 frames, horizontal swap only */
+.mcp-track {
+    display: flex;
+    width: 1200px;           /* 2 x 600 */
+    height: 382px;
+    will-change: transform;
+    animation: mcpSwipe 14s ease-in-out infinite;
+}
+.mcp-cell {
+    flex: 0 0 600px;
+    width: 600px;
+    height: 382px;
+    overflow: hidden;
+}
+.mcp-cell img { width: 600px; display: block; }
+.mcp-cell video { width: 600px; height: 382px; object-fit: cover; display: block; }
+/* 14s loop: tower image dwells 2s (0-2s), video cell dwells its full 12s length (2-14s) */
+@keyframes mcpSwipe {
+    0%, 12%      { transform: translateX(0); }       /* image 0-2s   */
+    14.3%, 98%   { transform: translateX(-600px); }  /* video 2-14s  */
+    100%         { transform: translateX(0); }
+}
+
+/* ML auto-layout before/after — 2 cells 600x327, contain (wide _05 letterboxes on frame bg) */
+.mlc-track {
+    display: flex;
+    width: 1200px;           /* 2 x 600 */
+    height: 327px;
+    will-change: transform;
+    animation: mlcSwipe 4s ease-in-out infinite;
+}
+.mlc-cell {
+    flex: 0 0 600px;
+    width: 600px;
+    height: 327px;
+    overflow: hidden;
+}
+.mlc-cell img { width: 600px; height: 327px; object-fit: contain; display: block; }
+@keyframes mlcSwipe {
+    0%, 44%   { transform: translateX(0); }      /* _04  ~4s */
+    50%, 94%  { transform: translateX(-600px); } /* _05  ~4s */
     100%      { transform: translateX(0); }
 }
 .popup-iframe,

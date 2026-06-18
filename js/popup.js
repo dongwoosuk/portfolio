@@ -152,6 +152,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var MAX_ZOOM = 5.4;
 
     function attachZoomPan(img) {
+        // Zoom-in / pan disabled by request: the popup shows the image fitted to the
+        // viewport (zoom-to-fit via CSS) but does NOT zoom in further on click/wheel/pinch.
+        img.style.cursor = 'default';
+        return;
+        // --- legacy zoom/pan (kept for easy re-enable) ---
         // Start from the shared state so an auto-advancing slideshow keeps its zoom.
         var scale = zoomState.scale, tx = zoomState.tx, ty = zoomState.ty;
         var pointers = {};
