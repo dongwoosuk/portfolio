@@ -1,0 +1,66 @@
+{
+  "numbered-model.jpg": {
+    "width": 4491,
+    "height": 6264
+  },
+  "numbering-detail.jpg": {
+    "width": 4491,
+    "height": 6264
+  },
+  "rir-definition.png": {
+    "width": 2000,
+    "height": 736
+  },
+  "panel-division.png": {
+    "width": 1922,
+    "height": 1062
+  },
+  "elevation-detail.png": {
+    "width": 1369,
+    "height": 850
+  },
+  "core.png": {
+    "width": 1200,
+    "height": 2400
+  },
+  "corridor-walls.png": {
+    "width": 1200,
+    "height": 2400
+  },
+  "facade.png": {
+    "width": 1200,
+    "height": 2400
+  },
+  "floor-slabs.png": {
+    "width": 1200,
+    "height": 2400
+  },
+  "interior-walls.png": {
+    "width": 1200,
+    "height": 2400
+  },
+  "mullion-curves.png": {
+    "width": 1200,
+    "height": 2400
+  },
+  "structural-columns.png": {
+    "width": 1200,
+    "height": 2400
+  },
+  "l3.jpg": {
+    "width": 4000,
+    "height": 3909
+  },
+  "l6.jpg": {
+    "width": 4000,
+    "height": 3909
+  },
+  "l10.jpg": {
+    "width": 4000,
+    "height": 3909
+  },
+  "elevation-original.png": {
+    "width": 1606,
+    "height": 2600
+  }
+}

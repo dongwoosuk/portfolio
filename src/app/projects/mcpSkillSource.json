@@ -1,0 +1,22 @@
+{
+  "skill": {
+    "file": "tower-massing / SKILL.md",
+    "start": 18,
+    "code": "| `/tower-massing` | Load engine + fresh Gen 0 (2x2, 4 random typologies) |\n| `/tower-massing refresh` (or `fresh`) | Re-roll current gen (new random typologies + dials) |\n| `/tower-massing lock` | Use selected Rhino objects as parents → add next gen (perimeter cells, parent typology + dial variations, inherits lineage color) |\n| `/tower-massing next` | If selection: same as lock. If no selection: add next gen with FRESH RANDOM typologies (new exploration, new palette colors) |\n| `/tower-massing typology <name>` | Generate 4 variations of one typology (dial-varied) |\n| `/tower-massing list` | Print typology catalog |"
+  },
+  "script": {
+    "file": "scripts / massing.py",
+    "start": 1107,
+    "code": "parent = parent_opts[slot % len(parent_opts)]\ntypology = sc.sticky[\"v11_option_typology\"][parent]\ndials = randomize_dials(typology)\ncolor = sc.sticky[\"v11_option_color\"][parent]\ncx = i * CELL_FT + CELL_FT / 2\ncy = j * CELL_FT + CELL_FT / 2\nmake_option(opt, rg.Point3d(cx, cy, 0), typology, dials, color)\nnew_options.append(opt)",
+    "lineNumbers": [
+      1109,
+      1111,
+      1112,
+      1113,
+      1118,
+      1119,
+      1120,
+      1121
+    ]
+  }
+}

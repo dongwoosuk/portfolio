@@ -1,0 +1,2582 @@
+{
+  "title": "26-0827_ADG Pilot Project_Unit Division.gh",
+  "sha256": "3f647cdb11db839257f729a9e497a97775a614fe702a54b700e119541d823ffa",
+  "nodes": [
+    {
+      "id": "b023eab2-c563-4c85-9169-83802141909a",
+      "name": "Shatter",
+      "fullName": "Shatter",
+      "x": 1731.0,
+      "y": 374.0,
+      "inputs": [
+        "C",
+        "t"
+      ],
+      "outputs": [
+        "S"
+      ],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 2430,
+      "ly": 973.5142857142856
+    },
+    {
+      "id": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "name": "UnitBand",
+      "fullName": "UnitBand",
+      "x": 962.0,
+      "y": 388.0,
+      "inputs": [
+        "shape_crv",
+        "shape_id",
+        "shape_bldg",
+        "shape_levels",
+        "corr_crv",
+        "band_d",
+        "shape_ph",
+        "core_crv",
+        "unit_w",
+        "unit_ratio",
+        "ph_w",
+        "ph_ratio",
+        "module",
+        "pattern",
+        "seed",
+        "min_run",
+        "min_unit_w",
+        "corner",
+        "band_pt",
+        "band_pct",
+        "band_tol",
+        "unit_min_band",
+        "cap_crv"
+      ],
+      "outputs": [
+        "out",
+        "avail_crv",
+        "avail_len",
+        "serv_crv",
+        "serv_kind",
+        "unit_seg",
+        "unit_type",
+        "unit_w_o",
+        "type_w_o",
+        "type_lbl",
+        "info"
+      ],
+      "kind": "component",
+      "value": "",
+      "width": 172,
+      "height": 421,
+      "lx": 1230,
+      "ly": 973.5142857142856
+    },
+    {
+      "id": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+      "name": "UnitCells",
+      "fullName": "UnitCells",
+      "x": 2176.0,
+      "y": 436.0,
+      "inputs": [
+        "shape_crv",
+        "corr_crv",
+        "shape_id",
+        "unit_seg",
+        "unit_type",
+        "rooms",
+        "type_name",
+        "avail_crv",
+        "min_area",
+        "type_w",
+        "band_d"
+      ],
+      "outputs": [
+        "out",
+        "cell_srf",
+        "cell_area",
+        "cell_type",
+        "cell_shape",
+        "cell_tag",
+        "room_srf",
+        "room_tag",
+        "joint_pt",
+        "joint_hard",
+        "info"
+      ],
+      "kind": "component",
+      "value": "",
+      "width": 157,
+      "height": 217,
+      "lx": 2030,
+      "ly": 1081.1571428571428
+    },
+    {
+      "id": "6e484f06-e4ab-414a-8e6a-31e8afbf459f",
+      "name": "CODE travel",
+      "fullName": "Custom Preview",
+      "x": 1578.0,
+      "y": 1229.0,
+      "inputs": [
+        "G",
+        "M"
+      ],
+      "outputs": [],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 1230,
+      "ly": 1833.5142857142855
+    },
+    {
+      "id": "12b6159b-2c4d-479a-86d6-ba393957ee51",
+      "name": "CODE dead end",
+      "fullName": "Custom Preview",
+      "x": 1578.0,
+      "y": 1293.0,
+      "inputs": [
+        "G",
+        "M"
+      ],
+      "outputs": [],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 1230,
+      "ly": 1931.5142857142855
+    },
+    {
+      "id": "a75b6fea-d7f1-4991-8a1b-690c3c5c9bff",
+      "name": "CODE req pair",
+      "fullName": "Custom Preview",
+      "x": 1578.0,
+      "y": 1357.0,
+      "inputs": [
+        "G",
+        "M"
+      ],
+      "outputs": [],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 1230,
+      "ly": 2110.5142857142855
+    },
+    {
+      "id": "ac86fe08-8115-4991-a514-946aa2e15840",
+      "name": "CODE other",
+      "fullName": "Custom Preview",
+      "x": 1578.0,
+      "y": 1421.0,
+      "inputs": [
+        "G",
+        "M"
+      ],
+      "outputs": [],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 1230,
+      "ly": 2208.5142857142855
+    },
+    {
+      "id": "0d525590-ec7c-4503-a3a5-8ec4a1a377bb",
+      "name": "CODE diagonal",
+      "fullName": "Custom Preview",
+      "x": 1578.0,
+      "y": 1485.0,
+      "inputs": [
+        "G",
+        "M"
+      ],
+      "outputs": [],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 1230,
+      "ly": 2306.5142857142855
+    },
+    {
+      "id": "52f1f0c1-a507-4ffd-8c62-be6578ec6e50",
+      "name": "CODE labels",
+      "fullName": "Text Tag 3D",
+      "x": 1578.0,
+      "y": 1569.0,
+      "inputs": [
+        "L",
+        "T",
+        "S",
+        "C",
+        "J"
+      ],
+      "outputs": [],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 115,
+      "lx": 1230,
+      "ly": 2485.5142857142855
+    },
+    {
+      "id": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "name": "UnitPlate",
+      "fullName": "Python 3 Script",
+      "x": 962.0,
+      "y": 1221.0,
+      "inputs": [
+        "massing",
+        "same_bldg",
+        "unit_z",
+        "unit_depth",
+        "corridor_w",
+        "corridor_mode",
+        "min_run",
+        "min_unit_w",
+        "which",
+        "shape_tol",
+        "corner",
+        "band_pt",
+        "band_pct",
+        "band_tol",
+        "unit_min_band",
+        "core_w",
+        "core_d",
+        "core_n",
+        "occ_sf",
+        "travel_max",
+        "in_unit",
+        "dead_end",
+        "walk_step",
+        "sep_frac",
+        "alt",
+        "alt_tol",
+        "core_mode",
+        "core_edge",
+        "core_align",
+        "core_stack",
+        "w_band",
+        "w_travel"
+      ],
+      "outputs": [
+        "out",
+        "fp_crv",
+        "fp_z",
+        "fp_bldg",
+        "fp_level",
+        "fp_shape",
+        "shape_id",
+        "shape_bldg",
+        "shape_levels",
+        "shape_area",
+        "corr_type",
+        "plate_d",
+        "band_d",
+        "shape_ph",
+        "shape_crv",
+        "corr_out",
+        "corr_in",
+        "band_srf",
+        "corr_srf",
+        "resid_srf",
+        "band_area",
+        "corr_area",
+        "resid_area",
+        "core_geo",
+        "core_area",
+        "core_box",
+        "core_note",
+        "travel_crv",
+        "dead_crv",
+        "sep_req_crv",
+        "sep_oth_crv",
+        "diag_crv",
+        "code_txt",
+        "code_pt",
+        "info",
+        "corr_cap",
+        "lvl_corr",
+        "lvl_out",
+        "lvl_z",
+        "lvl_shape"
+      ],
+      "kind": "component",
+      "value": "",
+      "width": 187,
+      "height": 710,
+      "lx": 830,
+      "ly": 1188.8
+    },
+    {
+      "id": "12542d7a-9bd4-4b97-82f9-e98e0ab6e776",
+      "name": "CODE travel",
+      "fullName": "Custom Preview",
+      "x": 1581.0,
+      "y": 1161.0,
+      "inputs": [
+        "G",
+        "M"
+      ],
+      "outputs": [],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 1630,
+      "ly": 1672.2571428571428
+    },
+    {
+      "id": "e2a0b4cf-54cf-4eeb-959f-5f4964a1af0a",
+      "name": "Wires",
+      "fullName": "Brep Wireframe",
+      "x": 564.0,
+      "y": 758.0,
+      "inputs": [
+        "B",
+        "D"
+      ],
+      "outputs": [
+        "W"
+      ],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 430,
+      "ly": 991.0
+    },
+    {
+      "id": "39f26756-52a1-4d23-9130-ce7c74038d4b",
+      "name": "CODE travel",
+      "fullName": "Custom Preview",
+      "x": 1482.0,
+      "y": 1625.0,
+      "inputs": [
+        "G",
+        "M"
+      ],
+      "outputs": [],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 1630,
+      "ly": 1859.7571428571428
+    },
+    {
+      "id": "e1d51fd8-776e-49c1-b62b-323371c89f5b",
+      "name": "Merge",
+      "fullName": "Merge",
+      "x": 498.0,
+      "y": 270.0,
+      "inputs": [
+        "D1",
+        "D2",
+        "D3"
+      ],
+      "outputs": [
+        "R"
+      ],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 81,
+      "lx": 430,
+      "ly": 181.0
+    },
+    {
+      "id": "b3c24244-f1da-44a2-bc47-081a03cf93b3",
+      "name": "Merge",
+      "fullName": "Merge",
+      "x": 498.0,
+      "y": 367.0,
+      "inputs": [
+        "D1",
+        "D2",
+        "D3"
+      ],
+      "outputs": [
+        "R"
+      ],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 81,
+      "lx": 430,
+      "ly": 424.0
+    },
+    {
+      "id": "e1a20834-01bf-4627-8429-aff9ab516ab5",
+      "name": "Merge",
+      "fullName": "Merge",
+      "x": 498.0,
+      "y": 451.0,
+      "inputs": [
+        "D1",
+        "D2"
+      ],
+      "outputs": [
+        "R"
+      ],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 430,
+      "ly": 626.5
+    },
+    {
+      "id": "1a4fc807-3773-489f-b100-8464bbb7213a",
+      "name": "Merge",
+      "fullName": "Merge",
+      "x": 498.0,
+      "y": 525.0,
+      "inputs": [
+        "D1",
+        "D2"
+      ],
+      "outputs": [
+        "R"
+      ],
+      "kind": "component",
+      "value": "",
+      "width": 140,
+      "height": 64,
+      "lx": 430,
+      "ly": 788.5
+    },
+    {
+      "id": "a353160d-f359-41f1-b5ff-97316e94a578",
+      "name": "Offset Startpoint (Unit Depth)",
+      "fullName": "Number Slider",
+      "x": 526.8496,
+      "y": 898.718,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "34.5",
+      "width": 204,
+      "height": 47,
+      "lx": 30,
+      "ly": 1153
+    },
+    {
+      "id": "09057244-259c-45b7-96a9-5511316456e2",
+      "name": "avail_crv",
+      "fullName": "EF Data Description (R6)",
+      "x": 1336.1362,
+      "y": 630.192,
+      "inputs": [
+        ""
+      ],
+      "outputs": [
+        ""
+      ],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 1630,
+      "ly": 973.5142857142856
+    },
+    {
+      "id": "75ba0b51-754f-4692-a107-ad37f5a44bd2",
+      "name": "avail_crv",
+      "fullName": "EF Data Description (R6)",
+      "x": 1604.48,
+      "y": 364.61865,
+      "inputs": [
+        ""
+      ],
+      "outputs": [
+        ""
+      ],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 2030,
+      "ly": 973.5142857142856
+    },
+    {
+      "id": "56b476f8-4e1a-4e0b-b1b0-2deed0f879a4",
+      "name": "Panel",
+      "fullName": "Panel",
+      "x": -529.4902,
+      "y": -353.13715,
+      "inputs": [],
+      "outputs": [],
+      "kind": "Panel",
+      "value": "",
+      "width": 140,
+      "height": 36,
+      "lx": 30,
+      "ly": 30
+    },
+    {
+      "id": "acb9003e-38f3-4fc1-adbe-71c3267ad8cb",
+      "name": "FINAL MASSING",
+      "fullName": "Geometry",
+      "x": 467.6978,
+      "y": 832.7791,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Geometry",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 991
+    },
+    {
+      "id": "618945e5-b12a-4502-98da-2f60287644c0",
+      "name": "fp_crv",
+      "fullName": "EF Data Description (R6)",
+      "x": 1336.1362,
+      "y": 851.68524,
+      "inputs": [
+        ""
+      ],
+      "outputs": [],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 1230,
+      "ly": 1428.5142857142855
+    },
+    {
+      "id": "94bc2edd-9f97-4b66-a966-e10785ee63bc",
+      "name": "shape_id",
+      "fullName": "EF Data Description (R6)",
+      "x": 1336.1475,
+      "y": 951.718,
+      "inputs": [
+        ""
+      ],
+      "outputs": [],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 1230,
+      "ly": 1509.5142857142855
+    },
+    {
+      "id": "a1601961-2869-48ac-ad77-8358ce8ce1a5",
+      "name": "shape_crv",
+      "fullName": "EF Data Description (R6)",
+      "x": 1332.5752,
+      "y": 1161.0742,
+      "inputs": [
+        ""
+      ],
+      "outputs": [],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 1230,
+      "ly": 1671.5142857142855
+    },
+    {
+      "id": "a5c05240-b406-48fe-928e-29de4db37c95",
+      "name": "Building Massing",
+      "fullName": "EF Data Description (R6)",
+      "x": 754.63354,
+      "y": 833.34033,
+      "inputs": [
+        ""
+      ],
+      "outputs": [
+        ""
+      ],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 430,
+      "ly": 1089.0
+    },
+    {
+      "id": "091f760a-5025-416b-97f5-4fe74ed5d10d",
+      "name": "Number Slider",
+      "fullName": "Number Slider",
+      "x": 618.9166,
+      "y": 923.73334,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "6",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 1234
+    },
+    {
+      "id": "8026569b-7b49-48db-a6e4-6c01d93a7918",
+      "name": "Number Slider",
+      "fullName": "Number Slider",
+      "x": 641.2806,
+      "y": 873.0776,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "15",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 1072
+    },
+    {
+      "id": "c477caf9-afa5-4c80-bb30-b47c226e6f3a",
+      "name": "core_box",
+      "fullName": "EF Data Description (R6)",
+      "x": 1330.7356,
+      "y": 1197.8569,
+      "inputs": [
+        ""
+      ],
+      "outputs": [],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 1230,
+      "ly": 1752.5142857142855
+    },
+    {
+      "id": "185bfd5e-fdb9-42b7-a0a2-6fe244eadf09",
+      "name": "core alt",
+      "fullName": "Number Slider",
+      "x": 516.72656,
+      "y": 1423.8688,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "6",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 1396
+    },
+    {
+      "id": "63515259-09fa-4892-bcfe-2774351eb292",
+      "name": "cell_srf",
+      "fullName": "EF Data Description (R6)",
+      "x": 2370.8147,
+      "y": 456.3316,
+      "inputs": [
+        ""
+      ],
+      "outputs": [],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 2430,
+      "ly": 1081.1571428571428
+    },
+    {
+      "id": "62b51e63-6353-4514-afb7-ad2ef8a1fe19",
+      "name": "Studio Width",
+      "fullName": "Number Slider",
+      "x": 215.94165,
+      "y": 240.71832,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "16",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 100
+    },
+    {
+      "id": "a8946f94-c08d-45d9-98d6-3752a710d374",
+      "name": "1 BR Width",
+      "fullName": "Number Slider",
+      "x": 224.94165,
+      "y": 260.45166,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "24",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 181
+    },
+    {
+      "id": "db20ea48-e2b7-43cb-9a2c-b98b88993400",
+      "name": "2 BR Width",
+      "fullName": "Number Slider",
+      "x": 224.94165,
+      "y": 281.21832,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "36",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 262
+    },
+    {
+      "id": "fc090a29-c568-4f1c-9b6b-5b23cedfbbd2",
+      "name": "Studio %",
+      "fullName": "Number Slider",
+      "x": 221.88414,
+      "y": 338.375,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "25",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 343
+    },
+    {
+      "id": "a76657ed-b880-4080-9059-d20b74e77e3d",
+      "name": "1 BR %",
+      "fullName": "Number Slider",
+      "x": 221.88371,
+      "y": 358.7417,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "45",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 424
+    },
+    {
+      "id": "c29bc236-9c6d-45d1-a8b4-527220682ffe",
+      "name": "2 BR %",
+      "fullName": "Number Slider",
+      "x": 220.89166,
+      "y": 378.27502,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "30",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 505
+    },
+    {
+      "id": "e2877fad-eebe-4997-8bb6-7f424126ff68",
+      "name": "PH-A Width",
+      "fullName": "Number Slider",
+      "x": 194.21182,
+      "y": 431.70798,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "36",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 586
+    },
+    {
+      "id": "c77b20ee-b8a3-4f08-b687-fb0d7a2e9659",
+      "name": "PH-B Width",
+      "fullName": "Number Slider",
+      "x": 190.20575,
+      "y": 451.70798,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "48",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 667
+    },
+    {
+      "id": "f3edf813-1bfd-4428-bdf3-f50a38bffad9",
+      "name": "PH-A %",
+      "fullName": "Number Slider",
+      "x": 208.94165,
+      "y": 505.44684,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "50",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 748
+    },
+    {
+      "id": "c13f465b-ccef-401b-8a9b-0bf781bfce92",
+      "name": "PH-B %",
+      "fullName": "Number Slider",
+      "x": 223.20575,
+      "y": 525.44684,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "50",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 829
+    },
+    {
+      "id": "ac49ccc1-d4e9-4777-ba2a-14f9ee95fca4",
+      "name": "MIX module",
+      "fullName": "Number Slider",
+      "x": 424.13333,
+      "y": 590.7619,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Number Slider",
+      "value": "4",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 910
+    },
+    {
+      "id": "7ccf9a04-6043-429d-8877-a8cd506f8693",
+      "name": "core_box",
+      "fullName": "EF Data Description (R6)",
+      "x": 1321.2319,
+      "y": 1331.7103,
+      "inputs": [
+        ""
+      ],
+      "outputs": [
+        ""
+      ],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 1230,
+      "ly": 2029.5142857142855
+    },
+    {
+      "id": "146a2199-f95d-428a-9d1e-b35ab1b7faa0",
+      "name": "lvl_corr",
+      "fullName": "EF Data Description (R6)",
+      "x": 1317.379,
+      "y": 1551.9287,
+      "inputs": [
+        ""
+      ],
+      "outputs": [
+        ""
+      ],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 1230,
+      "ly": 2404.5142857142855
+    },
+    {
+      "id": "a4b856d1-54be-4900-bc01-68cd1c9c7a9c",
+      "name": "Swatch",
+      "fullName": "Colour Swatch",
+      "x": 1438.6667,
+      "y": 1093.3334,
+      "inputs": [],
+      "outputs": [
+        ""
+      ],
+      "kind": "Colour Swatch",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 30,
+      "ly": 1315
+    },
+    {
+      "id": "c222d3fc-17b5-4e5b-91d5-2bd6e5d6893d",
+      "name": "corr_out",
+      "fullName": "EF Data Description (R6)",
+      "x": 1336.1362,
+      "y": 1131.5287,
+      "inputs": [
+        ""
+      ],
+      "outputs": [],
+      "kind": "EF Data Description (R6)",
+      "value": "",
+      "width": 140,
+      "height": 47,
+      "lx": 1230,
+      "ly": 1590.5142857142855
+    }
+  ],
+  "wires": [
+    {
+      "from": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "to": "09057244-259c-45b7-96a9-5511316456e2",
+      "output": "avail_crv",
+      "input": "avail_crv"
+    },
+    {
+      "from": "09057244-259c-45b7-96a9-5511316456e2",
+      "to": "75ba0b51-754f-4692-a107-ad37f5a44bd2",
+      "output": "avail_crv",
+      "input": "avail_crv"
+    },
+    {
+      "from": "75ba0b51-754f-4692-a107-ad37f5a44bd2",
+      "to": "b023eab2-c563-4c85-9169-83802141909a",
+      "output": "avail_crv",
+      "input": "C"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "shape_crv",
+      "input": "shape_crv"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "shape_id",
+      "input": "shape_id"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "shape_bldg",
+      "input": "shape_bldg"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "shape_levels",
+      "input": "shape_levels"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "corr_out",
+      "input": "corr_crv"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "band_d",
+      "input": "band_d"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "shape_ph",
+      "input": "shape_ph"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "core_geo",
+      "input": "core_crv"
+    },
+    {
+      "from": "e1d51fd8-776e-49c1-b62b-323371c89f5b",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "R",
+      "input": "unit_w"
+    },
+    {
+      "from": "b3c24244-f1da-44a2-bc47-081a03cf93b3",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "R",
+      "input": "unit_ratio"
+    },
+    {
+      "from": "e1a20834-01bf-4627-8429-aff9ab516ab5",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "R",
+      "input": "ph_w"
+    },
+    {
+      "from": "1a4fc807-3773-489f-b100-8464bbb7213a",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "R",
+      "input": "ph_ratio"
+    },
+    {
+      "from": "ac49ccc1-d4e9-4777-ba2a-14f9ee95fca4",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "MIX module",
+      "input": "module"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "output": "corr_cap",
+      "input": "cap_crv"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+      "output": "shape_crv",
+      "input": "shape_crv"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+      "output": "corr_out",
+      "input": "corr_crv"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+      "output": "shape_id",
+      "input": "shape_id"
+    },
+    {
+      "from": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "to": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+      "output": "unit_seg",
+      "input": "unit_seg"
+    },
+    {
+      "from": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "to": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+      "output": "unit_type",
+      "input": "unit_type"
+    },
+    {
+      "from": "09057244-259c-45b7-96a9-5511316456e2",
+      "to": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+      "output": "avail_crv",
+      "input": "avail_crv"
+    },
+    {
+      "from": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+      "to": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+      "output": "type_w_o",
+      "input": "type_w"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+      "output": "band_d",
+      "input": "band_d"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "618945e5-b12a-4502-98da-2f60287644c0",
+      "output": "fp_crv",
+      "input": "fp_crv"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "94bc2edd-9f97-4b66-a966-e10785ee63bc",
+      "output": "shape_id",
+      "input": "shape_id"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "a1601961-2869-48ac-ad77-8358ce8ce1a5",
+      "output": "shape_crv",
+      "input": "shape_crv"
+    },
+    {
+      "from": "acb9003e-38f3-4fc1-adbe-71c3267ad8cb",
+      "to": "a5c05240-b406-48fe-928e-29de4db37c95",
+      "output": "FINAL MASSING",
+      "input": "Building Massing"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "c477caf9-afa5-4c80-bb30-b47c226e6f3a",
+      "output": "core_box",
+      "input": "core_box"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "6e484f06-e4ab-414a-8e6a-31e8afbf459f",
+      "output": "travel_crv",
+      "input": "G"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "12b6159b-2c4d-479a-86d6-ba393957ee51",
+      "output": "dead_crv",
+      "input": "G"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "a75b6fea-d7f1-4991-8a1b-690c3c5c9bff",
+      "output": "sep_req_crv",
+      "input": "G"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "ac86fe08-8115-4991-a514-946aa2e15840",
+      "output": "sep_oth_crv",
+      "input": "G"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "0d525590-ec7c-4503-a3a5-8ec4a1a377bb",
+      "output": "diag_crv",
+      "input": "G"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "52f1f0c1-a507-4ffd-8c62-be6578ec6e50",
+      "output": "code_pt",
+      "input": "L"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "52f1f0c1-a507-4ffd-8c62-be6578ec6e50",
+      "output": "code_txt",
+      "input": "T"
+    },
+    {
+      "from": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+      "to": "63515259-09fa-4892-bcfe-2774351eb292",
+      "output": "cell_srf",
+      "input": "cell_srf"
+    },
+    {
+      "from": "a5c05240-b406-48fe-928e-29de4db37c95",
+      "to": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "output": "Building Massing",
+      "input": "massing"
+    },
+    {
+      "from": "8026569b-7b49-48db-a6e4-6c01d93a7918",
+      "to": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "output": "Number Slider",
+      "input": "unit_z"
+    },
+    {
+      "from": "a353160d-f359-41f1-b5ff-97316e94a578",
+      "to": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "output": "Offset Startpoint (Unit Depth)",
+      "input": "unit_depth"
+    },
+    {
+      "from": "091f760a-5025-416b-97f5-4fe74ed5d10d",
+      "to": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "output": "Number Slider",
+      "input": "corridor_w"
+    },
+    {
+      "from": "185bfd5e-fdb9-42b7-a0a2-6fe244eadf09",
+      "to": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "output": "core alt",
+      "input": "alt"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "7ccf9a04-6043-429d-8877-a8cd506f8693",
+      "output": "core_box",
+      "input": "core_box"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "146a2199-f95d-428a-9d1e-b35ab1b7faa0",
+      "output": "lvl_corr",
+      "input": "lvl_corr"
+    },
+    {
+      "from": "7ccf9a04-6043-429d-8877-a8cd506f8693",
+      "to": "12542d7a-9bd4-4b97-82f9-e98e0ab6e776",
+      "output": "core_box",
+      "input": "G"
+    },
+    {
+      "from": "a4b856d1-54be-4900-bc01-68cd1c9c7a9c",
+      "to": "12542d7a-9bd4-4b97-82f9-e98e0ab6e776",
+      "output": "Swatch",
+      "input": "M"
+    },
+    {
+      "from": "acb9003e-38f3-4fc1-adbe-71c3267ad8cb",
+      "to": "e2a0b4cf-54cf-4eeb-959f-5f4964a1af0a",
+      "output": "FINAL MASSING",
+      "input": "B"
+    },
+    {
+      "from": "146a2199-f95d-428a-9d1e-b35ab1b7faa0",
+      "to": "39f26756-52a1-4d23-9130-ce7c74038d4b",
+      "output": "lvl_corr",
+      "input": "G"
+    },
+    {
+      "from": "a4b856d1-54be-4900-bc01-68cd1c9c7a9c",
+      "to": "39f26756-52a1-4d23-9130-ce7c74038d4b",
+      "output": "Swatch",
+      "input": "M"
+    },
+    {
+      "from": "f4dd5db9-620c-4a0b-b9c2-9cc331da8809",
+      "to": "c222d3fc-17b5-4e5b-91d5-2bd6e5d6893d",
+      "output": "corr_out",
+      "input": "corr_out"
+    },
+    {
+      "from": "62b51e63-6353-4514-afb7-ad2ef8a1fe19",
+      "to": "e1d51fd8-776e-49c1-b62b-323371c89f5b",
+      "output": "Studio Width",
+      "input": "D1"
+    },
+    {
+      "from": "a8946f94-c08d-45d9-98d6-3752a710d374",
+      "to": "e1d51fd8-776e-49c1-b62b-323371c89f5b",
+      "output": "1 BR Width",
+      "input": "D2"
+    },
+    {
+      "from": "db20ea48-e2b7-43cb-9a2c-b98b88993400",
+      "to": "e1d51fd8-776e-49c1-b62b-323371c89f5b",
+      "output": "2 BR Width",
+      "input": "D3"
+    },
+    {
+      "from": "fc090a29-c568-4f1c-9b6b-5b23cedfbbd2",
+      "to": "b3c24244-f1da-44a2-bc47-081a03cf93b3",
+      "output": "Studio %",
+      "input": "D1"
+    },
+    {
+      "from": "a76657ed-b880-4080-9059-d20b74e77e3d",
+      "to": "b3c24244-f1da-44a2-bc47-081a03cf93b3",
+      "output": "1 BR %",
+      "input": "D2"
+    },
+    {
+      "from": "c29bc236-9c6d-45d1-a8b4-527220682ffe",
+      "to": "b3c24244-f1da-44a2-bc47-081a03cf93b3",
+      "output": "2 BR %",
+      "input": "D3"
+    },
+    {
+      "from": "e2877fad-eebe-4997-8bb6-7f424126ff68",
+      "to": "e1a20834-01bf-4627-8429-aff9ab516ab5",
+      "output": "PH-A Width",
+      "input": "D1"
+    },
+    {
+      "from": "c77b20ee-b8a3-4f08-b687-fb0d7a2e9659",
+      "to": "e1a20834-01bf-4627-8429-aff9ab516ab5",
+      "output": "PH-B Width",
+      "input": "D2"
+    },
+    {
+      "from": "f3edf813-1bfd-4428-bdf3-f50a38bffad9",
+      "to": "1a4fc807-3773-489f-b100-8464bbb7213a",
+      "output": "PH-A %",
+      "input": "D1"
+    },
+    {
+      "from": "c13f465b-ccef-401b-8a9b-0bf781bfce92",
+      "to": "1a4fc807-3773-489f-b100-8464bbb7213a",
+      "output": "PH-B %",
+      "input": "D2"
+    }
+  ],
+  "moves": [
+    {
+      "id": "784e99d1-b3cd-4f16-91a6-bdb6c4c718f3",
+      "name": "Allocate Unit Frontages",
+      "members": [
+        "1a4fc807-3773-489f-b100-8464bbb7213a",
+        "1b6c9256-6c72-41ce-8193-d5af44f4e2cf",
+        "62b51e63-6353-4514-afb7-ad2ef8a1fe19",
+        "a76657ed-b880-4080-9059-d20b74e77e3d",
+        "a8946f94-c08d-45d9-98d6-3752a710d374",
+        "ac49ccc1-d4e9-4777-ba2a-14f9ee95fca4",
+        "b3c24244-f1da-44a2-bc47-081a03cf93b3",
+        "c13f465b-ccef-401b-8a9b-0bf781bfce92",
+        "c29bc236-9c6d-45d1-a8b4-527220682ffe",
+        "c77b20ee-b8a3-4f08-b687-fb0d7a2e9659",
+        "db20ea48-e2b7-43cb-9a2c-b98b88993400",
+        "e1a20834-01bf-4627-8429-aff9ab516ab5",
+        "e1d51fd8-776e-49c1-b62b-323371c89f5b",
+        "e2877fad-eebe-4997-8bb6-7f424126ff68",
+        "f3edf813-1bfd-4428-bdf3-f50a38bffad9",
+        "fc090a29-c568-4f1c-9b6b-5b23cedfbbd2"
+      ],
+      "geometry": {
+        "nodes": {
+          "1b6c9256-6c72-41ce-8193-d5af44f4e2cf": {
+            "bounds": [
+              562.0,
+              -74.0,
+              167.0,
+              464.0
+            ],
+            "ports": [
+              [
+                564.0,
+                -62.0
+              ],
+              [
+                564.0,
+                -42.0
+              ],
+              [
+                564.0,
+                -22.0
+              ],
+              [
+                564.0,
+                -2.0
+              ],
+              [
+                564.0,
+                18.0
+              ],
+              [
+                564.0,
+                38.0
+              ],
+              [
+                564.0,
+                58.0
+              ],
+              [
+                564.0,
+                78.0
+              ],
+              [
+                564.0,
+                98.0
+              ],
+              [
+                564.0,
+                118.0
+              ],
+              [
+                564.0,
+                138.0
+              ],
+              [
+                564.0,
+                158.0
+              ],
+              [
+                564.0,
+                178.0
+              ],
+              [
+                564.0,
+                198.0
+              ],
+              [
+                564.0,
+                218.0
+              ],
+              [
+                564.0,
+                238.0
+              ],
+              [
+                564.0,
+                258.0
+              ],
+              [
+                564.0,
+                278.0
+              ],
+              [
+                564.0,
+                298.0
+              ],
+              [
+                564.0,
+                318.0
+              ],
+              [
+                564.0,
+                338.0
+              ],
+              [
+                564.0,
+                358.0
+              ],
+              [
+                564.0,
+                378.0
+              ],
+              [
+                727.0,
+                -52.0
+              ],
+              [
+                727.0,
+                -10.0
+              ],
+              [
+                727.0,
+                32.0
+              ],
+              [
+                727.0,
+                74.0
+              ],
+              [
+                727.0,
+                116.0
+              ],
+              [
+                727.0,
+                157.0
+              ],
+              [
+                727.0,
+                199.0
+              ],
+              [
+                727.0,
+                241.0
+              ],
+              [
+                727.0,
+                283.0
+              ],
+              [
+                727.0,
+                325.0
+              ],
+              [
+                727.0,
+                366.0
+              ]
+            ]
+          },
+          "62b51e63-6353-4514-afb7-ad2ef8a1fe19": {
+            "bounds": [
+              25.0,
+              0.0,
+              197.0,
+              20.0
+            ],
+            "ports": [
+              [
+                222.0,
+                10.0
+              ]
+            ]
+          },
+          "a8946f94-c08d-45d9-98d6-3752a710d374": {
+            "bounds": [
+              34.0,
+              19.0,
+              188.0,
+              20.0
+            ],
+            "ports": [
+              [
+                222.0,
+                29.0
+              ]
+            ]
+          },
+          "db20ea48-e2b7-43cb-9a2c-b98b88993400": {
+            "bounds": [
+              34.0,
+              39.0,
+              188.0,
+              20.0
+            ],
+            "ports": [
+              [
+                222.0,
+                49.0
+              ]
+            ]
+          },
+          "fc090a29-c568-4f1c-9b6b-5b23cedfbbd2": {
+            "bounds": [
+              31.0,
+              88.0,
+              191.0,
+              20.0
+            ],
+            "ports": [
+              [
+                222.0,
+                98.0
+              ]
+            ]
+          },
+          "a76657ed-b880-4080-9059-d20b74e77e3d": {
+            "bounds": [
+              31.0,
+              108.0,
+              191.0,
+              20.0
+            ],
+            "ports": [
+              [
+                222.0,
+                118.0
+              ]
+            ]
+          },
+          "c29bc236-9c6d-45d1-a8b4-527220682ffe": {
+            "bounds": [
+              30.0,
+              128.0,
+              192.0,
+              20.0
+            ],
+            "ports": [
+              [
+                222.0,
+                138.0
+              ]
+            ]
+          },
+          "e2877fad-eebe-4997-8bb6-7f424126ff68": {
+            "bounds": [
+              4.0,
+              187.0,
+              218.0,
+              20.0
+            ],
+            "ports": [
+              [
+                222.0,
+                197.0
+              ]
+            ]
+          },
+          "c77b20ee-b8a3-4f08-b687-fb0d7a2e9659": {
+            "bounds": [
+              0.0,
+              207.0,
+              222.0,
+              20.0
+            ],
+            "ports": [
+              [
+                222.0,
+                217.0
+              ]
+            ]
+          },
+          "f3edf813-1bfd-4428-bdf3-f50a38bffad9": {
+            "bounds": [
+              18.0,
+              265.0,
+              204.0,
+              20.0
+            ],
+            "ports": [
+              [
+                222.0,
+                275.0
+              ]
+            ]
+          },
+          "c13f465b-ccef-401b-8a9b-0bf781bfce92": {
+            "bounds": [
+              33.0,
+              285.0,
+              189.0,
+              20.0
+            ],
+            "ports": [
+              [
+                222.0,
+                295.0
+              ]
+            ]
+          },
+          "ac49ccc1-d4e9-4777-ba2a-14f9ee95fca4": {
+            "bounds": [
+              150.0,
+              370.0,
+              192.0,
+              20.0
+            ],
+            "ports": [
+              [
+                342.0,
+                380.0
+              ]
+            ]
+          },
+          "e1d51fd8-776e-49c1-b62b-323371c89f5b": {
+            "bounds": [
+              269.0,
+              -3.0,
+              72.0,
+              64.0
+            ],
+            "ports": [
+              [
+                271.0,
+                9.0
+              ],
+              [
+                271.0,
+                29.0
+              ],
+              [
+                271.0,
+                49.0
+              ],
+              [
+                339.0,
+                29.0
+              ]
+            ]
+          },
+          "b3c24244-f1da-44a2-bc47-081a03cf93b3": {
+            "bounds": [
+              269.0,
+              86.0,
+              72.0,
+              64.0
+            ],
+            "ports": [
+              [
+                271.0,
+                98.0
+              ],
+              [
+                271.0,
+                118.0
+              ],
+              [
+                271.0,
+                138.0
+              ],
+              [
+                339.0,
+                118.0
+              ]
+            ]
+          },
+          "e1a20834-01bf-4627-8429-aff9ab516ab5": {
+            "bounds": [
+              269.0,
+              185.0,
+              72.0,
+              44.0
+            ],
+            "ports": [
+              [
+                271.0,
+                197.0
+              ],
+              [
+                271.0,
+                217.0
+              ],
+              [
+                339.0,
+                207.0
+              ]
+            ]
+          },
+          "1a4fc807-3773-489f-b100-8464bbb7213a": {
+            "bounds": [
+              269.0,
+              263.0,
+              72.0,
+              44.0
+            ],
+            "ports": [
+              [
+                271.0,
+                275.0
+              ],
+              [
+                271.0,
+                295.0
+              ],
+              [
+                339.0,
+                285.0
+              ]
+            ]
+          }
+        },
+        "wires": [
+          {
+            "from": {
+              "guid": "e1d51fd8-776e-49c1-b62b-323371c89f5b"
+            },
+            "to": {
+              "guid": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf"
+            },
+            "points": [
+              [
+                339.0,
+                29.0
+              ],
+              [
+                564.0,
+                98.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "b3c24244-f1da-44a2-bc47-081a03cf93b3"
+            },
+            "to": {
+              "guid": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf"
+            },
+            "points": [
+              [
+                339.0,
+                118.0
+              ],
+              [
+                564.0,
+                118.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "e1a20834-01bf-4627-8429-aff9ab516ab5"
+            },
+            "to": {
+              "guid": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf"
+            },
+            "points": [
+              [
+                339.0,
+                207.0
+              ],
+              [
+                564.0,
+                138.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "1a4fc807-3773-489f-b100-8464bbb7213a"
+            },
+            "to": {
+              "guid": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf"
+            },
+            "points": [
+              [
+                339.0,
+                285.0
+              ],
+              [
+                564.0,
+                158.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "ac49ccc1-d4e9-4777-ba2a-14f9ee95fca4"
+            },
+            "to": {
+              "guid": "1b6c9256-6c72-41ce-8193-d5af44f4e2cf"
+            },
+            "points": [
+              [
+                342.0,
+                380.0
+              ],
+              [
+                564.0,
+                178.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "62b51e63-6353-4514-afb7-ad2ef8a1fe19"
+            },
+            "to": {
+              "guid": "e1d51fd8-776e-49c1-b62b-323371c89f5b"
+            },
+            "points": [
+              [
+                222.0,
+                10.0
+              ],
+              [
+                271.0,
+                9.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "a8946f94-c08d-45d9-98d6-3752a710d374"
+            },
+            "to": {
+              "guid": "e1d51fd8-776e-49c1-b62b-323371c89f5b"
+            },
+            "points": [
+              [
+                222.0,
+                29.0
+              ],
+              [
+                271.0,
+                29.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "db20ea48-e2b7-43cb-9a2c-b98b88993400"
+            },
+            "to": {
+              "guid": "e1d51fd8-776e-49c1-b62b-323371c89f5b"
+            },
+            "points": [
+              [
+                222.0,
+                49.0
+              ],
+              [
+                271.0,
+                49.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "fc090a29-c568-4f1c-9b6b-5b23cedfbbd2"
+            },
+            "to": {
+              "guid": "b3c24244-f1da-44a2-bc47-081a03cf93b3"
+            },
+            "points": [
+              [
+                222.0,
+                98.0
+              ],
+              [
+                271.0,
+                98.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "a76657ed-b880-4080-9059-d20b74e77e3d"
+            },
+            "to": {
+              "guid": "b3c24244-f1da-44a2-bc47-081a03cf93b3"
+            },
+            "points": [
+              [
+                222.0,
+                118.0
+              ],
+              [
+                271.0,
+                118.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "c29bc236-9c6d-45d1-a8b4-527220682ffe"
+            },
+            "to": {
+              "guid": "b3c24244-f1da-44a2-bc47-081a03cf93b3"
+            },
+            "points": [
+              [
+                222.0,
+                138.0
+              ],
+              [
+                271.0,
+                138.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "e2877fad-eebe-4997-8bb6-7f424126ff68"
+            },
+            "to": {
+              "guid": "e1a20834-01bf-4627-8429-aff9ab516ab5"
+            },
+            "points": [
+              [
+                222.0,
+                197.0
+              ],
+              [
+                271.0,
+                197.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "c77b20ee-b8a3-4f08-b687-fb0d7a2e9659"
+            },
+            "to": {
+              "guid": "e1a20834-01bf-4627-8429-aff9ab516ab5"
+            },
+            "points": [
+              [
+                222.0,
+                217.0
+              ],
+              [
+                271.0,
+                217.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "f3edf813-1bfd-4428-bdf3-f50a38bffad9"
+            },
+            "to": {
+              "guid": "1a4fc807-3773-489f-b100-8464bbb7213a"
+            },
+            "points": [
+              [
+                222.0,
+                275.0
+              ],
+              [
+                271.0,
+                275.0
+              ]
+            ]
+          },
+          {
+            "from": {
+              "guid": "c13f465b-ccef-401b-8a9b-0bf781bfce92"
+            },
+            "to": {
+              "guid": "1a4fc807-3773-489f-b100-8464bbb7213a"
+            },
+            "points": [
+              [
+                222.0,
+                295.0
+              ],
+              [
+                271.0,
+                295.0
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "6ac346ef-705d-46ca-8d57-3af18929b608",
+      "name": "Build Unit Cells from Frontages",
+      "members": [
+        "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a",
+        "63515259-09fa-4892-bcfe-2774351eb292"
+      ],
+      "geometry": {
+        "nodes": {
+          "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a": {
+            "bounds": [
+              38.0,
+              86.0,
+              169.0,
+              224.0
+            ],
+            "ports": [
+              [
+                40.0,
+                98.0
+              ],
+              [
+                40.0,
+                118.0
+              ],
+              [
+                40.0,
+                138.0
+              ],
+              [
+                40.0,
+                158.0
+              ],
+              [
+                40.0,
+                178.0
+              ],
+              [
+                40.0,
+                198.0
+              ],
+              [
+                40.0,
+                218.0
+              ],
+              [
+                40.0,
+                238.0
+              ],
+              [
+                40.0,
+                258.0
+              ],
+              [
+                40.0,
+                278.0
+              ],
+              [
+                40.0,
+                298.0
+              ],
+              [
+                205.0,
+                98.0
+              ],
+              [
+                205.0,
+                118.0
+              ],
+              [
+                205.0,
+                138.0
+              ],
+              [
+                205.0,
+                158.0
+              ],
+              [
+                205.0,
+                178.0
+              ],
+              [
+                205.0,
+                198.0
+              ],
+              [
+                205.0,
+                218.0
+              ],
+              [
+                205.0,
+                238.0
+              ],
+              [
+                205.0,
+                258.0
+              ],
+              [
+                205.0,
+                278.0
+              ],
+              [
+                205.0,
+                298.0
+              ]
+            ]
+          },
+          "63515259-09fa-4892-bcfe-2774351eb292": {
+            "bounds": [
+              267.0,
+              108.0,
+              50.0,
+              20.0
+            ],
+            "ports": [
+              [
+                267.0,
+                118.0
+              ],
+              [
+                317.0,
+                118.0
+              ]
+            ]
+          }
+        },
+        "wires": [
+          {
+            "from": {
+              "guid": "22b2acaa-bfbe-4096-b3c8-66eb72f5f19a"
+            },
+            "to": {
+              "guid": "63515259-09fa-4892-bcfe-2774351eb292"
+            },
+            "points": [
+              [
+                205.0,
+                118.0
+              ],
+              [
+                267.0,
+                118.0
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "frontageLines": [
+    [
+      [
+        176.0,
+        25.0,
+        15.0
+      ],
+      [
+        211.9995,
+        25.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        235.9995,
+        25.0,
+        15.0
+      ],
+      [
+        387.0,
+        25.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        387.0,
+        25.0,
+        15.0
+      ],
+      [
+        387.0,
+        225.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        387.0,
+        225.0,
+        15.0
+      ],
+      [
+        351.00050062,
+        225.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        344.99949938,
+        225.0,
+        15.0
+      ],
+      [
+        309.0,
+        225.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        309.0,
+        225.0,
+        15.0
+      ],
+      [
+        309.0,
+        189.0005,
+        15.0
+      ]
+    ],
+    [
+      [
+        309.0,
+        165.0005,
+        15.0
+      ],
+      [
+        309.0,
+        103.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        309.0,
+        103.0,
+        15.0
+      ],
+      [
+        254.0,
+        103.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        254.0,
+        103.0,
+        15.0
+      ],
+      [
+        254.0,
+        225.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        254.0,
+        225.0,
+        15.0
+      ],
+      [
+        43.0,
+        225.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        43.0,
+        225.0,
+        15.0
+      ],
+      [
+        43.0,
+        25.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        43.0,
+        25.0,
+        15.0
+      ],
+      [
+        78.99949938,
+        25.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        85.00050062,
+        25.0,
+        15.0
+      ],
+      [
+        121.0,
+        25.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        121.0,
+        25.0,
+        15.0
+      ],
+      [
+        121.0,
+        67.0005,
+        15.0
+      ]
+    ],
+    [
+      [
+        121.0,
+        91.0005,
+        15.0
+      ],
+      [
+        121.0,
+        147.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        121.0,
+        147.0,
+        15.0
+      ],
+      [
+        176.0,
+        147.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        176.0,
+        147.0,
+        15.0
+      ],
+      [
+        176.0,
+        25.0,
+        15.0
+      ]
+    ],
+    [
+      [
+        110.0,
+        158.0,
+        65.0
+      ],
+      [
+        187.0,
+        158.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        187.0,
+        158.0,
+        65.0
+      ],
+      [
+        187.0,
+        36.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        187.0,
+        36.0,
+        65.0
+      ],
+      [
+        211.9995,
+        36.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        235.9995,
+        36.0,
+        65.0
+      ],
+      [
+        376.0,
+        36.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        376.0,
+        36.0,
+        65.0
+      ],
+      [
+        376.0,
+        214.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        376.0,
+        214.0,
+        65.0
+      ],
+      [
+        351.00050056,
+        214.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        344.99949944,
+        214.0,
+        65.0
+      ],
+      [
+        320.0,
+        214.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        320.0,
+        214.0,
+        65.0
+      ],
+      [
+        320.0,
+        189.0005,
+        65.0
+      ]
+    ],
+    [
+      [
+        320.0,
+        165.0005,
+        65.0
+      ],
+      [
+        320.0,
+        92.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        320.0,
+        92.0,
+        65.0
+      ],
+      [
+        243.0,
+        92.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        243.0,
+        92.0,
+        65.0
+      ],
+      [
+        243.0,
+        214.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        243.0,
+        214.0,
+        65.0
+      ],
+      [
+        54.0,
+        214.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        54.0,
+        214.0,
+        65.0
+      ],
+      [
+        54.0,
+        36.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        54.0,
+        36.0,
+        65.0
+      ],
+      [
+        78.99949944,
+        36.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        85.00050056,
+        36.0,
+        65.0
+      ],
+      [
+        110.0,
+        36.0,
+        65.0
+      ]
+    ],
+    [
+      [
+        110.0,
+        36.0,
+        65.0
+      ],
+      [
+        110.0,
+        67.0005,
+        65.0
+      ]
+    ],
+    [
+      [
+        110.0,
+        91.0005,
+        65.0
+      ],
+      [
+        110.0,
+        158.0,
+        65.0
+      ]
+    ]
+  ],
+  "evidence": {
+    "referenceEqualsExtracted": true,
+    "freshInsertionPassed": true,
+    "sourceUnchanged": true
+  }
+}

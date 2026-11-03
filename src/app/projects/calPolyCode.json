@@ -1,0 +1,17 @@
+{
+  "panels": {
+    "file": "calpoly_facade_new_massing.py",
+    "line": 328,
+    "code": "Wf = block_w(face)                                  # this face's block width (sliver-aware)\nk = KP[didx]; lob, hib = breaks(k, Wf)\nnorth = (face in ASYM_SEG and s % 2 == ASYM_SEG[face])   # no-rake FOLDED plate (12\"->4.5\" across width)\nif fl == 6 and face in ASYM_SEG and PARAPET_FOLD_BOTH.get(face):\n    north = True                             # parapet: fold BOTH blocks -> one band across the window\nsouth = (face in ASYM_SEG and not north)     # raked, proportional max 5\"\nbase = lob if PHASE[fl] == 'lo' else hib      # break zigzag kept (miter) for all -- incl. the folded north\ntop = (lob if PHASE[fl + 1] == 'lo' else hib) if fl < 6 else base\nif len(base) != len(top):"
+  },
+  "windows": {
+    "file": "calpoly_windows.py",
+    "line": 160,
+    "code": "    continue\nfwd, U, nd = frames[fk]\nfor c in range(F.NCELL):\n    for fl in range(NFLOOR):\n        loc = rg.Point3d(F.gap_ctr(c, fk), 0.0, fl * F.SD + F.SP)  # gap ctr, flush, sill-top\n        loc.Transform(fwd)\n        g = proto[fk].DuplicateBrep(); g.Transform(_basis(U, nd, loc) * invp[fk])\n        doc.Objects.AddBrep(g, at); n += 1"
+  },
+  "variants": {
+    "file": "calpoly_variant_panels.py",
+    "line": 267,
+    "code": "voc = Counter(); made = []\nfor i, s in enumerate(raked):\n    j = (nrak - 1 - i) if face in REVERSE else i\n    k = (j + SHIFT.get(face, 0)) % PERIOD\n    seq = (ribbon(CROSS_PIER[k], CARRY, \"P\") if k in CROSS_PIER\n           else ribbon(CROSS_JAMB[k], CARRY, \"J\")) or [(\"oo\", \"oo\")] * 7\n    L.append(\"   c%-2d seg%-3d  %s\" % (i, s, \" \".join(\"%s|%s\" % x for x in seq)))\n    for fl, (eb, et) in enumerate(seq):\n        br, _nt = panel(secs_for(fl, eb, et), jamb_low)\n        if br is None:\n            L.append(\"      FAIL s%d L%d\" % (s, fl + 1)); continue\n        voc[\"%s|%s\" % (eb, et)] += 1\n        made.append((s, br))"
+  }
+}

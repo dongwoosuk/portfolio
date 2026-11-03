@@ -1,65 +1,76 @@
 import Image from "next/image";
+import Link from "next/link";
+import HeroReel from "./HeroReel";
+import HomeLanguage, { HomeText, HomeLanguageSwitch } from "./HomeLanguage";
+import { projects, selectedProjectSlugs, type Project } from "./projects/data";
+
+function Arrow({ diagonal = false }: { diagonal?: boolean }) {
+  return <span aria-hidden="true">{diagonal ? "↗" : "→"}</span>;
+}
+
+const workSummaries: Record<string, { title: string; category: string; description: string; tags: string }> = {
+  "cal-poly-facade": { title: "Cal Poly Student Housing — Building C Facade", category: "FACADE DESIGN", description: "Connect solar studies, panel geometry, and facade classification to support project design decisions.", tags: "Solar analysis / Parametric geometry / Panel systems" },
+  "adg-massing-pilot": { title: "ADG Pilot: Unit Layout & Facade", category: "COMPUTATIONAL WORKFLOW", description: "Turn a shared massing into core, unit, and facade options shaped by planning and opening constraints.", tags: "Egress / Unit planning / Facade generation" },
+  "joseki": { title: "joseki", category: "DESIGN SOFTWARE", description: "Find useful Grasshopper logic, inspect its source, and bring it into the next workflow.", tags: "Product development / Reusable knowledge / Grasshopper" },
+  "rhino-grasshopper-mcp": { title: "Rhino / Grasshopper MCP", category: "AI & INTEGRATION", description: "Connect AI modeling requests to Rhino geometry and editable Grasshopper workflows.", tags: "MCP bridge / AI-assisted modeling / Graph editing" },
+  "five-by-five-bim": { title: "5×5 Building: Concept to BIM", category: "BIM INTEGRATION", description: "Carry an adjustable building system from Grasshopper geometry into Revit models and views.", tags: "Parametric modeling / Rhino.Inside.Revit / BIM" },
+};
+
+function ProjectCard({ project, number }: { project: Project; number: number }) {
+  const summary = workSummaries[project.slug];
+  const joseki = project.slug === "joseki";
+  const adg = project.slug === "adg-massing-pilot";
+  const calpoly = project.slug === "cal-poly-facade";
+  const five = project.slug === "five-by-five-bim";
+  return <Link className={`work-entry${joseki ? " work-entry--software" : ""}${adg ? " work-entry--adg" : ""}${calpoly ? " work-entry--calpoly" : ""}${five ? " work-entry--five" : ""}`} href={`/projects/${project.slug}`}>
+    <div className="work-entry-visual">{calpoly ? <div className="home-calpoly-crop"><Image src="/work/home/calpoly-panel-types.webp" alt="Cal Poly student housing facade model colored by panel type" width={6316} height={3459} sizes="(max-width: 760px) 80vw, 42vw" /></div> : <Image src={calpoly ? "/work/home/calpoly-panel-types.webp" : adg ? "/work/home/adg-context.webp" : joseki ? "/work/tools/joseki-explore.png" : project.cover} alt={calpoly ? "Cal Poly student housing facade model colored by panel type" : adg ? "ADG pilot building in its urban context" : joseki ? "The joseki Explore interface showing candidate functions and their node-and-wire graphs" : project.coverAlt} fill sizes="(max-width: 760px) 90vw, 48vw" />}</div>
+    <div className="work-entry-copy"><span className="work-entry-category">{String(number).padStart(2, "0")} / <HomeText>{summary?.category ?? project.category}</HomeText></span><h3><HomeText>{summary?.title ?? project.title}</HomeText></h3><p><HomeText>{summary?.description ?? project.deck}</HomeText></p><span className="work-entry-tags"><HomeText>{summary?.tags ?? project.tools}</HomeText></span><span className="work-entry-link"><HomeText>{"Explore project"}</HomeText> <Arrow diagonal /></span></div>
+  </Link>;
+}
 
 export default function Home() {
+  const selectedSlugs = selectedProjectSlugs;
+  const featuredProjects = selectedSlugs.map((slug) => projects.find((project) => project.slug === slug)!).filter(Boolean);
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <HomeLanguage><main className="portfolio-home" id="top">
+      <header className="site-header">
+        <a className="case-clean-wordmark" href="#top" aria-label="Dongwoo Suk, portfolio home">DONGWOO SUK / PORTFOLIO</a>
+        <nav className="site-nav" aria-label="Main navigation"><a href="#work"><HomeText>{"Selected work"}</HomeText></a><a href="#systems"><HomeText>{"Practice tools"}</HomeText></a><a href="#leadership"><HomeText>{"People"}</HomeText></a><a href="#about"><HomeText>{"About"}</HomeText></a></nav>
+        <a className="header-contact" href="mailto:dongwoosuk0219@gmail.com"><HomeText>{"Contact"}</HomeText> <Arrow diagonal /></a>
+        <HomeLanguageSwitch />
+      </header>
+
+      <section className="hero section-shell" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <div className="eyebrow"><span className="eyebrow-line" /> <HomeText>{"COMPUTATIONAL DESIGN · AEC TECHNOLOGY"}</HomeText></div>
+          <h1 id="hero-title"><HomeText>{"Design technology"}</HomeText><br /><em><HomeText>{"for practice."}</HomeText></em></h1>
+          <p className="hero-lede"><HomeText>{"I'm Dongwoo Suk, a Computational Design Specialist. I develop computational workflows, software, and reusable tools that connect architectural decisions with the people delivering them."}</HomeText></p>
+          <div className="hero-actions"><a className="button button-dark" href="#work"><HomeText>{"View selected projects"}</HomeText> <Arrow /></a></div>
+          <div className="hero-footnote"><span className="status-dot" /> <HomeText>{"Computational Design Specialist · Steinberg Hart · SF Bay Area"}</HomeText></div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        <HeroReel />
+      </section>
+
+      <div className="capability-strip" aria-label="Practice areas"><div><span><HomeText>{"01"}</HomeText></span><strong><HomeText>{"Design"}</HomeText></strong><p><HomeText>{"Rules that respond to building conditions"}</HomeText></p></div><div><span><HomeText>{"02"}</HomeText></span><strong><HomeText>{"Computation"}</HomeText></strong><p><HomeText>{"Geometry, data, and repeatable workflows"}</HomeText></p></div><div><span><HomeText>{"03"}</HomeText></span><strong><HomeText>{"Delivery"}</HomeText></strong><p><HomeText>{"A path from exploration into BIM"}</HomeText></p></div></div>
+
+      <section className="work-intro section-shell" id="work"><span className="section-kicker"><HomeText>{"01 / SELECTED WORK"}</HomeText></span><div className="intro-grid"><h2><HomeText>{"Design problems."}</HomeText><br /><em><HomeText>{"Working systems."}</HomeText></em></h2><p><HomeText>{"Five projects spanning facade design, housing layouts, reusable design software, BIM integration, and AI-assisted modeling."}</HomeText></p></div></section>
+      <section className="work-list section-shell" aria-label="Selected project case studies">
+        {featuredProjects.map((project, index) => <ProjectCard project={project} number={index + 1} key={project.slug} />)}
+      </section>
+
+
+      <section className="approach section-shell" id="approach"><span className="section-kicker"><HomeText>{"02 / APPROACH"}</HomeText></span><div className="intro-grid"><h2><HomeText>{"Make decisions"}</HomeText><br /><em><HomeText>{"testable."}</HomeText></em></h2><p><HomeText>{"I turn project conditions into adjustable models, compare options, and organize the results for review and delivery."}</HomeText></p></div><ol className="home-approach-steps" aria-label="Design method">
+        <li><span className="home-step-number">01</span><h3><HomeText>{"Conditions"}</HomeText></h3><p><HomeText>{"Read solar exposure, unit mix, egress, and opening limits."}</HomeText></p><Link href="/projects/cal-poly-facade"><HomeText>{"Facade design"}</HomeText> <Arrow diagonal /></Link></li>
+        <li><span className="home-step-number">02</span><h3><HomeText>{"Variables"}</HomeText></h3><p><HomeText>{"Make depth, location, ratios, and types adjustable."}</HomeText></p><Link href="/projects/adg-massing-pilot"><HomeText>{"Planning constraints"}</HomeText> <Arrow diagonal /></Link></li>
+        <li><span className="home-step-number">03</span><h3><HomeText>{"Options"}</HomeText></h3><p><HomeText>{"Generate layout and form alternatives within the same conditions."}</HomeText></p><Link href="/projects/adg-massing-pilot"><HomeText>{"Layout & facade options"}</HomeText> <Arrow diagonal /></Link></li>
+        <li><span className="home-step-number">04</span><h3><HomeText>{"Review & Delivery"}</HomeText></h3><p><HomeText>{"Review model geometry and data, then carry them into team workflows and BIM."}</HomeText></p><Link href="/projects/five-by-five-bim"><HomeText>{"BIM handoff"}</HomeText> <Arrow diagonal /></Link></li>
+      </ol></section>
+
+      <section className="practice-tools section-shell" id="systems"><span className="section-kicker"><HomeText>{"03 / PRACTICE TOOLS"}</HomeText></span><div className="intro-grid"><h2><HomeText>{"Small frictions."}</HomeText><br /><em><HomeText>{"Useful software."}</HomeText></em></h2><p><HomeText>{"I build tools around the way designers actually work: noticing changed references, discovering commands, and keeping model information usable."}</HomeText></p></div><div className="practice-grid"><article className="practice-card"><div className="practice-card-label"><span><HomeText>{"PUBLIC BETA"}</HomeText></span><span><HomeText>{"Rhino 8 / .NET 8 / C#"}</HomeText></span></div><div className="practice-image"><Image src="/work/tools/worksession.png" alt="Worksession Notifier interface" fill sizes="(max-width: 760px) 90vw, 43vw" /></div><h3><HomeText>{"Worksession Notifier"}</HomeText></h3><p><HomeText>{"I built background change detection and a non-activating notification with Refresh and Later choices."}</HomeText></p><p className="practice-status"><HomeText>{"Public beta / Saved-reference change detection."}</HomeText></p><a className="practice-link" href="https://github.com/dongwoosuk/worksession-notifier/releases" target="_blank" rel="noreferrer"><HomeText>{"View release →"}</HomeText></a></article><article className="practice-card"><div className="practice-card-label"><span><HomeText>{"PROTOTYPE"}</HomeText></span><span><HomeText>{"Rhino 8 / .NET 8 / C#"}</HomeText></span></div><div className="practice-image"><Image src="/work/tools/alias.png" alt="Rhino Alias HUD interface" fill sizes="(max-width: 760px) 90vw, 43vw" /></div><h3><HomeText>{"Rhino Alias HUD"}</HomeText></h3><p><HomeText>{"I built in-viewport hints, local usage-based suggestions, and post-command shortcut coaching."}</HomeText></p><p className="practice-status"><HomeText>{"Prototype / Usage-based suggestions and coaching preview."}</HomeText></p></article><article className="practice-card"><div className="practice-card-label"><span><HomeText>{"LOCAL ADD-IN"}</HomeText></span><span><HomeText>{"Revit API / C# / .NET"}</HomeText></span></div><div className="practice-image"><Image src="/work/tools/revit-coach.png" alt="Revit Shortcut Coach interface" fill sizes="(max-width: 760px) 90vw, 43vw" /></div><h3><HomeText>{"Revit Shortcut Coach"}</HomeText></h3><p><HomeText>{"I built bilingual command search, execution-time hints, and focused view/graphics utilities."}</HomeText></p><p className="practice-status"><HomeText>{"Revit 2024-2026 / Interface preview; some commands are search-only."}</HomeText></p></article><article className="practice-card"><div className="practice-card-label"><span><HomeText>{"PROJECT UTILITY"}</HomeText></span><span><HomeText>{"Python / Grasshopper / Eto / Yak"}</HomeText></span></div><div className="practice-image"><Image src="/work/tools/parking-tracker.png" alt="Parking Tracker interface with Excel import, export, and parking summaries" fill sizes="(max-width: 760px) 90vw, 43vw" /></div><h3><HomeText>{"Parking Tracker"}</HomeText></h3><p><HomeText>{"I developed an Excel-to-Rhino workflow and packaged its controls as an Eto UI plugin."}</HomeText></p><p className="practice-status"><HomeText>{"Project utility / Developed for 188 West Saint James."}</HomeText></p></article></div><div className="other-work"><span><HomeText>{"ALSO DEVELOPING"}</HomeText></span><p><HomeText>{"Reticle, a public C# Grasshopper plugin; AEC Outlook MCP; and a LEED study application."}</HomeText></p><a href="https://github.com/dongwoosuk" target="_blank" rel="noreferrer"><HomeText>{"Explore GitHub →"}</HomeText></a></div></section>
+      <section className="leadership section-shell" id="leadership"><span className="section-kicker"><HomeText>{"04 / TEAM & KNOWLEDGE"}</HomeText></span><div className="intro-grid"><h2><HomeText>{"Make the work"}</HomeText><br /><em><HomeText>{"usable by others."}</HomeText></em></h2><p><HomeText>{"I lead the Adaptive Design Group (ADG), a firmwide computational design initiative at Steinberg Hart. My work combines project-team support, internal presentations and workshops, and computational workflow development."}</HomeText></p></div><div className="home-team-facts"><span><strong>6</strong><HomeText>{"Offices connected through ADG"}</HomeText></span><span><strong>~10</strong><HomeText>{"Members in the computational design group"}</HomeText></span></div><div className="leadership-grid"><article><div className="team-evidence-image"><Image src="/work/home/adg-context.webp" alt="ADG pilot / shared model study" fill sizes="(max-width: 760px) 88vw, 28vw" /></div><h3><HomeText>{"Project support"}</HomeText></h3><p><HomeText>{"For the ADG pilot, I developed circulation, unit-layout, and facade studies from the team's shared massing input."}</HomeText></p><Link className="team-evidence-link" href="/projects/adg-massing-pilot"><HomeText>{"View related work"}</HomeText> <Arrow diagonal /></Link></article><article><div className="team-evidence-image"><Image src="/work/five-by-five/concept-overview.jpg" alt="Computational modeling / presentation material" fill sizes="(max-width: 760px) 88vw, 28vw" /></div><h3><HomeText>{"Internal talks & workshops"}</HomeText></h3><p><HomeText>{"I share computational design methods through internal presentations and workshops, connecting modeling concepts with practical project workflows."}</HomeText></p><Link className="team-evidence-link" href="/projects/five-by-five-bim"><HomeText>{"View related work"}</HomeText> <Arrow diagonal /></Link></article><article><div className="team-evidence-image"><Image src="/work/tools/joseki-explore.png" alt="Joseki / reusable Grasshopper logic" fill sizes="(max-width: 760px) 88vw, 28vw" /></div><h3><HomeText>{"Workflow development"}</HomeText></h3><p><HomeText>{"I develop computational workflows and reusable tools that connect project needs with parametric modeling, BIM, and shared design knowledge."}</HomeText></p><Link className="team-evidence-link" href="/projects/joseki"><HomeText>{"View related work"}</HomeText> <Arrow diagonal /></Link></article></div></section>
+
+      <section className="about section-shell" id="about"><div><span className="section-kicker"><HomeText>{"05 / EXPERIENCE & CONTACT"}</HomeText></span><h2><HomeText>{"A designer who"}</HomeText><br /><em><HomeText>{"builds the tools."}</HomeText></em></h2><figure className="about-profile"><Image src="/images/dongwoo-teshima.jpg" alt="Dongwoo Suk visiting Teshima" width={960} height={539} sizes="(max-width: 760px) 88vw, 42vw" /></figure></div><div className="about-right"><dl className="home-experience-facts"><div><dt><HomeText>{"CURRENT ROLE"}</HomeText></dt><dd>Computational Design Specialist / Project Designer<br /><span>Steinberg Hart / SF Bay Area</span></dd></div><div><dt><HomeText>{"WORK FOCUS"}</HomeText></dt><dd><HomeText>{"Computational design, BIM workflows, and software for architectural practice"}</HomeText></dd></div></dl><p><HomeText>{"My work connects architectural design with parametric models, BIM workflows, and software developed around project needs."}</HomeText></p><p><HomeText>{"I'm interested in roles where computational thinking can improve real project decisions, design technology adoption, and the connection between design and delivery."}</HomeText></p><div className="home-career"><span className="section-kicker"><HomeText>{"EXPERIENCE"}</HomeText></span><ol><li><time>2022&ndash;<HomeText>{"Present"}</HomeText></time><div><strong>Steinberg Hart</strong><p><HomeText>{"Computational Design Specialist / Project Designer"}</HomeText></p></div></li><li><time>2019&ndash;2021</time><div><strong>The Code Solution</strong><p><HomeText>{"Junior Designer / Multifamily residential projects"}</HomeText></p></div></li><li><time>2017 / 2019</time><div><strong>Oyler Wu Collaborative</strong><p><HomeText>{"Intern Designer / Design and fabrication"}</HomeText></p></div></li></ol><span className="section-kicker"><HomeText>{"EDUCATION"}</HomeText></span><div className="home-education"><p><strong>SCI-Arc</strong><br /><HomeText>{"Master of Architecture I / 2018"}</HomeText></p><p><strong>Pratt Institute</strong><br /><HomeText>{"BFA, Interior Design / 2015"}</HomeText></p></div></div><div className="about-links"><a href="mailto:dongwoosuk0219@gmail.com">Email <Arrow diagonal /></a><a href="https://www.linkedin.com/in/dongwoosuk" target="_blank" rel="noreferrer"><HomeText>{"LinkedIn"}</HomeText> <Arrow diagonal /></a><a href="https://github.com/dongwoosuk" target="_blank" rel="noreferrer"><HomeText>{"GitHub"}</HomeText> <Arrow diagonal /></a></div></div></section>
+      <footer className="site-footer section-shell"><span><HomeText>{"© 2026 DONGWOO SUK"}</HomeText></span><span><HomeText>{"DESIGN · COMPUTATION · DELIVERY"}</HomeText></span><a href="#top"><HomeText>{"BACK TO TOP ↑"}</HomeText></a></footer>
+    </main></HomeLanguage>
   );
 }

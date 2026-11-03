@@ -1,0 +1,116 @@
+{
+  "assets": [
+    {
+      "key": "summer",
+      "src": "/work/facade/solar/26-0812_Incident_Summer_AltitudeSplit.png",
+      "caption": "Summer exposure / above and below 50° solar altitude",
+      "width": 3122,
+      "height": 1600
+    },
+    {
+      "key": "winter",
+      "src": "/work/facade/solar/26-0812_Incident_Winter_AltitudeSplit.png",
+      "caption": "Winter exposure / the same 50° comparison",
+      "width": 3122,
+      "height": 1600
+    },
+    {
+      "key": "rose",
+      "src": "/work/facade/solar/26-0810_Radiation%20Rose.png",
+      "caption": "Annual radiation rose / directional exposure",
+      "width": 1948,
+      "height": 2278
+    },
+    {
+      "key": "dome",
+      "src": "/work/facade/solar/26-0810_Sky%20Radiation%20Dome.png",
+      "caption": "Annual direct sky radiation / azimuth and altitude",
+      "width": 1948,
+      "height": 2278
+    },
+    {
+      "key": "temperature",
+      "src": "/work/facade/solar/26-0810_Sun%20Path%20Temperature.png",
+      "caption": "Annual sun path / temperature context",
+      "width": 1948,
+      "height": 2278
+    },
+    {
+      "key": "sun3d",
+      "src": "/work/facade/solar/26-0810_Sun%20Path%203D_Summer%20Solstice_13h.png",
+      "caption": "Summer solstice / 3D sun path",
+      "width": 3388,
+      "height": 3398
+    },
+    {
+      "key": "jun21",
+      "src": "/work/facade/solar/26-0811_Board_Jun21_Solstice.png",
+      "caption": "Summer solstice / afternoon sun and shadows",
+      "width": 3122,
+      "height": 1600
+    },
+    {
+      "key": "dec21",
+      "src": "/work/facade/solar/26-0811_Board_Dec21_Solstice.png",
+      "caption": "Winter solstice / noon to sunset",
+      "width": 3122,
+      "height": 1600
+    },
+    {
+      "key": "closeup",
+      "src": "/work/facade/solar/26-0812_Axon%20Close-up%20Single%20Stacked.png",
+      "caption": "One panel / geometry, shadow, and incident radiation",
+      "width": 2182,
+      "height": 3008
+    },
+    {
+      "key": "jambsw",
+      "src": "/work/facade/solar/26-0812_Incident_Jamb_Performance.png",
+      "caption": "Southwest facade / asymmetric jamb roles",
+      "width": 3122,
+      "height": 1600
+    },
+    {
+      "key": "jambnw",
+      "src": "/work/facade/solar/26-0812_Incident_Jamb_Performance%20_NW.png",
+      "caption": "Northwest facade / reversed jamb configuration",
+      "width": 2440,
+      "height": 616
+    },
+    {
+      "key": "elevation",
+      "src": "/work/facade/elevations/26-0831_Elevation%20NW.png",
+      "caption": "Northwest elevation / panel composition",
+      "width": 7236,
+      "height": 3424
+    },
+    {
+      "key": "renderb",
+      "src": "/work/facade/renderings/0922_VIEW_B%20copy_Updated.jpg",
+      "caption": "Project visualization / overall facade composition",
+      "width": 2940,
+      "height": 1440
+    },
+    {
+      "key": "renderc",
+      "src": "/work/facade/renderings/0922_VIEW_C_Updated%20copy.jpg",
+      "caption": "Project visualization / depth and oblique faces",
+      "width": 2940,
+      "height": 1440
+    },
+    {
+      "key": "summerhigh",
+      "src": "/work/facade/solar/0918_Solar.png",
+      "caption": "Higher sun / altitude ≥ 50°",
+      "width": 4356,
+      "height": 2304
+    },
+    {
+      "key": "summerlow",
+      "src": "/work/facade/solar/0918_Solar_low%20angle.png",
+      "caption": "Lower sun / altitude < 50°",
+      "width": 4356,
+      "height": 2304
+    }
+  ]
+}

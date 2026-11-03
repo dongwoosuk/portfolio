@@ -1,0 +1,15 @@
+{
+  "objects": 53,
+  "wires": 60,
+  "python3_output": 188,
+  "same_wires": true,
+  "same_output": true,
+  "same_zoom": 1.216,
+  "metrics": {
+    "horizontal_wires": 22,
+    "wire_count": 60,
+    "mean_port_error": 36.25,
+    "estimated_port_components": []
+  },
+  "source": "Expanded branching arithmetic graph / deliberately shuffled positions / detached native Grasshopper canvas"
+}

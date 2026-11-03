@@ -1,0 +1,13 @@
+"use client";
+import { useState } from "react";
+import graph from "./josekiGraph.json";
+export default function JosekiFullGraph({moveIndex,highlight}:{moveIndex:number;highlight:boolean}) {
+ const [zoom,setZoom]=useState(1);
+ const selected=new Set(graph.moves[moveIndex].members),byId=new Map(graph.nodes.map(n=>[n.id,n]));
+ const width=Math.max(...graph.nodes.map(n=>n.lx+n.width))+30,height=Math.max(...graph.nodes.map(n=>n.ly+n.height))+30;
+ function port(id:string,name:string,output:boolean){const n=byId.get(id)!;const ports=output?n.outputs:n.inputs;const i=Math.max(0,ports.indexOf(name));return [n.lx+(output?n.width:0),n.ly+30+i*17];}
+ return <div className="full-graph-wrap"><div className="full-graph-zoom"><span>joseki DIAGRAM / ALIGNED PRESENTATION</span><button onClick={()=>setZoom(z=>Math.max(1,z-.5))} aria-label="Zoom out">-</button><button onClick={()=>setZoom(z=>Math.min(3,z+.5))} aria-label="Zoom in">+</button><button onClick={()=>setZoom(1)}>Fit</button></div><div className="full-graph-scroll"><svg style={{width:`${zoom*100}%`,minWidth:0}} viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Entire ADG definition with component names, actual input and output ports, and nonoverlapping left-to-right layout"><rect width={width} height={height} fill="#14291e"/>
+ {graph.wires.map((w,i)=>{const a=port(w.from,w.output,true),b=port(w.to,w.input,false),reach=Math.max(40,(b[0]-a[0])*.5);return <path key={i} d={`M${a[0]} ${a[1]} C${a[0]+reach} ${a[1]} ${b[0]-reach} ${b[1]} ${b[0]} ${b[1]}`} fill="none" stroke={highlight&&selected.has(w.from)&&selected.has(w.to)?"#bde5a3":"#70927b"} strokeWidth={highlight&&selected.has(w.from)&&selected.has(w.to)?2.5:1.2} opacity={highlight&&!(selected.has(w.from)&&selected.has(w.to))?.25:.8}/>})}
+ {graph.nodes.map(n=><g key={n.id} transform={`translate(${n.lx},${n.ly})`} opacity={highlight&&!selected.has(n.id)?.45:1}><title>{n.fullName+" / "+n.id}</title><rect rx="9" width={n.width} height={n.height} fill={highlight&&selected.has(n.id)?"#b8d9a2":"#4c6857"} stroke="#91b29a" strokeWidth="1.3"/><rect rx="8" x="1" y="1" width={n.width-2} height="21" fill={highlight&&selected.has(n.id)?"#a7cd8f":"#5a7965"}/><text x={n.width/2} y="15" textAnchor="middle" fontSize="11" fontWeight="600" fill="#e2eddc">{n.name}</text>{n.kind==="Number Slider"&&<text x={n.width/2} y="34" textAnchor="middle" fontSize="10" fill="#e2eddc">{n.value}</text>}{[false,true].map(output=>(output?n.outputs:n.inputs).map((label,i)=><g key={`${output}-${i}`}><circle cx={output?n.width:0} cy={30+i*17} r="2.8" fill="#14291e" stroke="#91b29a"/><text x={output?n.width-7:7} y={33+i*17} textAnchor={output?"end":"start"} fontSize="9" fill="#e2eddc">{label}</text></g>))}</g>)}
+ </svg></div></div>;
+}

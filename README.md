@@ -1,18 +1,32 @@
-# Dongwoo Suk — Computational Design Portfolio
+﻿# Dongwoo Suk - Computational Design Portfolio
 
-Computational Design Specialist and ADG Lead at Steinberg Hart.
+English portfolio: https://dongwoosuk.github.io/portfolio/
 
-## View Portfolio
-**[dongwoosuk.github.io/portfolio](https://dongwoosuk.github.io/portfolio/)**
+Computational Design Specialist / Project Designer at Steinberg Hart.
 
-## Contents
-- ADG Overview — Firm-wide computational design initiative
-- Building Massing Generator — Parametric automation + evolutionary optimization
-- Rhino.Inside.Revit Workflow — Concept-to-BIM bridge
-- Open-Source Tools — 5 public repositories on GitHub
-- Awards & Recognition — 11 awards, 34+ media articles
-- Technical Stack & Certifications
+## Local development
 
-## Built With
-- [Reveal.js](https://revealjs.com/) — HTML presentation framework
-- GitHub Pages
+```sh
+npm ci
+npm run dev -- --hostname 127.0.0.1 --port 3000
+```
+
+## Publish
+
+Push changes to main. GitHub Actions builds and deploys the English site automatically.
+
+```sh
+npm run build:pages
+```
+
+The static site exports to .next-pages/ with the /portfolio base path. The build script prefixes public media paths for GitHub Pages. Generated output is excluded from Git.
+
+## Selected work
+
+- ADG Unit Layout & Facade Pilot
+- Cal Poly Student Housing Bldg-C Facade
+- joseki
+- 5x5 Building
+- Rhino / Grasshopper MCP
+
+Built with Next.js, React, TypeScript, and GitHub Pages. Project media lives in public/work/. Older presentation sources remain in the repository for reference.
